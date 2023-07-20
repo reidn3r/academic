@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/dbConfig');
-
+const Logout = require('./Logout');
 const Login = sequelize.define('login', {
     id:{
         type: DataTypes.INTEGER,
@@ -22,6 +22,12 @@ const Login = sequelize.define('login', {
 },{
     tableName: 'login',
     timestamps: false
+})
+
+Login.hasMany(Logout, {
+    foreignKey: 'login_id',
+    sourceKey: 'id',
+    onDelete: 'CASCADE'
 })
 
 module.exports = Login;

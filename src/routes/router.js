@@ -13,11 +13,10 @@ router.get('/logout', (req, res) => {
     res.status(200).redirect('/');
 })
 
-router.get('/register', (req, res) => {
-    res.status(200).redirect('/');
-})
+router.post('/register', require('../controllers/registerController'));
 
 router.get('/profile/:id', (req, res) => {
     res.status(200).redirect('/');
 })
+
 module.exports = router;

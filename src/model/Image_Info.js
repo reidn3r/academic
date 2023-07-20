@@ -9,18 +9,18 @@ const Image_Info = sequelize.define('image_info', {
         autoIncrement: true,
         primaryKey: true,
     },
-
+    
     profile_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
     },
-
+    
     image_data:{
         type: DataTypes.BLOB,
         allowNull: false
     },
-
+    
     created_at:{
         type: DataTypes.TIME,
         allowNull: false

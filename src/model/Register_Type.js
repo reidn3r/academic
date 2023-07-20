@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/dbConfig');
+const Register = require('./Register');
 
 const Register_Type = sequelize.define('register_type', {
     id:{
@@ -18,6 +19,13 @@ const Register_Type = sequelize.define('register_type', {
 },{
     tableName: 'register_type',
     timestamps: false
+})
+
+//Associations
+Register_Type.hasMany(Register, {
+    foreignKey: 'id_register_type',
+    sourceKey: 'id',
+    onDelete: 'CASCADE'
 })
 
 
