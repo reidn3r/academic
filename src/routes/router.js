@@ -13,7 +13,11 @@ router.get('/logout', (req, res) => {
     res.status(200).redirect('/');
 })
 
+router.get('/register', require('../controllers/registerPage'));
 router.post('/register', require('../controllers/registerController'));
+
+router.get('/register/user', require('../controllers/registerUserController'));
+router.get('/register/company', require('../controllers/registerCompanyController'));
 
 router.get('/profile/:id', (req, res) => {
     res.status(200).redirect('/');

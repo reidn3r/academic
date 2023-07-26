@@ -1,0 +1,101 @@
+/* Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+}
+
+.main-container{
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(270deg, #D2122E, #E52B50);
+}
+
+.register-container{
+    border: 1px solid #ededed;
+    border-radius: 0px 8px 0px 8px;
+    padding: 90px;
+    position: relative;
+    
+    background-image: linear-gradient(120deg, #fff, #D3D3D3);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.form-data > div {
+    padding: 5px;
+}
+
+.register-title-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+    
+    background-color: #fd5c63;
+    border-bottom: 1px solid #FF0800;
+    border-radius: 0px 8px 0px 0px;
+    
+    padding: 5px;
+}
+
+.register-title{
+    color: #58111A;
+}
+
+.register-radio-btn-container, .radio-btn{
+    display: flex;
+    flex-direction: row;
+    margin-right: 30%;
+}
+
+.radio-btn > input{
+    margin-left: 3px;
+}
+
+.submit-btn-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.submit-btn{
+    padding: 11px;
+    width: 60%;
+    border-radius: 5%;
+    cursor: pointer;
+    
+    background-color: #fd5c63;
+    border: 1px solid #FF0800;
+    color: #fff;
+    transition: 0.5s;
+}
+.submit-btn:hover{
+    color: #ededed;
+    background-color: #FF0800;
+}
+
+.password-container > div{
+    margin-bottom: 2px;
+}
+
+.name-ipt, .email-ipt, .pw-ipt, .confirm-pw-ipt{
+    border: 1px solid #989898;
+    border-radius: 4.5px;
+    padding: 3.5px;
+}    
