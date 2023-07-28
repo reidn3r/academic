@@ -53,17 +53,22 @@
 
                 <div class="university-container">
                     <i class="fa-solid fa-building-columns" style="color: #fd5c63;"></i>
-                    <input type="text" name="universityInput" class="univ-ipt" placeholder="Universidade" required>
+                    <input list="universities-list" name="universityInput" class="univ-ipt" placeholder="Universidade de atividade" required>
+                    <datalist id="universities-list">
+                        <% foundUniversities.forEach(function(univ) { %>
+                        <option value="<%= univ.university_name %>">
+                        <% }); %>
+                    </datalist>
                 </div>
 
                 <div class="city-container">
                     <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
                     <input list="cities-list" class="city-ipt" placeholder="Cidade de atividade">
                     <datalist id="cities-list">
-                        <option value="a">
-                            <option value="b">
-                                <option value="c">
-                                </datalist>
+                        <% foundUniversities.forEach(function(univ) { %>
+                        <option value="<%= univ.university_name %>">
+                        <% }); %>
+                    </datalist>
                 </div>
                 
                 <div class="state-container">

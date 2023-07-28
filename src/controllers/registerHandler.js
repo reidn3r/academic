@@ -1,6 +1,11 @@
-const registerUserController = (req, res) => {
+const universityModel = require('../model/University');
+
+const registerUserController = async(req, res) => {
     const data = req.session.data;
-    res.render('registerUser', {context: data});
+    const foundUniversities = await universityModel.findAll({ attributes: ['university_name']});
+
+    // res.json(foundUniversities);
+    res.render('registerUser', {context: data, foundUniversities});
 }
 
 

@@ -4,7 +4,7 @@ const registerUser = (req, res) => {
 
     console.log(data);
     res.json(data);
-    //validar cpf, data de nascimento, universidade, cidade, estado
+    //data de nascimento, universidade, cidade, estado
 }
 
 module.exports = registerUser;
