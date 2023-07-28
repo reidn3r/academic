@@ -94,7 +94,7 @@ body{
     margin-bottom: 2px;
 }
 
-.name-ipt, .email-ipt, .pw-ipt, .confirm-pw-ipt{
+.name-ipt, .email-ipt, .pw-ipt, .confirm-pw-ipt, .city-ipt, .state-ipt, .cnpj-ipt{
     border: 1px solid #989898;
     border-radius: 4.5px;
     padding: 3.5px;

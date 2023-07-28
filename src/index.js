@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const dbConnect = require('./config/dbConnect');
 const session = require('express-session');
 
-
 require('dotenv').config({path: path.join(__dirname, '..', 'config.env')});
 
 const app = express();
@@ -17,9 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
 app.use(session(require('./config/sessionConfig')))
-app.use('/v1', require('./routes/router'));
+app.use('/v1', require('./routes/v1Router'));
 
 //Associations
 const associations = require('./model/Associations');

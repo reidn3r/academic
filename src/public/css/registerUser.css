@@ -58,14 +58,14 @@ body{
     color: #58111A;
 }
 
-.register-radio-btn-container, .radio-btn{
+.radio-btn, .activity-container{
     display: flex;
     flex-direction: row;
-    margin-right: 30%;
+    margin-right: 5%;
 }
 
-.radio-btn > input{
-    margin-left: 3px;
+.radio-btn > label{
+    margin-left: 4%;
 }
 
 .submit-btn-container{
@@ -94,7 +94,7 @@ body{
     margin-bottom: 2px;
 }
 
-.name-ipt, .email-ipt, .pw-ipt, .confirm-pw-ipt{
+.name-ipt, .email-ipt, .cpf-ipt, .birth-ipt, .univ-ipt, .city-ipt, .state-ipt{
     border: 1px solid #989898;
     border-radius: 4.5px;
     padding: 3.5px;

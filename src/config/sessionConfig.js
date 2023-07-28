@@ -5,5 +5,7 @@ module.exports = {
     secret: process.env.SS_KEY,
     httpOnly: true,
     secure: false,
-    cookie: { secure: false }
+    cookie: { secure: false },
+    saveUninitialized: false,
+    resave: false
 }

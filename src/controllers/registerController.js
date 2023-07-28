@@ -1,7 +1,10 @@
 const UserModel = require('../model/User');
 const CompanyModel = require('../model/Company');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
+
+const registerPage = (req, res) => {
+    res.render('register');
+}
 
 const registerController = async(req, res) => {
     const { nameInput, emailInput, pwInput, confirmPwInput, optradio } = req.body;
@@ -16,8 +19,6 @@ const registerController = async(req, res) => {
     const foundUserEmail = await UserModel.findOne({where: {email:emailInput}});
     if(foundUserEmail || foundCompanyEmail) return res.status(401).json({message: "Email ja cadastrado"});
 
-    
-    /* enviar os dados validados no corpo do redirecionamento */
     req.session.data = {nameInput, emailInput, hashPw, optradio };
     if(optradio == "pessoa"){
         return res.redirect('register/user');
@@ -30,4 +31,4 @@ const registerController = async(req, res) => {
     }
 }
 
-module.exports = registerController;
+module.exports = { registerPage, registerController};

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="/css/registerUser.css" type="text/css">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main-container">
+        <div class="register-container">
+            <div class="register-title-container">
+                <h1 class="register-title">REGISTRO de USUÁRIO</h1>
+            </div>
+            
+            <form action="/v1/api/register/user" method="POST" class="form-data">
+                <div class="name-container">
+                    <i class="fa-regular fa-user" style="color: #fd5c63;"></i>
+                    <% if (context.nameInput) { %>
+                    <input type="text" name="nameInput" class="name-ipt" placeholder="Nome" value="<%= context.nameInput %>" required >
+                    <% } else { %>
+                        <input type="text" name="nameInput" class="name-ipt" placeholder="Nome" required >
+                    <% } %>
+                    </div>
+                
+                <div class="email-container">
+                    <i class="fa-regular fa-envelope" style="color: #fd5c63;"></i>
+                    <% if (context.emailInput) { %>
+                    <input type="email" name="emailInput" class="email-ipt" placeholder="Email" value="<%= context.emailInput %>" required >  
+                    <% } else { %>
+                    <input type="email" name="emailInput" class="email-ipt" placeholder="Email" required >  
+                    <% } %>
+                </div>
+
+                <div class="cpf-container">
+                    <i class="fa-solid fa-id-card" style="color: #fd5c63;"></i>
+                    <input type="text" name="cpfInput" class="cpf-ipt" placeholder="CPF" required>
+                </div>
+
+                <div class="birth-container">
+                    <i class="fa-regular fa-calendar-days" style="color: #fd5c63;"></i>
+                    <input type="date" name="birthInput" class="birth-ipt" value="2000-01-01" required>
+                        <!-- valor dinamico -->
+                </div>
+
+                <div class="university-container">
+                    <i class="fa-solid fa-building-columns" style="color: #fd5c63;"></i>
+                    <input type="text" name="universityInput" class="univ-ipt" placeholder="Universidade" required>
+                </div>
+
+                <div class="city-container">
+                    <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
+                    <input list="cities-list" class="city-ipt" placeholder="Cidade de atividade">
+                    <datalist id="cities-list">
+                        <option value="a">
+                            <option value="b">
+                                <option value="c">
+                                </datalist>
+                </div>
+                
+                <div class="state-container">
+                    <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>                    <input list="states-list" class="state-ipt" placeholder="Estado de atividade">
+                    <datalist id="states-list">
+                        <option value="a">
+                        <option value="b">
+                        <option value="c">
+                    </datalist>
+                </div>
+
+                <div class="activity-container">
+                    <div class="radio-btn">
+                        <input type="radio" name="optradio" class="radio-input" value="bolsista">
+                        <label class="radio-label">Bolsista</label>
+                    </div>
+                    <div class="radio-btn">
+                        <input type="radio" name="optradio" class="radio-input" value="pesquisador">
+                        <label class="radio-label">Pesquisador</label>
+                    </div>
+                    <div class="radio-btn">
+                        <input type="radio" name="optradio" class="radio-input" value="estudante">
+                        <label class="radio-label">Estudante</label>
+                    </div>
+
+                </div>
+
+                <div class="submit-btn-container">
+                    <input type="submit" value="Continuar" class="submit-btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- #fd5c63 -->
