@@ -6,6 +6,6 @@ module.exports = {
     httpOnly: true,
     secure: false,
     cookie: { secure: false },
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false
 }

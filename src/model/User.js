@@ -54,7 +54,8 @@ const User = sequelize.define('user', {
     },
 
     cpf:{
-        type: DataTypes.INTEGER,
+        // type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         

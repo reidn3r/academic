@@ -19,7 +19,7 @@ const registerController = async(req, res) => {
     const foundUserEmail = await UserModel.findOne({where: {email:emailInput}});
     if(foundUserEmail || foundCompanyEmail) return res.status(401).json({message: "Email ja cadastrado"});
 
-    req.session.data = {nameInput, emailInput, hashPw, optradio };
+    req.session.userData = { nameInput, emailInput, hashPw, optradio };
     if(optradio == "pessoa"){
         return res.redirect('register/user');
     } 
