@@ -5,6 +5,7 @@ const stateModel = require('../model/State_Info');
 
 const registerUserController = async(req, res) => {
     const data = req.session.userData;
+    if(!data) return res.redirect('/v1/register');
     const foundUniversities = await universityModel.findAll({ attributes: ['university_name']});
     const foundCities = await cityModel.findAll({ attributes: ['city_name']});
     const foundStates = await stateModel.findAll({ attributes: ['state_name']});
@@ -13,6 +14,7 @@ const registerUserController = async(req, res) => {
 
 const registerCompanyController = async(req, res) => {
     const data = req.session.userData;
+    if(!data) return res.redirect('/v1/register');
     const foundUniversities = await universityModel.findAll({ attributes: ['university_name']});
     const foundCities = await cityModel.findAll({ attributes: ['city_name']});
     const foundStates = await stateModel.findAll({ attributes: ['state_name']});

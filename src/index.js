@@ -18,6 +18,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(session(require('./config/sessionConfig')));
 app.use('/v1', require('./routes/pageRouter'));
+app.use('/v1/api', require('./routes/apiRouter'));
 
 //Associations
 const associations = require('./model/Associations');
