@@ -11,10 +11,12 @@ const registerUserController = async(req, res) => {
     res.render('registerUser', {context: data, foundUniversities, foundCities, foundStates});
 }
 
-const registerCompanyController = (req, res) => {
+const registerCompanyController = async(req, res) => {
     const data = req.session.userData;
-    res.render('registerCompany', {context: data});
+    const foundUniversities = await universityModel.findAll({ attributes: ['university_name']});
+    const foundCities = await cityModel.findAll({ attributes: ['city_name']});
+    const foundStates = await stateModel.findAll({ attributes: ['state_name']});
+    res.render('registerCompany', {context: data, foundUniversities, foundCities, foundStates});
 }
-
 
 module.exports = { registerUserController, registerCompanyController };

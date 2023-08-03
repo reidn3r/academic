@@ -19,11 +19,15 @@ router.post('/register', require('../controllers/registerController').registerCo
 router.get('/register/user', require('../controllers/registerHandler').registerUserController);
 router.get('/register/company', require('../controllers/registerHandler').registerCompanyController);
 
-router.post('/api/register/user', require('../controllers/apiRegisterController'));
-// router.post('/api/register/company')
+router.post('/api/register/user', require('../controllers/apiRegisterController').registerUser);
+router.post('/api/register/company', require('../controllers/apiRegisterController').registerCompany);
 
 router.get('/profile/:id', (req, res) => {
     res.status(200).redirect('/');
+})
+
+router.get('*', (req, res) => {
+    res.redirect('/v1');
 })
 
 module.exports = router;

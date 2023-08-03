@@ -20,49 +20,49 @@
                 <h1 class="register-title">REGISTRO de EMPRESA</h1>
             </div>
 
-            <form action="/" method="POST" class="form-data">
+            <form action="/v1/api/register/company" method="POST" class="form-data">
                 <div class="name-container">
                     <i class="fa-regular fa-user" style="color: #fd5c63;"></i>
                     <% if (context.nameInput) { %>
                     <input type="text" name="nameInput" class="name-ipt" value="<%= context.nameInput %>" required >
                     <% } else { %>
-                        <input type="text" name="" class="name-ipt" placeholder="Nome" required >
+                        <input type="text" name="nameInput" class="name-ipt" placeholder="Nome" required >
                     <% } %>
                 </div>
                 
                 <div class="email-container">
                     <i class="fa-regular fa-envelope" style="color: #fd5c63;"></i>
                     <% if (context.emailInput){ %>
-                        <input type="email" name="" class="email-ipt" placeholder="Email" value="<%= context.emailInput %>" >
+                        <input type="email" name="emailInput" class="email-ipt" placeholder="Email" value="<%= context.emailInput %>" required>
                     <% } else { %>
-                    <input type="email" name="" class="email-ipt" placeholder="Email" required >
+                    <input type="email" name="emailInput" class="email-ipt" placeholder="Email" required >
                     <% } %>
                     </div>
 
                 <div class="cnpj-container">
                     <i class="fa-solid fa-id-card-clip" style="color: #fd5c63;"></i>
-                    <input type="text" name="cnpj-input" class="cnpj-ipt" placeholder="CNPJ">
+                    <input type="text" name="cnpjInput" class="cnpj-ipt" placeholder="CNPJ" required>
                 </div>
                 
                 <div class="city-container">
                     <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
-                    <input list="cities-list" class="city-ipt" placeholder="Cidade de atividade">
+                    <input list="cities-list" name="cityInput" class="city-ipt" placeholder="Cidade de atividade" required>
                     <datalist id="cities-list">
-                        <option value="a">
-                            <option value="b">
-                                <option value="c">
-                                </datalist>
-                </div>
-                
-                <div class="state-container">
-                    <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>                    <input list="states-list" class="state-ipt" placeholder="Estado de atividade">
-                    <datalist id="states-list">
-                        <option value="a">
-                        <option value="b">
-                        <option value="c">
+                        <% foundCities.forEach(function(city) { %>
+                        <option value="<%= city.city_name %>">
+                        <% }); %>
                     </datalist>
                 </div>
                 
+                <div class="state-container">
+                    <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>                    
+                    <input list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade" required>
+                    <datalist id="states-list">
+                        <% foundStates.forEach(function(state) { %>
+                        <option value="<%= state.state_name %>">
+                            <% }); %>
+                    </datalist>
+                </div>
                 <div class="submit-btn-container">
                     <input type="submit" value="Cadastrar" class="submit-btn" required >
                 </div>

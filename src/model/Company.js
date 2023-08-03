@@ -41,7 +41,8 @@ const Company = sequelize.define('Company', {
     },
     
     cnpj:{
-        type: DataTypes.INTEGER,
+        // type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false        
     },
 
