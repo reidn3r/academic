@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="float-container">
+        <div class="float-left-child">
+            <img src="/images/academic-logo.png" alt="">
+            <p class="right-title">lorem ipsum</p>
+        </div>
+        <div class="float-right-child">
+            <div class="login-container">
+                <form action="/v1/api/login" method="POST" class="login-form">
+                    <input type="email" name="emailInput" placeholder="Email" class="email-input">
+                    <input type="password" name="passwordInput" placeholder="Senha" class="password-input">
+                    <input type="submit" class="login-btn" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

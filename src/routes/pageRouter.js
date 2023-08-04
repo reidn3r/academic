@@ -1,8 +1,11 @@
+const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', require('../controllers/homeController'));
-router.get('/login', require('../controllers/loginController'));
+router.get('/', auth, require('../controllers/homeController'));
+
+router.get('/login', require('../controllers/loginController').login);
+
 router.get('/logout', require('../controllers/logoutController'));
 
 router.get('/register', require('../controllers/registerController').registerPage);
