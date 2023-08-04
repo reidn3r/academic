@@ -6,11 +6,14 @@ router.get('/login', require('../controllers/loginController'));
 router.get('/logout', require('../controllers/logoutController'));
 
 router.get('/register', require('../controllers/registerController').registerPage);
-router.post('/register', require('../controllers/registerController').registerController);
+router.post('/register', require('../controllers/registerController').registerMainController);
 
-router.get('/register/user', require('../controllers/registerHandler').registerUserController);
-router.get('/register/company', require('../controllers/registerHandler').registerCompanyController);
+router.get('/register/user', require('../controllers/registerController').registerUserController);
+router.get('/register/company', require('../controllers/registerController').registerCompanyController);
 
+router.get('/create', require('../controllers/createProfileController'));
+
+/* -------- */
 router.get('/profile/:id', (req, res) => {
     res.status(200).redirect('/');
 })

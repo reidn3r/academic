@@ -1,5 +1,3 @@
-// let str = "60.146.705/0001-43";
-
 const cleanString = (str) => {
     console.log(str);
     if(typeof(str) != "string") return null;
@@ -13,4 +11,3 @@ const cleanString = (str) => {
 }
 
 module.exports = cleanString;
-// console.log(cleanString(str));

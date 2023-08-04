@@ -4,104 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="/css/registerUser.css" type="text/css">
-
+    
+    <link rel="stylesheet" href="/css/registerUser.css">
+    
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-
+    
     <!-- FONT AWESOME CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
+    <div class="main-header">
+        <img src="/images/academic-logo.png" alt="academic-logo" class="academic-logo">
+        <p class="header-title">Registro de Usuário</p>
+    </div>
+
     <div class="main-container">
-        <div class="register-container">
-            <div class="register-title-container">
-                <h1 class="register-title">REGISTRO de USUÁRIO</h1>
+        <form action="/v1/api/register/user" method="POST"class="form-data">
+            <div class="name-container">
+                <i class="fa-regular fa-user" style="color: #fd5c63;"></i>
+                <% if (context.nameInput) { %>
+                <input type="text" name="nameInput" value="<%= context.nameInput %>" class="name-ipt" placeholder="Nome" required>
+                <% } else { %>
+                    <input type="text" name="nameInput" class="name-ipt" placeholder="Nome" required >
+                <% } %>
+
+            </div>
+
+            <div class="email-container">
+                <i class="fa-regular fa-envelope" style="color: #fd5c63;"></i>
+                <% if (context.emailInput) { %>
+                <input type="email" name="emailInput" class="email-ipt" value="<%= context.emailInput %>" placeholder="Email" required>
+                <% } else { %>
+                    <input type="email" name="emailInput" class="email-ipt" placeholder="Email" required >  
+                <% } %>
+
+            </div>
+
+            <div class="cpf-container">
+                <i class="fa-solid fa-id-card" style="color: #fd5c63;"></i>
+                <input type="text" name="cpfInput" class="cpf-ipt" placeholder="CPF" required>
+            </div>
+
+            <div class="birth-container">
+                <i class="fa-regular fa-calendar-days" style="color: #fd5c63;"></i>
+                <input type="date" name="birthInput" class="birth-ipt" value="2000-01-01" required>
+                    <!-- valor dinamico -->
+            </div>
+
+            <div class="university-container">
+                <i class="fa-solid fa-building-columns" style="color: #fd5c63;"></i>
+                <input list="universities-list" name="universityInput" class="univ-ipt" placeholder="Universidade de atividade" required>
+                <datalist id="universities-list">
+                    <% foundUniversities.forEach(function(univ) { %>
+                    <option value="<%= univ.university_name %>">
+                    <% }); %>
+                </datalist>
+            </div>
+
+            <div class="city-container">
+                <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
+                <input list="cities-list" class="city-ipt" placeholder="Cidade de atividade" name="cityInput">
+                <datalist id="cities-list">
+                    <% foundCities.forEach(function(city) { %>
+                    <option value="<%= city.city_name %>">
+                    <% }); %>
+                </datalist>
             </div>
             
-            <form action="/v1/api/register/user" method="POST" class="form-data">
-                <div class="name-container">
-                    <i class="fa-regular fa-user" style="color: #fd5c63;"></i>
-                    <% if (context.nameInput) { %>
-                    <input type="text" name="nameInput" class="name-ipt" placeholder="Nome" value="<%= context.nameInput %>" required >
-                    <% } else { %>
-                        <input type="text" name="nameInput" class="name-ipt" placeholder="Nome" required >
-                    <% } %>
-                    </div>
-                
-                <div class="email-container">
-                    <i class="fa-regular fa-envelope" style="color: #fd5c63;"></i>
-                    <% if (context.emailInput) { %>
-                    <input type="email" name="emailInput" class="email-ipt" placeholder="Email" value="<%= context.emailInput %>" required >  
-                    <% } else { %>
-                    <input type="email" name="emailInput" class="email-ipt" placeholder="Email" required >  
-                    <% } %>
-                </div>
-
-                <div class="cpf-container">
-                    <i class="fa-solid fa-id-card" style="color: #fd5c63;"></i>
-                    <input type="text" name="cpfInput" class="cpf-ipt" placeholder="CPF" required>
-                </div>
-
-                <div class="birth-container">
-                    <i class="fa-regular fa-calendar-days" style="color: #fd5c63;"></i>
-                    <input type="date" name="birthInput" class="birth-ipt" value="2000-01-01" required>
-                        <!-- valor dinamico -->
-                </div>
-
-                <div class="university-container">
-                    <i class="fa-solid fa-building-columns" style="color: #fd5c63;"></i>
-                    <input list="universities-list" name="universityInput" class="univ-ipt" placeholder="Universidade de atividade" required>
-                    <datalist id="universities-list">
-                        <% foundUniversities.forEach(function(univ) { %>
-                        <option value="<%= univ.university_name %>">
+            <div class="state-container">
+                <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>
+                <input list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade">
+                <datalist id="states-list">
+                    <% foundStates.forEach(function(state) { %>
+                    <option value="<%= state.state_name %>">
                         <% }); %>
-                    </datalist>
-                </div>
+                </datalist>
+            </div>
 
-                <div class="city-container">
-                    <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
-                    <input list="cities-list" class="city-ipt" placeholder="Cidade de atividade" name="cityInput">
-                    <datalist id="cities-list">
-                        <% foundCities.forEach(function(city) { %>
-                        <option value="<%= city.city_name %>">
-                        <% }); %>
-                    </datalist>
+            <div class="activity-container">
+                <div class="radio-btn">
+                    <input type="radio" name="optradio" class="radio-input" value="bolsista">
+                    <label class="radio-label">Bolsista</label>
                 </div>
-                
-                <div class="state-container">
-                    <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>
-                    <input list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade">
-                    <datalist id="states-list">
-                        <% foundStates.forEach(function(state) { %>
-                        <option value="<%= state.state_name %>">
-                            <% }); %>
-                    </datalist>
+                <div class="radio-btn">
+                    <input type="radio" name="optradio" class="radio-input" value="pesquisador">
+                    <label class="radio-label">Pesquisador</label>
                 </div>
+                <div class="radio-btn">
+                    <input type="radio" name="optradio" class="radio-input" value="estudante">
+                    <label class="radio-label">Estudante</label>
+                </div>
+            </div>
 
-                <div class="activity-container">
-                    <div class="radio-btn">
-                        <input type="radio" name="optradio" class="radio-input" value="bolsista">
-                        <label class="radio-label">Bolsista</label>
-                    </div>
-                    <div class="radio-btn">
-                        <input type="radio" name="optradio" class="radio-input" value="pesquisador">
-                        <label class="radio-label">Pesquisador</label>
-                    </div>
-                    <div class="radio-btn">
-                        <input type="radio" name="optradio" class="radio-input" value="estudante">
-                        <label class="radio-label">Estudante</label>
-                    </div>
+            <div class="submit-btn-container">
+                <input type="submit" value="Continuar" class="submit-btn">
+            </div>
 
-                </div>
-
-                <div class="submit-btn-container">
-                    <input type="submit" value="Continuar" class="submit-btn">
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
 </body>
 </html>

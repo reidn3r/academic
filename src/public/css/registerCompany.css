@@ -1,9 +1,7 @@
-/* Reset */
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto';
 }
 
 body{
@@ -11,62 +9,68 @@ body{
     width: 100%;
 }
 
-.main-container{
+.academic-logo{
+    width: 10%;
+    height: 25%;
+    object-fit: cover;
+    margin-left: 2vw;
+}
+
+i {
+    width: 20px;
+    height: 15px;
+}
+
+
+.main-header{
     width: 100%;
-    height: 100%;
     
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: linear-gradient(270deg, #16161C, #343434);
-}
-
-.register-container{
-    border: 1px solid #ededed;
-    border-radius: 0px 8px 0px 8px;
-    padding: 90px;
-    position: relative;
-    
-    background-image: linear-gradient(120deg, #fff, #D3D3D3);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-}
-
-.form-data > div {
-    padding: 5px;
-}
-
-.register-title-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
-    position: absolute;
-    top: 0px;
-    left: 0;
-    right: 0;
-    
-    background-color: #D3D3D3;
-    border-bottom: 1px solid #b0b0b0;
-    border-radius: 0px 8px 0px 0px;
-    
-    padding: 5px;
-}
-
-.register-title{
-    color: #2d2d2d;
-}
-
-.register-radio-btn-container, .radio-btn{
     display: flex;
     flex-direction: row;
-    margin-right: 30%;
+    align-items: center;
+    
+    background-color: #F0F0F0;
+    border-bottom: 1px solid #bcbcbc;
 }
 
-.radio-btn > input{
-    margin-left: 3px;
+.header-title{
+    font-family: 'Roboto';
+    font-size: 24px;
+    font-weight: 600;
+    position: absolute;
+    right: 45%
+
 }
+
+.main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    background-color: #e0e0e0;
+}
+
+.main-container > *{
+    margin-bottom: 5px;
+}
+
+.form-data{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+    width: 100%;
+}
+
+input::placeholder, .form-data{
+    font-size: 18px;
+}
+
+input[type=text], input[type=email], input[type=password], input[type=date], input[name=universityInput], input[name=cityInput], input[name=stateInput] {
+    width: 15vw;
+}
+
 
 .submit-btn-container{
     display: flex;
@@ -74,33 +78,37 @@ body{
     justify-content: center;
 }
 
+.name-ipt, .email-ipt, .univ-ipt, .cnpj-ipt, .city-ipt, .state-ipt{
+    border: 1px solid #F8F8F8;
+    border-radius: 4.5px;
+    padding: 12px;
+    transition: 0.5s;
+}
+
+.name-ipt:hover, .email-ipt:hover, .cnpj-ipt:hover, .city-ipt:hover, .state-ipt:hover{
+    border: 1px solid #707070;
+    transition: 0.5s;
+}    
+
+input{
+    margin: 0.4vh 0px;
+}
+
 .submit-btn{
-    padding: 11px;
-    width: 60%;
+    padding: 10px 3.1vw;
     border-radius: 5%;
-    cursor: pointer;
-    
+    cursor: pointer;  
+    border: none;
+    transition: 0.5s;
+}
+
+.submit-btn:hover{
     background-color: #fd5c63;
-    border: 1px solid #FF0800;
     color: #fff;
     transition: 0.5s;
 }
-.submit-btn:hover{
-    color: #ededed;
-    background-color: #FF0800;
-}
 
-.password-container > div{
-    margin-bottom: 2px;
-}
 
-.name-ipt, .email-ipt, .pw-ipt, .confirm-pw-ipt, .city-ipt, .state-ipt, .cnpj-ipt{
-    border: 1px solid #989898;
-    border-radius: 4.5px;
-    padding: 3.5px;
-}    
-
-i {
-    width: 20px;
-    height: 15px;
+input:focus{
+    outline: none;
 }
