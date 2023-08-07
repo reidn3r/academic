@@ -25,17 +25,20 @@ const loginController = async(req, res) => {
     if(!mathPw) return res.status(401).json({message: "Senha incorreta"});
     
     if(mathPw){
-            await jwt.sign({
-                id: foundEmail.id,
-                username: foundEmail.name,
-            }, 
-            process.env.JWT_SECRET, 
-            { algorithm: process.env.ALGORITHM },
-            { expiresIn: process.env.EXPIRATION })
-    }
-
-    // res.json({message: foundEmail});
-    res.redirect('/v1');
+        try{
+            const payload = { id: foundEmail.id, username: foundEmail.name};
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
+                
+            res.cookie('login-token', token, {
+                httpOnly: true,
+                secure: true
+            });
+            res.redirect('/v1');
+        }
+        catch(err){
+            return res.status(401).json({message: err});
+        }
+        }        
 }
 
 module.exports = { login, loginController };

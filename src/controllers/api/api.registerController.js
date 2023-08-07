@@ -2,16 +2,16 @@
 const session = require('express-session');
 
 // utils
-const cpfValidation = require('../public/utils/CPFisValid');
-const cnpjValidation = require('../public/utils/CNPJisValid');
-const cleanString = require('../public/utils/cleanString');
+const cpfValidation = require('../../public/utils/CPFisValid');
+const cnpjValidation = require('../../public/utils/CNPJisValid');
+const cleanString = require('../../public/utils/cleanString');
 
 // services
-const universityService = require('../services/universityService');
-const locationService = require('../services/locationValidationService');
-const stateService = require('../services/stateService');
-const registerUserService = require('../services/registerUserService');
-const registerCompanyService = require('../services/registerCompanyService');
+const universityService = require('../../services/universityService');
+const locationService = require('../../services/locationValidationService');
+const stateService = require('../../services/stateService');
+const registerUserService = require('../../services/registerUserService');
+const registerCompanyService = require('../../services/registerCompanyService');
 
 const registerUser = async(req, res) => {
     const data = req.session.userData;

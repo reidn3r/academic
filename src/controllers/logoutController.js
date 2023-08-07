@@ -1,5 +1,6 @@
 const logoutController = (req, res) => {
-    res.status(200).redirect('/');
+    res.clearCookie('login-token');
+    res.status(200).redirect('/v1');
 }
 
 module.exports = logoutController;

@@ -1,10 +1,11 @@
-const auth = require('../middleware/auth');
+const authJwt = require('../middleware/login.auth');
+const verifyLogin = require('../middleware/verifyLogin.auth');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', auth, require('../controllers/homeController'));
+router.get('/', authJwt, require('../controllers/homeController'));
 
-router.get('/login', require('../controllers/loginController').login);
+router.get('/login', verifyLogin, require('../controllers/loginController').login);
 
 router.get('/logout', require('../controllers/logoutController'));
 
