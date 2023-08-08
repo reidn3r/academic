@@ -6,12 +6,7 @@ const logoutController = async(req, res) => {
     const tokenExists = await client.sIsMember('valid_tokens', token);
     
     if(tokenExists){
-        await client.multi()
-            .sMove('valid_tokens', 'invalid_tokens', token)
-            // .expire('invalid_tokens', 5)
-                //Expiração aplicado p/ tds os membros do set
-
-            .exec()
+        await client.sMove('valid_tokens', 'invalid_tokens', token);
     }
     console.log(tokenExists);
     
