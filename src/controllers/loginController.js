@@ -11,7 +11,6 @@ const login = (req, res) => {
 
 const loginController = async(req, res) => {
     const { emailInput, passwordInput } = req.body;
-    console.log(emailInput, passwordInput);
 
     if(!emailInput || !passwordInput) return res.status(404).json({message: "missing data"});
 
