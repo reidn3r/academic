@@ -4,11 +4,12 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const dbConnect = require('./config/dbConnect');
 const session = require('express-session');
+const redisClient = require('./config/redisConfig');
 
 require('dotenv').config({path: path.join(__dirname, '..', 'config.env')});
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3030;
 
 //Middleware
 app.use(morgan('dev'));
@@ -30,10 +31,14 @@ const Server = async() => {
     try{
         await dbConnect();
         app.listen(PORT, () => console.log(`server running at: http://localhost:${PORT}`));
+        await redisClient.connect();
     }
     catch(err){
+        // client.quit();
         throw err;
+        
     }
 }
+
 
 Server();

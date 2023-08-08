@@ -29,7 +29,7 @@ const loginController = async(req, res) => {
             const payload = { id: foundEmail.id, username: foundEmail.name};
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
                 
-            res.cookie('login-token', token, {
+            res.cookie('loginToken', token, {
                 httpOnly: true,
                 secure: true
             });

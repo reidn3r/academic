@@ -8,8 +8,8 @@ const verifyLogin = (req, res, next) =>{
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if(decoded) return res.status(200).redirect('/v1');
         })
-
     }
+    next();
 }
 
 
