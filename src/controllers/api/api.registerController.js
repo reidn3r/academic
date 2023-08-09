@@ -33,11 +33,9 @@ const registerUser = async(req, res) => {
     
     const user_activity_id = optradio == "bolsista" ? 1 : optradio == "pesquisador" ? 2 : 3;
     
-    await registerUserService(foundUniversity.id, user_activity_id, nameInput, emailInput, data.hashPw, locationValidation.id, foundState.id, cleanCpfInput, birthInput);
-    
-    //criar novo perfil
-        //enviar dados por sessão
-        res.redirect('/v1/create');
+    const newUser = await registerUserService(foundUniversity.id, user_activity_id, nameInput, emailInput, data.hashPw, locationValidation.id, foundState.id, cleanCpfInput, birthInput);
+    req.session.profile = {userData: data, profileData: {newUser}};
+    res.redirect('/v1/create');
     }
     
     const registerCompany = async(req, res) => {
@@ -55,11 +53,10 @@ const registerUser = async(req, res) => {
         const locationValidation = await locationService(cityInput, foundState.id);
         if(!locationValidation) return res.status(404).json({message: "Insira uma cidáde válida"});
         
-        await registerCompanyService(nameInput, emailInput, data.hashPw, locationValidation.id, foundState.id, cleanCnpjInput);
+        const newCompany = await registerCompanyService(nameInput, emailInput, data.hashPw, locationValidation.id, foundState.id, cleanCnpjInput);
         
         
-    //criar novo perfil
-        //enviar dados por sessão
+    req.session.profile = {userData: data, profileData: {newCompany}};
     res.redirect('/v1/create');
 }
 

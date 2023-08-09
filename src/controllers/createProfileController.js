@@ -1,5 +1,6 @@
 const createProfile = (req, res) => {
-    return res.json({message: "ok"});
+    const profileData = req.session.profile;
+    res.render('createProfile', {context: profileData});
 }
 
 module.exports = createProfile;

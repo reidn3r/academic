@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criando perfil</title>
+    <link rel="stylesheet" href="/css/createProfile.css">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+    <div class="main-container">
+        <form action="/v1/api/create" class="form-data" method="POST">
+        <div class="profile-name-container">
+            <% if(context) { %>
+            <p class="profile-name"><%= context.userData.nameInput %></p>
+            <% } %>
+        </div>
+
+        <div class="profile-pic-container">
+            <img class="profile-image" src="/images/default_user.png" alt="">
+            <label for="update-image" class="label-update-image">Alterar imagem</label>
+            <input type="file" class="update-image" id="update-image" name="profile-image" enctype="multipart/form-data">
+        </div>
+        <div class="profile-desc-container">
+            <% if(context.profileData.newUser && context.profileData.newUser.cpf ){ %>
+            <p class="description-title">Dê uma descrição sobre você</p>
+            <% } else if (context.profileData.newCompany && context.profileData.newCompany.cnpj) { %>
+            <p class="description-title">Dê uma descrição sobre a empresa</p>
+            <% } %>
+            <textarea name="profileDesc" class="profile-description" required></textarea>
+        </div>
+
+        <div class="submit-btn-container">
+            <input type="submit" class="submit-btn" value="Continuar">
+        </div>
+    </form>
+    </div>
+</body>
+</html>
