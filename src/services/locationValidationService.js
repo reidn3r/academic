@@ -1,4 +1,4 @@
-const sequelize = require('../config/dbConfig');
+const sequelize = require('../config/sequelizeConfig');
 
 
 const locationValidation = async(cityInput, stateId) =>{

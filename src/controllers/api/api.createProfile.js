@@ -1,58 +1,56 @@
+const fs = require('fs');
+const path = require('path');
+
 const profileModel = require('../../model/Profile');
 const loginModel = require('../../model/Login');
 const imageModel = require('../../model/Image_Info');
 const dateFormat = require('../../public/utils/dateFormat');
 
-const multer = require('multer');
-const path = require('path');
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) =>  {
-        cb(null, path.join(__dirname, '..', '..', '..', 'temp'));
-    },
-
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const extension = path.extname(file.originalname);
-        cb(null, file.fieldname + '-' + uniqueSuffix + extension);
-    }
-
-})
-
-const createProfile = async(req, res) => {
+const createProfile = async(req, res, next) => {
     const session = req.session.profile;
     const entity_data = session.profileData.newCompany || session.profileData.newUser;    
     const { profileDesc } = req.body;
 
+    if(!entity_data) return res.redirect('/v1/register');
+
     if(!profileDesc) return res.status(400).json({message: "Profile description required."});
 
-    //tratar o upload de imagens
-
+    let blob = null;
+    if(req.file){
+        blob = req.file.buffer.toString('base64');
+    }
+    else{
+        blob = fs.readFileSync(path.join(__dirname, '..', '..', 'public', 'images', 'default_user.png'));
+    }
+    
     //salva img. do perfil no bd
-    // const newImage = await imageModel.create({
-    //     profile_id: newProfile.id,
-    //     image_data: "",
-    //     created_at: dateFormat(new Date())
-    // });
+    const newImage = await imageModel.create({
+        profile_id: newProfile.id,
+        image_data: blob,
+        created_at: dateFormat(new Date())
+    });
 
     //salva novo perfil no bd
-    // const newProfile = await profileModel.create({
-    //     register_id: entity_data.register_id,
-    //     name: entity_data.name,
-    //     contact_email: entity_data.email,
-    //     description: profileDesc,
-    //     created_at: dateFormat(new Date()),
-    //     updated_at: dateFormat(new Date()),
-    //     image_id: newImage.id
-    // });
+    const newProfile = await profileModel.create({
+        register_id: entity_data.register_id,
+        name: entity_data.name,
+        contact_email: entity_data.email,
+        description: profileDesc,
+        created_at: dateFormat(new Date()),
+        updated_at: dateFormat(new Date()),
+        image_id: newImage.id
+    });
     
     //salva novo login no bd
-    // const newLogin = await loginModel.create({
-    //     profile_id: newProfile.id,
-    //     login_date: dateFormat(new Date())
-    // });
+    const newLogin = await loginModel.create({
+        profile_id: newProfile.id,
+        login_date: dateFormat(new Date())
+    });
 
-    res.json({message: entity_data});
+    //deletar arquivo temporário
+        //limpar memória?
+
+    return res.redirect('/v1/login');
 }
 
 module.exports = createProfile;

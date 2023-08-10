@@ -17,13 +17,13 @@
 </head>
 <body>
     <div class="main-container">
-        <form action="/v1/api/create" class="form-data" method="POST">
         <div class="profile-name-container">
             <% if(context) { %>
-            <p class="profile-name"><%= context.userData.nameInput %></p>
-            <% } %>
-        </div>
-
+                <p class="profile-name"><%= context.userData.nameInput %></p>
+                <% } %>
+            </div>
+            
+        <form action="/v1/api/create" class="form-data" method="POST" enctype="multipart/form-data" >
         <div class="profile-pic-container">
             <img class="profile-image" src="/images/default_user.png" alt="">
             <label for="update-image" class="label-update-image">Alterar imagem</label>

@@ -1,4 +1,4 @@
-const db = require('./dbConfig');
+const db = require('./sequelizeConfig');
 
 const dbConnect = async(app) => {
     try{

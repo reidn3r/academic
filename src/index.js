@@ -2,9 +2,9 @@ const path = require('path');
 const express = require("express");
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-const dbConnect = require('./config/dbConnect');
 const session = require('express-session');
 const redisClient = require('./config/redisConfig');
+const dbConnect = require('./config/sequelizeConnect');
 
 require('dotenv').config({path: path.join(__dirname, '..', 'config.env')});
 
