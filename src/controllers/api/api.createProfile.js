@@ -52,7 +52,7 @@ const createProfile = async(req, res, next) => {
     newImage.profile_id = newProfile.id;
     await newImage.save();
 
-    // if(filename) await fsPromises.rm(path.join(__dirname, '..', '..', '..', 'temp', `${filename}`));
+    if(filename) await fsPromises.rm(path.join(__dirname, '..', '..', '..', 'temp', `${filename}`));
 
     return res.redirect('/v1/login');
 }

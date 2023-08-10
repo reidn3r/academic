@@ -49,7 +49,7 @@
             
             <div class="city-container">
                 <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
-                <input value="Maringa" list="cities-list" name="cityInput" class="city-ipt" placeholder="Cidade de atividade" required>
+                <input list="cities-list" name="cityInput" class="city-ipt" placeholder="Cidade de atividade" required>
                 <datalist id="cities-list">
                     <% foundCities.forEach(function(city) { %>
                     <option value="<%= city.city_name %>">
@@ -59,7 +59,7 @@
             
             <div class="state-container">
                 <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>                    
-                <input value="Paraná" list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade" required>
+                <input list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade" required>
                 <datalist id="states-list">
                     <% foundStates.forEach(function(state) { %>
                     <option value="<%= state.state_name %>">
