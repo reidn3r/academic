@@ -1,10 +1,12 @@
 const fs = require('fs');
+const fsPromises = require('fs/promises');
 const path = require('path');
 
 const profileModel = require('../../model/Profile');
 const loginModel = require('../../model/Login');
 const imageModel = require('../../model/Image_Info');
 const dateFormat = require('../../public/utils/dateFormat');
+const sequelize = require('../../config/sequelizeConfig');
 
 const createProfile = async(req, res, next) => {
     const session = req.session.profile;
@@ -12,20 +14,19 @@ const createProfile = async(req, res, next) => {
     const { profileDesc } = req.body;
 
     if(!entity_data) return res.redirect('/v1/register');
-
     if(!profileDesc) return res.status(400).json({message: "Profile description required."});
-
-    let blob = null;
+    
+    let blob = null; filename = false;
     if(req.file){
+        filename = req.file.filename;
         blob = req.file.buffer.toString('base64');
-    }
-    else{
+    } else{
         blob = fs.readFileSync(path.join(__dirname, '..', '..', 'public', 'images', 'default_user.png'));
     }
-    
+
     //salva img. do perfil no bd
     const newImage = await imageModel.create({
-        profile_id: newProfile.id,
+        // profile_id: newProfile.id,
         image_data: blob,
         created_at: dateFormat(new Date())
     });
@@ -40,15 +41,18 @@ const createProfile = async(req, res, next) => {
         updated_at: dateFormat(new Date()),
         image_id: newImage.id
     });
-    
+
     //salva novo login no bd
     const newLogin = await loginModel.create({
         profile_id: newProfile.id,
         login_date: dateFormat(new Date())
     });
 
-    //deletar arquivo temporário
-        //limpar memória?
+    //update no profile_id de image_info
+    newImage.profile_id = newProfile.id;
+    await newImage.save();
+
+    // if(filename) await fsPromises.rm(path.join(__dirname, '..', '..', '..', 'temp', `${filename}`));
 
     return res.redirect('/v1/login');
 }

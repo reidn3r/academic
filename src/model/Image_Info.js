@@ -12,7 +12,7 @@ const Image_Info = sequelize.define('image_info', {
     
     profile_id:{
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         unique: true,
     },
     
@@ -22,7 +22,7 @@ const Image_Info = sequelize.define('image_info', {
     },
     
     created_at:{
-        type: DataTypes.TIME,
+        type: DataTypes.DATE,
         allowNull: false
     }
 }, {
