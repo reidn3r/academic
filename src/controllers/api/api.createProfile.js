@@ -19,7 +19,6 @@ const createProfile = async(req, res, next) => {
     let blob = null; filename = false;
     if(req.file){
         filename = req.file.filename;
-        // blob = req.file.buffer.toString('base64');
         blob = req.file.buffer;
     } else{
         blob = fs.readFileSync(path.join(__dirname, '..', '..', 'public', 'images', 'default_user.png'));

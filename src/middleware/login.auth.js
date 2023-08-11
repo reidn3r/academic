@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const jwtAuth = async(req, res, next) => {
     const token = req.cookies.loginToken;
-    // if(!token) return res.status(401).json({message: "Token inválido"});
     if(!token) return res.redirect('/v1/login');
 
     const invalidToken = await client.sIsMember('invalid_tokens', token);

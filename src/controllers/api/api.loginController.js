@@ -1,8 +1,13 @@
 const UserModel = require('../../model/User');
 const CompanyModel = require('../../model/Company');
+const profileModel = require('../../model/Profile');
+const sequelize = require('../../config/sequelizeConfig');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const session = require('express-session');
+
 require('dotenv').config({path: path.join(__dirname, '..', 'config.env')});
 
 const loginController = async(req, res) => {
@@ -21,19 +26,31 @@ const loginController = async(req, res) => {
     
     if(mathPw){
         try{
-            const payload = { id: foundEmail.id, username: foundEmail.name};
-            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
-                
-            res.cookie('loginToken', token, {
-                httpOnly: true,
-                secure: true
-            });
-            return res.redirect(`/v1/profile/${foundEmail.id}`);
-        }
+            // const hasProfile = await profileModel.findOne({where: {contact_email: emailInput}});
+            const [foundProfile, metadata] = await sequelize.query(`SELECT * FROM profile WHERE contact_email="${emailInput}" LIMIT 1`);
+            if(foundProfile.length == 0){
+                // req.session.userData = { nameInput, emailInput, hashPw, optradio -> "pessoa/empresa" };
+                // req.session.profile = {userData: data, profileData: {newUser}};
+                const opt = foundEmail.cpf ? "pessoa" : "empresa";
+                const userData = { nameInput: foundEmail.name, emailInput:foundEmail.email, hashPw:foundEmail.password, optradio: opt};
+
+                req.session.profile = {userData: userData, profileData: foundEmail};
+                console.log('DASDASDASDASDAS')
+                return res.redirect('/v1/create');
+            }
+                const payload = { id: foundEmail.id, username: foundEmail.name};
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
+                    
+                res.cookie('loginToken', token, {
+                    httpOnly: true,
+                    secure: true
+                });
+                return res.redirect(`/v1/profile/${foundEmail.id}`);
+            }
         catch(err){
             return res.status(401).json({message: err});
         }
-        }        
+    }        
 }
 
 module.exports = loginController;
