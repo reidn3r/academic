@@ -18,7 +18,7 @@ router.post('/register/user', require('../controllers/api/api.registerController
 
 router.post('/register/company', require('../controllers/api/api.registerController').registerCompany);
 
-router.post('/login', verifyLogin, require('../controllers/loginController').loginController);
+router.post('/login', verifyLogin, require('../controllers/api/api.loginController'));
 
 router.post('/create', upload.single('profile-image'), require('../controllers/api/api.createProfile'));
 

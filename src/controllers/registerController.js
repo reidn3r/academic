@@ -1,4 +1,3 @@
-// const session = require('express-session');
 const bcrypt = require('bcrypt');
 
 // models
@@ -41,7 +40,7 @@ const registerMainController = async(req, res) => {
     
     const foundCompanyEmail = await CompanyModel.findOne({where: {email:emailInput}});
     const foundUserEmail = await UserModel.findOne({where: {email:emailInput}});
-    // if(foundUserEmail || foundCompanyEmail) return res.status(401).json({message: "Email ja cadastrado"});
+    if(foundUserEmail || foundCompanyEmail) return res.status(401).json({message: "Email ja cadastrado"});
     
     req.session.userData = { nameInput, emailInput, hashPw, optradio };
     if(optradio == "pessoa"){

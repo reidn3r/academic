@@ -5,8 +5,7 @@ const router = express.Router();
 
 router.get('/', authJwt, require('../controllers/homeController'));
 
-router.get('/login', verifyLogin, require('../controllers/loginController').login);
-
+router.get('/login', verifyLogin, require('../controllers/loginController'));
 router.get('/logout', require('../controllers/logoutController'));
 
 router.get('/register', require('../controllers/registerController').registerPage);
@@ -17,10 +16,7 @@ router.get('/register/company', require('../controllers/registerController').reg
 
 router.get('/create', require('../controllers/createProfileController'));
 
-/* -------- */
-router.get('/profile/:id', (req, res) => {
-    res.status(200).redirect('/');
-})
+router.get('/profile/:id', require('../controllers/getProfileController'));
 
 router.get('*', (req, res) => {
     res.redirect('/v1');

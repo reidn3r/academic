@@ -7,9 +7,7 @@ const logoutController = async(req, res) => {
     
     if(tokenExists){
         await client.sMove('valid_tokens', 'invalid_tokens', token);
-    }
-    console.log(tokenExists);
-    
+    }    
     res.clearCookie('loginToken');
     res.status(200).redirect('/v1');
 }
