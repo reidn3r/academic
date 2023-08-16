@@ -1,0 +1,263 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 21px;
+}
+
+body{
+    background-color: #F0F0F0;
+    font-family: 'Roboto';
+    width: 100%;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.main-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 10vh;
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #707070;
+}
+
+.home-container{
+    border: 1px solid #00FF40;
+    background-color: #00FA9A;
+    border-radius: 5px;
+    color: #fff;
+    padding: 8px;
+    margin-left: 8%;
+    transition: 0.5s;
+}
+
+.home-container > a{
+    color: #006241;
+    transition: 0.5s;
+}
+.home-container > a:hover{
+    color: #fff;
+    transition: 0.5s;
+}
+
+.home-container:hover{
+    border: 1px solid #00FF40;
+    background-color: #00FF40;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.academic-logo-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.edit-container{
+    border: 1px solid black;
+    background-color: #00308F;
+    color: #fff;
+    
+    border-radius: 5px;
+    padding: 8px;
+    margin-right: 8%;
+    transition: 0.5s;
+}
+.edit-container:hover{
+    background-color: #1F75FE;
+    border: 1px solid #1F75FE;
+    color: #E1EBEE;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.academic-logo-container{
+    width: 33%;
+    height: 13vh;
+}
+
+.academic-logo{
+    width: 10vw;
+    height: 13vh;
+    object-fit: cover;
+    margin-top: -1vh;
+    margin: auto;
+}
+
+.main-profile-content{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.profile-attributes{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.profile-image{
+    margin: 7% 5%;
+}
+
+.profile-main-img{
+    width: 230px;
+    height: 220px;
+    border-radius: 50%;
+    /* border: 3px solid #707070; */
+    border: 3px solid #FEBE10;
+    object-fit: cover;
+    transition: 0.5s;    
+}
+
+.profile-main-img:hover{
+    border: 3px solid #fd5c63;
+    border-radius: 1px 8px 1px 8px;
+    transition: 0.5s;    
+}
+
+.profile-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    width: 50%;
+    padding: 8px;
+    margin: 10% 2%;
+    transition: 0.5s;
+}
+
+.name{
+    font-weight: 400;
+    transition: 0.5s;
+}
+.name:hover{
+    font-weight: 800;
+    font-size: 24px;
+    transition: 0.5s;
+}
+
+.profile-desc{
+    display: flex;
+    flex-direction: column;
+    
+    border: 1px solid #F0F0F0;
+    
+    width: 90%;
+    margin: -9% 2%;
+    padding: 13px;
+    
+    transition: 0.5s;
+}
+.profile-desc:hover{
+    background-color: #fff;
+    border: 1px solid #7B68EE;
+    border-radius: 8px 8px 8px 8px;
+    transition: 0.5s;
+}
+
+.interest-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 100%; 
+    margin-bottom: 5%
+}
+
+.interest-title{
+    margin-left: 3%;
+    margin-bottom: 1%;
+    font-weight: 700;
+}
+
+.interest-group{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%; 
+    height: 100%;
+}
+
+.intr-card{
+    display: flex;
+    flex-direction: column;
+    
+    border: 1px solid #452c63;
+    background-color: #E6E6FA;
+    border-radius: 5px;
+    padding: 9px;
+    margin-left: 3%;
+    margin-bottom: 1%;
+    transition: 0.5s;
+}
+.intr-card:hover{
+    border: 1px solid #DDA0DD;
+    background-color: #fff;
+    transition: 0.5s;
+    border-radius: 0px 5px 0px 5px;
+}
+
+.profile-contact{
+    display: flex;
+    flex-direction: column;
+    
+    width: 100%;
+
+    border-top: 1px solid #909090;
+    background-color: #e0e0e0;
+}
+
+.profile-contact-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.contact-container{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    padding: 12px;
+    justify-content: space-between;
+}
+
+
+.contact-card{
+    display: flex;
+    justify-content: center;
+
+    width: 45%;
+    padding: 8px;
+    margin-bottom: 10px;
+    
+    border: 1px solid #707070;
+    background-color: #ededed;
+    border-radius: 4px;
+
+    transition: 0.5s;
+}
+.contact-card:hover{
+    background-color: #f0f0f0;
+    border: 1px solid #FFFF00;
+    transition: 0.5s;
+}
+.contact-title{
+    margin: 1.5%;
+}
