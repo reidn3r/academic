@@ -48,7 +48,8 @@ a{
 }
 
 .home-container > a{
-    color: #006241;
+    /* color: #006241; */
+    color: #fff;
     transition: 0.5s;
 }
 .home-container > a:hover{
@@ -150,7 +151,7 @@ a{
 }
 .name:hover{
     font-weight: 800;
-    font-size: 24px;
+    font-size: 22px;
     transition: 0.5s;
 }
 
@@ -176,8 +177,15 @@ a{
 .interest-container{
     display: flex;
     flex-direction: column;
-    max-width: 100%; 
-    margin-bottom: 5%
+    max-width: 95%;
+    margin-left: 2%;
+    
+    margin-bottom: 20%;
+    padding: 8px;
+    
+    border: 1px solid #909090;
+    border-radius: 5px;
+    background-color: #fff;
 }
 
 .interest-title{
@@ -208,7 +216,7 @@ a{
 }
 .intr-card:hover{
     border: 1px solid #DDA0DD;
-    background-color: #fff;
+    /* background-color: #fff; */
     transition: 0.5s;
     border-radius: 0px 5px 0px 5px;
 }

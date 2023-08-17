@@ -25,13 +25,18 @@
                 <img src="/images/academic-logo.png" alt="academic-logo" class="academic-logo">
             </div>
             <div class="edit-container">
+                <%if(context.auth){ %>
                 <p class="edit-btn">Editar</p>
+                <% } else { %>
+                    <p class="edit-btn" style="display:none">Editar</p>
+                <% } %>
+                
+
             </div>
         </div>
         <div class="main-profile-content">
             <div class="profile-image">
-                <img src="data:Image/png;base64,<%= context.profileImage.toString('base64') %>" alt="profile-image" class="profile-main-img" >
-                <!-- <img src="data:<%= context.contentType %>;base64,<%= context.profileImage.toString('base64') %>" alt="profile-image" class="profile-main-img" > -->
+                <img src="data:<%= context.mimeType %>;base64,<%= context.profileImage.toString('base64') %>" alt="profile-image" class="profile-main-img" >
             </div>
             <div class="profile-attributes">
                 <div class="profile-name">

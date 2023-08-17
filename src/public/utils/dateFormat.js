@@ -1,5 +1,5 @@
 const dateFormat = (date) => {
-    return date.toLocaleDateString('pt-BR');
+    return date.toISOString().slice(0,19).replace('T', ' ');
 }
 
 module.exports = dateFormat;

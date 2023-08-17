@@ -4,9 +4,25 @@
     box-sizing: border-box;
 }
 
+a{
+    text-decoration: none !important;
+}
+
+body{
+    font-family: 'Roboto';
+}
 
 img{
     width: 30vh;
+}
+
+.register{
+    color: black;
+    transition: 0.5s;
+}
+.register:hover{
+    color: #fd5c63;
+    transition: 0.5s;
 }
 
 .float-left-child{

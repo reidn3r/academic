@@ -16,17 +16,20 @@ const createProfile = async(req, res, next) => {
     if(!entity_data) return res.redirect('/v1/register');
     if(!profileDesc) return res.status(400).json({message: "Profile description required."});
     
-    let blob = null; filename = false;
+    let blob = null; filename = false; fileMimetype=null;
     if(req.file){
         filename = req.file.filename;
         blob = req.file.buffer;
+        fileMimetype = req.file.mimetype;
     } else{
         blob = fs.readFileSync(path.join(__dirname, '..', '..', 'public', 'images', 'default_user.png'));
+        fileMimetype = 'Image/png';
     }
 
     //salva img. do perfil no bd
     const newImage = await imageModel.create({
         image_data: blob,
+        image_content_type: fileMimetype,
         created_at: dateFormat(new Date())
     });
 
@@ -42,6 +45,7 @@ const createProfile = async(req, res, next) => {
     });
 
     //salva novo login no bd
+        //fazer login --
     const newLogin = await loginModel.create({
         profile_id: newProfile.id,
         login_date: dateFormat(new Date())
