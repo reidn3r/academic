@@ -178,6 +178,10 @@ a{
     transition: 0.5s;
 }
 
+.no-intr{
+    margin-left: 3%;
+}
+
 .interest-container{
     display: flex;
     flex-direction: column;
@@ -253,7 +257,9 @@ a{
 
 .contact-card{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 
     width: 45%;
     padding: 8px;
@@ -265,11 +271,17 @@ a{
 
     transition: 0.5s;
 }
+
 .contact-card:hover{
     background-color: #f0f0f0;
     border: 1px solid #FFFF00;
     transition: 0.5s;
 }
+
+.contact-description{
+    font-weight: 500;
+}
+
 .contact-title{
     margin: 1.5%;
 }

@@ -50,36 +50,39 @@
             </div>
 
             <div class="interest-group">
-                <% if(context.topics.length > 0) { %>
-                    <% context.topics.forEach(function(topic) { %>
-                        <div class="intr-card">
-                            <p class="interest"> <%= topic %> </p>
-                        </div>
+            <% if(context.topics.length > 0) { %>
+                <% context.topics.forEach(function(topic) { %>
+                    <div class="intr-card">
+                        <p class="interest"> <%= topic %> </p>
+                    </div>
                     <% }); %>
-                <% } %>
-            </div>
-        </div>
-
+                    <% } else { %>
+                        <div class="no-intr">
+                            <p class="intr"> Nada para ver aqui. </p>
+                        </div>
+                        <% } %>
+                        
+                    </div>
+                </div>
+                
         <div class="profile-contact">
             <div class="profile-contact-title">
                 <p class="contact-title">Contatos</p>
             </div>
             <div class="contact-container">
-                    <div class="contact-card">
-                        <p class="contact-name">Contato 1</p>
-                    </div>
-                    <div class="contact-card">
-                        <p class="contact-name">Contato 2</p>
-                    </div>
-                    <div class="contact-card">
-                        <p class="contact-name">Contato 3</p>
-                    </div>
-                    <div class="contact-card">
-                        <p class="contact-name">Contato 4</p>
-                    </div>
-                    <div class="contact-card">
-                        <p class="contact-name">Contato 5</p>
-                    </div>
+                <% if(context.contacts_array.length > 0) { %>
+                    <% context.contacts_array.forEach(function(ctt) { %>
+                        <div class="contact-card">
+                            <p class="contact-description"><%= ctt.typeContactName %></p>
+                            <p class="contact-name"><%= ctt.content %> </p>
+                        </div>
+                        <% }); %>
+                        <% } else { %>
+                            <div class="no-intr">
+                                <p class="intr"> Nada para ver aqui. </p>
+                            </div>
+                        <% } %>
+
                 </div>
         </div>
     </div>
