@@ -32,14 +32,15 @@ const loginController = async(req, res) => {
                 req.session.profile = {userData: userData, profileData: foundEmail};
                 return res.redirect('/v1/create');
             }
-                const payload = { id: foundEmail.id, username: foundEmail.name};
+                const payload = { id: foundEmail.id, profile_id: foundProfile[0].register_id};
                 const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
                     
                 res.cookie('loginToken', token, {
                     httpOnly: true,
                     secure: true
                 });
-                return res.redirect(`/v1/profile/${foundEmail.id}`);
+
+                return res.redirect(`/v1/profile/${foundProfile[0].register_id}`);
             }
         catch(err){
             return res.status(401).json({message: err});

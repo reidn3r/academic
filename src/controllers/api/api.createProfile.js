@@ -45,7 +45,7 @@ const createProfile = async(req, res, next) => {
     });
 
     //salva novo login no bd
-        //fazer login --
+        //fazer login -- retornar o token
     const newLogin = await loginModel.create({
         profile_id: newProfile.id,
         login_date: dateFormat(new Date())

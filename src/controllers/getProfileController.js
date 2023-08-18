@@ -10,18 +10,9 @@ const getProfile = async(req, res) => {
     if(req.cookies.loginToken){
         const token = req.cookies.loginToken;
         jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-            /* Corrigir query */
-            const [results, metadata] = await sequelize.query(`SELECT * FROM profile WHERE register_id=${decoded.id} LIMIT 1`);
-            if(results.length > 0){
-                console.log("results>0")
-                const foundData = await userModel.findOne({where: {id: decoded.id}}) || companyModel.findOne({where: {id: decoded.id}});
-                if(foundData && results[0].contact_email == foundData.email){
-                    auth = true;
-                }
-            }
+            auth = decoded.profile_id == id ? true : false;
         })
     }
-    console.log(`auth: ${auth}`);
     let foundUser = await userModel.findOne({where: {register_id: id}})|| await companyModel.findOne({where: {register_id: id}});
     if(!foundUser) return res.status(404).json({message: "User not found"});
     
