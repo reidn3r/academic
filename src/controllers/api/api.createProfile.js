@@ -44,13 +44,6 @@ const createProfile = async(req, res, next) => {
         image_id: newImage.id
     });
 
-    //salva novo login no bd
-        //fazer login -- retornar o token
-    const newLogin = await loginModel.create({
-        profile_id: newProfile.id,
-        login_date: dateFormat(new Date())
-    });
-
     //update no profile_id de image_info
     newImage.profile_id = newProfile.id;
     await newImage.save();

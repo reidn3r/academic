@@ -1,6 +1,8 @@
 const UserModel = require('../../model/User');
 const CompanyModel = require('../../model/Company');
+const loginModel = require('../../model/Login');
 const sequelize = require('../../config/sequelizeConfig');
+const dateFormat = require('../../public/utils/dateFormat')
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -38,6 +40,11 @@ const loginController = async(req, res) => {
                 res.cookie('loginToken', token, {
                     httpOnly: true,
                     secure: true
+                });
+                
+                await loginModel.create({
+                    profile_id: foundProfile[0].register_id,
+                    login_date: dateFormat(new Date())
                 });
 
                 return res.redirect(`/v1/profile/${foundProfile[0].register_id}`);

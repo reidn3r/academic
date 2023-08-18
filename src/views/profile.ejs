@@ -24,15 +24,11 @@
             <div class="academic-logo-container">
                 <img src="/images/academic-logo.png" alt="academic-logo" class="academic-logo">
             </div>
+            <% if(context.auth) { %>
             <div class="edit-container">
-                <%if(context.auth){ %>
-                <p class="edit-btn">Editar</p>
-                <% } else { %>
-                    <p class="edit-btn" style="display:none">Editar</p>
-                <% } %>
-                
-
-            </div>
+                    <p class="edit-btn">Editar</p>
+                </div>
+            <% } %>
         </div>
         <div class="main-profile-content">
             <div class="profile-image">
@@ -54,9 +50,13 @@
             </div>
 
             <div class="interest-group">
-                <div class="intr-card">
-                    <p class="interest">ABCDEFGHIJ</p>
-                </div>
+                <% if(context.topics.length > 0) { %>
+                    <% context.topics.forEach(function(topic) { %>
+                        <div class="intr-card">
+                            <p class="interest"> <%= topic %> </p>
+                        </div>
+                    <% }); %>
+                <% } %>
             </div>
         </div>
 

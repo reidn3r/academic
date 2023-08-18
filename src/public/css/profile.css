@@ -35,6 +35,8 @@ a{
     height: 10vh;
     background-color: #e0e0e0;
     border-bottom: 1px solid #707070;
+
+    /* position: relative; */
 }
 
 .home-container{
@@ -48,7 +50,6 @@ a{
 }
 
 .home-container > a{
-    /* color: #006241; */
     color: #fff;
     transition: 0.5s;
 }
@@ -68,6 +69,9 @@ a{
     display: flex;
     flex-direction: column;
     width: 100%;
+    position: relative;
+    /* right: 33%; */
+    right: 1%;
 }
 
 .edit-container{
