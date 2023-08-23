@@ -27,11 +27,11 @@ City_Info.hasMany(User, {
     onDelete: 'CASCADE'
 })
 
-City_Info.hasMany(Company, {
-    foreignKey: 'city_id',
-    sourceKey: 'id',
-    onDelete: 'CASCADE'
-})
+// City_Info.hasMany(Company, {
+//     foreignKey: 'city_id',
+//     sourceKey: 'id',
+//     onDelete: 'CASCADE'
+// })
 
 
 module.exports = City_Info;

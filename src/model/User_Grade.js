@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelizeConfig');
+const { DataTypes } = require('sequelize');
 
-const profileContacts = sequelize.define('profile_contacts', {
+const User_Grade = sequelize.define('user_grade', {
     id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -10,23 +10,23 @@ const profileContacts = sequelize.define('profile_contacts', {
         primaryKey: true,
     },
 
-    profile_id:{
+    user_grade_id:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    user_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
     },
 
-    contact_type_id:{
+    profile_id:{
         type: DataTypes.INTEGER,
-        allowNull: false,    
-    },
-
-    contact_content:{
-        type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     }
 }, {
-    tableName: "profile_contacs",
+    tableName: "user_grade",
     timestamps: false
 });
 
-module.exports = profileContacts;
+
+module.exports = User_Grade;

@@ -5,7 +5,6 @@ const universityModel = require('../model/University');
 const cityModel = require('../model/City_Info');
 const stateModel = require('../model/State_Info');
 const UserModel = require('../model/User');
-const CompanyModel = require('../model/Company');
 
 const registerUserController = async(req, res) => {
     const data = req.session.userData;
@@ -20,14 +19,14 @@ const registerPage = (req, res) => {
     res.render('register');
 }
 
-const registerCompanyController = async(req, res) => {
-    const data = req.session.userData;
-    if(!data) return res.redirect('/v1/register');
-    const foundUniversities = await universityModel.findAll({ attributes: ['university_name']});
-    const foundCities = await cityModel.findAll({ attributes: ['city_name']});
-    const foundStates = await stateModel.findAll({ attributes: ['state_name']});
-    res.render('registerCompany', {context: data, foundUniversities, foundCities, foundStates});
-}
+// const registerCompanyController = async(req, res) => {
+//     const data = req.session.userData;
+//     if(!data) return res.redirect('/v1/register');
+//     const foundUniversities = await universityModel.findAll({ attributes: ['university_name']});
+//     const foundCities = await cityModel.findAll({ attributes: ['city_name']});
+//     const foundStates = await stateModel.findAll({ attributes: ['state_name']});
+//     res.render('registerCompany', {context: data, foundUniversities, foundCities, foundStates});
+// }
 
 const registerMainController = async(req, res) => {
     const { nameInput, emailInput, pwInput, confirmPwInput, optradio } = req.body;
@@ -38,20 +37,21 @@ const registerMainController = async(req, res) => {
     if(pwInput !== confirmPwInput) return res.status(401).json({message: "As senhas devem serem iguais"});
     const hashPw = await bcrypt.hash(pwInput, 15);
     
-    const foundCompanyEmail = await CompanyModel.findOne({where: {email:emailInput}});
+    // const foundCompanyEmail = await CompanyModel.findOne({where: {email:emailInput}});
     const foundUserEmail = await UserModel.findOne({where: {email:emailInput}});
-    if(foundUserEmail || foundCompanyEmail) return res.status(401).json({message: "Email ja cadastrado"});
+    // if(foundUserEmail || foundCompanyEmail) return res.status(401).json({message: "Email ja cadastrado"});
+    if(foundUserEmail) return res.status(401).json({message: "Email ja cadastrado"});
     
     req.session.userData = { nameInput, emailInput, hashPw, optradio };
     if(optradio == "pessoa"){
         return res.redirect('register/user');
     } 
-    else if(optradio == 'empresa'){
-        return res.redirect('register/company');
-    }
+    // else if(optradio == 'empresa'){
+    //     return res.redirect('register/company');
+    // }
     else{
         return res.status(401).json({message: "Pessoa ou empresa deve ser selecionado"})
     }
 }
 
-module.exports = { registerPage, registerMainController,  registerUserController, registerCompanyController };
+module.exports = { registerPage, registerMainController,  registerUserController };

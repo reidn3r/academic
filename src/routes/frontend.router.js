@@ -12,7 +12,7 @@ router.get('/register', require('../controllers/registerController').registerPag
 router.post('/register', require('../controllers/registerController').registerMainController);
 
 router.get('/register/user', require('../controllers/registerController').registerUserController);
-router.get('/register/company', require('../controllers/registerController').registerCompanyController);
+// router.get('/register/company', require('../controllers/registerController').registerCompanyController);
 
 router.get('/create', require('../controllers/createProfileController'));
 

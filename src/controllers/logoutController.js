@@ -10,7 +10,7 @@ const logoutController = async(req, res) => {
         await client.sMove('valid_tokens', 'invalid_tokens', token);
     }    
     res.clearCookie('loginToken');
-    res.status(200).redirect('/v1');
+    return res.status(200).redirect('/v1');
 }
 
 module.exports = logoutController;

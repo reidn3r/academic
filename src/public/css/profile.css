@@ -65,6 +65,11 @@ a{
     cursor: pointer;
 }
 
+.home-btn{
+    width: 100%;
+    /* padding: 8px; */
+}
+
 .academic-logo-container{
     display: flex;
     flex-direction: column;
@@ -72,6 +77,14 @@ a{
     position: relative;
     /* right: 33%; */
     right: 1%;
+}
+
+.academic-logo-container-noauth{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    right: 5%;
 }
 
 .edit-container{
@@ -177,6 +190,7 @@ a{
     border-radius: 8px 8px 8px 8px;
     transition: 0.5s;
 }
+
 
 .no-intr{
     margin-left: 3%;

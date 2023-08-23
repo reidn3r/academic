@@ -4,7 +4,6 @@ const path = require('path');
 const router = express.Router();
 const verifyLogin = require('../middleware/verifyLogin.auth');
 
-// const upload = multer({ storage: multer.diskStorage({
 const upload = multer({ storage: multer.memoryStorage({
     destination: (req, file, cb) => {
         cb(null, path.join(__dirname, '..', '..', 'temp'));
@@ -16,7 +15,7 @@ const upload = multer({ storage: multer.memoryStorage({
 
 router.post('/register/user', require('../controllers/api/api.registerController').registerUser);
 
-router.post('/register/company', require('../controllers/api/api.registerController').registerCompany);
+// router.post('/register/company', require('../controllers/api/api.registerController').registerCompany);
 
 router.post('/login', verifyLogin, require('../controllers/api/api.loginController'));
 

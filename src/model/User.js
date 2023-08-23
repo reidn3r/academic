@@ -1,5 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelizeConfig');
+const User_Grade = require('./User_Grade');
+
+
 
 const User = sequelize.define('user', {
     id:{
@@ -54,11 +57,25 @@ const User = sequelize.define('user', {
     },
 
     cpf:{
-        // type: DataTypes.INTEGER,
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         
+    },
+
+    user_sex:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    user_grade_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+
+    user_course:{
+        type: DataTypes.STRING,
+        allowNull: false
     },
 
     created_at:{
@@ -74,5 +91,12 @@ const User = sequelize.define('user', {
     tableName: 'user',
     timestamps: false
 });
+
+User.hasOne(User_Grade, {
+    foreignKey: 'user_id',
+    sourceKey: 'id',
+    onDelete: "CASCADE"
+})
+
 
 module.exports = User;

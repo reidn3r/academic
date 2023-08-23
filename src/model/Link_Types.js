@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelizeConfig');
-const TopicsProfile = require('./Topics_of_Interest_Profile');
+const ProfileLinks = require('./Profile_Links');
 
-const topicsInterest = sequelize.define('topics_of_interest', {
+const Link_Types = sequelize.define('link_types', {
     id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -10,20 +10,19 @@ const topicsInterest = sequelize.define('topics_of_interest', {
         autoIncrement: true,
         primaryKey: true,
     },
-
-    topic:{
+    type: {
         type: DataTypes.STRING,
         allowNull: false
     }
 }, {
-    tableName: 'topics_of_interest',
+    tableName: 'link_type',
     timestamps: false
 });
 
-topicsInterest.hasMany(TopicsProfile, {
-    foreignKey: 'topic_id',
-    sourceKey: "id",
+Link_Types.hasMany(ProfileLinks, {
+    foreignKey: 'link_type_id',
+    sourceKey: 'id',
     onDelete: "CASCADE"
 });
 
-module.exports = topicsInterest;
+module.exports = Link_Types;

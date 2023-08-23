@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelizeConfig');
+const profileContacts = require('./Profile_Contacts');
 
 const contactType = sequelize.define('contact_type', {
     id:{
@@ -19,5 +20,10 @@ const contactType = sequelize.define('contact_type', {
     timestamps: false
 });
 
+contactType.hasMany(profileContacts, {
+    foreignKey: 'contact_type_id',
+    sourceKey: 'id',
+    onDelete: "CASCADE"
+})
 
 module.exports = contactType;

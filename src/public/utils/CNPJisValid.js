@@ -29,4 +29,4 @@ const cnpjValidation = (str) => {
     return false;
 }
 
-module.exports = cnpjValidation;
+// module.exports = cnpjValidation;

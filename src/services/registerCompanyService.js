@@ -17,4 +17,4 @@ const registerCompany = async(nameInput, emailInput, hashPw, cityId, stateId, cn
     return newCompany;
 }
 
-module.exports = registerCompany;
+// module.exports = registerCompany;

@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelizeConfig');
 const User = require('./User');
-const Company = require('./Company');
 
 const State_Info = sequelize.define('state_info', {
     id:{
@@ -28,10 +27,10 @@ State_Info.hasMany(User, {
     onDelete: 'CASCADE'
 })
 
-State_Info.hasMany(Company, {
-    foreignKey: 'state_id',
-    sourceKey: 'id',
-    onDelete: 'CASCADE'
-})
+// State_Info.hasMany(Company, {
+//     foreignKey: 'state_id',
+//     sourceKey: 'id',
+//     onDelete: 'CASCADE'
+// })
 
 module.exports = State_Info;

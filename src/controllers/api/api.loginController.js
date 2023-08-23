@@ -1,5 +1,4 @@
 const UserModel = require('../../model/User');
-const CompanyModel = require('../../model/Company');
 const loginModel = require('../../model/Login');
 const sequelize = require('../../config/sequelizeConfig');
 const dateFormat = require('../../public/utils/dateFormat')
@@ -16,9 +15,9 @@ const loginController = async(req, res) => {
     if(!emailInput || !passwordInput) return res.status(404).json({message: "missing data"});
 
     let foundEmail = await UserModel.findOne({ where: {email:emailInput}});
-    if(!foundEmail){
-        foundEmail = await CompanyModel.findOne({ where: {email: emailInput }});
-    }
+    // if(!foundEmail){
+    //     foundEmail = await CompanyModel.findOne({ where: {email: emailInput }});
+    // }
     if(!foundEmail) return res.status(404).json({message: "Email nao cadastrado."});
 
     const mathPw = await bcrypt.compare(passwordInput, foundEmail.password);

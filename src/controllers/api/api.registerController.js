@@ -11,7 +11,7 @@ const universityService = require('../../services/universityService');
 const locationService = require('../../services/locationValidationService');
 const stateService = require('../../services/stateService');
 const registerUserService = require('../../services/registerUserService');
-const registerCompanyService = require('../../services/registerCompanyService');
+// const registerCompanyService = require('../../services/registerCompanyService');
 
 const registerUser = async(req, res) => {
     const data = req.session.userData;
@@ -38,26 +38,26 @@ const registerUser = async(req, res) => {
     res.redirect('/v1/create');
     }
     
-    const registerCompany = async(req, res) => {
-        const data = req.session.userData;
-        if(!data) return res.redirect('/v1/register');
+//     const registerCompany = async(req, res) => {
+//         const data = req.session.userData;
+//         if(!data) return res.redirect('/v1/register');
         
-        const { nameInput, emailInput, cnpjInput, cityInput, stateInput} = req.body;    
+//         const { nameInput, emailInput, cnpjInput, cityInput, stateInput} = req.body;    
         
-        if(!cnpjValidation(cnpjInput)) return res.status(404).json({message: "CNPJ inválido"});
-        const cleanCnpjInput = cleanString(cnpjInput);
+//         if(!cnpjValidation(cnpjInput)) return res.status(404).json({message: "CNPJ inválido"});
+//         const cleanCnpjInput = cleanString(cnpjInput);
         
-        const foundState = await stateService(stateInput);
-        if(!foundState) return res.status(404).json({message: "Insira um estado válido"});
+//         const foundState = await stateService(stateInput);
+//         if(!foundState) return res.status(404).json({message: "Insira um estado válido"});
         
-        const locationValidation = await locationService(cityInput, foundState.id);
-        if(!locationValidation) return res.status(404).json({message: "Insira uma cidáde válida"});
+//         const locationValidation = await locationService(cityInput, foundState.id);
+//         if(!locationValidation) return res.status(404).json({message: "Insira uma cidáde válida"});
         
-        const newCompany = await registerCompanyService(nameInput, emailInput, data.hashPw, locationValidation.id, foundState.id, cleanCnpjInput);
+//         const newCompany = await registerCompanyService(nameInput, emailInput, data.hashPw, locationValidation.id, foundState.id, cleanCnpjInput);
         
         
-    req.session.profile = {userData: data, profileData: {newCompany}};
-    res.redirect('/v1/create');
-}
+//     req.session.profile = {userData: data, profileData: {newCompany}};
+//     res.redirect('/v1/create');
+// }
 
-module.exports = { registerUser, registerCompany };
+module.exports = { registerUser };
