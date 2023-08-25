@@ -16,10 +16,12 @@ img{
     width: 30vh;
 }
 
+
 .register{
-    color: black;
+    color: #d9d9d9;
     transition: 0.5s;
 }
+
 .register:hover{
     color: #fd5c63;
     transition: 0.5s;
@@ -39,19 +41,26 @@ img{
     width: 30%;
     height: 100vh;
     float: left;
-    background-color: #F0F0F0;
+    /* background-color: #F0F0F0; */
+    background-color: #282828;
     
 }
 .float-right-child{
     width: 70%;
     height: 100vh;
     float: left;
-    background-color: #E0E0E0;
+    /* background-color: #E0E0E0; */
+    background-color: #696969;
 
     display: flex;
     justify-content: center;
     
 }
+
+.right-title{
+    color: #d9d9d9;
+}
+
 
 
 .login-container, .login-form{
