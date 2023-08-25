@@ -32,8 +32,6 @@
         <div class="profile-desc-container">
             <% if(context.profileData.newUser && context.profileData.newUser.cpf ){ %>
             <p class="description-title">Dê uma descrição sobre você</p>
-            <% } else if (context.profileData.newCompany && context.profileData.newCompany.cnpj) { %>
-            <p class="description-title">Dê uma descrição sobre a empresa</p>
             <% } %>
             <textarea name="profileDesc" class="profile-description" required></textarea>
         </div>

@@ -1,5 +1,5 @@
 // const logoutModel = require('../model/Logout');
-const client = require('../config/redisConfig');
+const client = require('../../config/redisConfig');
 
 const logoutController = async(req, res) => {
     const token = req.cookies.loginToken;

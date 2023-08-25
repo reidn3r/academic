@@ -15,15 +15,12 @@ const loginController = async(req, res) => {
     if(!emailInput || !passwordInput) return res.status(404).json({message: "missing data"});
 
     let foundEmail = await UserModel.findOne({ where: {email:emailInput}});
-    // if(!foundEmail){
-    //     foundEmail = await CompanyModel.findOne({ where: {email: emailInput }});
-    // }
     if(!foundEmail) return res.status(404).json({message: "Email nao cadastrado."});
 
-    const mathPw = await bcrypt.compare(passwordInput, foundEmail.password);
-    if(!mathPw) return res.status(401).json({message: "Senha incorreta"});
+    const matchPw = await bcrypt.compare(passwordInput, foundEmail.password);
+    if(!matchPw) return res.status(401).json({message: "Senha incorreta"});
     
-    if(mathPw){
+    if(matchPw){
         try{
             const [foundProfile, metadata] = await sequelize.query(`SELECT * FROM profile WHERE contact_email="${emailInput}" LIMIT 1`);
             if(foundProfile.length == 0){

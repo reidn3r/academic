@@ -1,4 +1,4 @@
-const Image_Info = require('./Image_Info');
+const Image_Info = require('./Profile_Image_Info');
 const Profile = require('./Profile');
 const Login = require('./Login');
 const Logout = require('./Logout');

@@ -7,6 +7,7 @@
 body{
     height: 100vh;
     width: 100%;
+    font-family: 'Roboto';
 }
 
 .academic-logo{
@@ -78,9 +79,15 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
     flex-direction: row;
 }
 
+.radio-label{
+    margin-left: 5%;
+}
+
 .activity-container{
     justify-content: center;
     align-items: center;
+    width: 100%;
+
 }
 
 .submit-btn-container{
@@ -93,13 +100,13 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
     margin-bottom: 2px;
 }
 
-.name-ipt, .email-ipt, .cpf-ipt, .univ-ipt, .city-ipt, .state-ipt{
+.name-ipt, .email-ipt, .cpf-ipt, .univ-ipt, .city-ipt, .state-ipt, .course-ipt{
     border: 1px solid #F8F8F8;
     border-radius: 4.5px;
     padding: 12px;
     transition: 0.5s;
 }
-.name-ipt:hover, .email-ipt:hover, .cpf-ipt:hover, .birth-ipt:hover, .univ-ipt:hover, .city-ipt:hover, .state-ipt:hover{
+.name-ipt:hover, .email-ipt:hover, .cpf-ipt:hover, .birth-ipt:hover, .univ-ipt:hover, .city-ipt:hover, .state-ipt:hover, .course-ipt:hover{
     border: 1px solid #707070;
     transition: 0.5s;
 }    
@@ -117,6 +124,7 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
     padding: 5px 3px;
     align-items: center;
     font-family: 'Roboto';
+    /* width: 12.8%; */
 }
 
 input{
@@ -144,4 +152,12 @@ input:focus{
 
 input[type=radio]{
     margin-left: 0.5vw;
+}
+
+/* NEW */
+.activity-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
 }

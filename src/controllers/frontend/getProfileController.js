@@ -1,8 +1,8 @@
-const userModel = require('../model/User');
-const imageModel = require('../model/Image_Info');
-const topicsModel = require('../model/Topics_Interest');
-const contactModel = require('../model/Contact_type');
-const sequelize = require('../config/sequelizeConfig');
+const userModel = require('../../model/User');
+const imageModel = require('../../model/Profile_Image_Info');
+const topicsModel = require('../../model/Topics_Interest');
+const contactModel = require('../../model/Contact_type');
+const sequelize = require('../../config/sequelizeConfig');
 const jwt = require('jsonwebtoken');
 
 const getProfile = async(req, res) => {

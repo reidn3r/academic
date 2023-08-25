@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelizeConfig');
 
-const profileContacts = sequelize.define('profile_contacts', {
+const PosGradeInfo = sequelize.define('user_pos_grade_info', {
     id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -15,18 +15,13 @@ const profileContacts = sequelize.define('profile_contacts', {
         allowNull: false,
     },
 
-    contact_type_id:{
+    pos_grad_id:{
         type: DataTypes.INTEGER,
-        allowNull: false,    
+        allowNull: false,
     },
-
-    contact_content:{
-        type: DataTypes.STRING,
-        allowNull: false
-    }
 }, {
-    tableName: "profile_contacts",
+    tableName: 'user_pos_grade_info',
     timestamps: false
-});
+})
 
-module.exports = profileContacts;
+module.exports = PosGradeInfo;

@@ -30,7 +30,7 @@ const associations = require('./model/Associations');
 const Server = async() => {
     try{
         await dbConnect();
-        app.listen(PORT, () => console.log(`server running at: http://localhost:${PORT}`));
+        app.listen(PORT, () => console.log(`server running at: http://localhost:${PORT}/v1`));
         await redisClient.connect();
     }
     catch(err){
