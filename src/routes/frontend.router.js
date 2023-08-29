@@ -13,9 +13,11 @@ router.post('/register', require('../controllers/frontend/registerController').r
 
 router.get('/register/user', require('../controllers/frontend/registerController').registerUserController);
 router.get('/create', require('../controllers/frontend/createProfileController'));
-router.get('/create/contacts', require('../controllers/frontend/profileContacts'));
+router.get('/create/contacts', require('../controllers/frontend/profileContactsController'));
 
 router.get('/profile/:id', require('../controllers/frontend/getProfileController'));
+
+router.get('/profile/:id/projects', require('../controllers/frontend/profileProjectsController'));
 
 router.get('*', (req, res) => {
     res.redirect('/v1');

@@ -18,12 +18,12 @@ const ProfileProject = sequelize.define('profile_project_data', {
     
     project_description:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     
     profile_image_id:{
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     tableName: 'profile_project_data',

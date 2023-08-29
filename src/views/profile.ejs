@@ -54,7 +54,7 @@
             <p class="profile-desc"><%= context.profileDesc %></p>
         </div>
     </div>
-
+    
     <div class="middle-container">
         <div class="project-list-container">
             <div class="list-title">
@@ -63,7 +63,21 @@
                     <p class="add-btn-text">Adicionar</p>
                 </div>
             </div>
-
+            
+            <% if( context.foundProjects.length > 0){ %>
+                <div class="project-list">
+                    <% context.foundProjects.forEach(function(project) { %>
+                    <div class="project-container">
+                        <div class="project-image-carrousel">
+                        <img src="" alt="project-image" class="project-image">
+                    </div>
+                    <div class="project-description-container">
+                        <p class="project-description"><% project.project_description %></p>
+                    </div>
+                </div>
+                    <% }) %>
+            </div>
+            <% } %>
         </div>
     </div>
 </body>
