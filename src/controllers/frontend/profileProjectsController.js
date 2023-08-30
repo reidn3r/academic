@@ -9,6 +9,7 @@ const profileProjects = async(req, res) => {
 
     if(foundProfile.length == 0) return res.status(404).json({message: "profile not found"});
     
+    //Busca dos projetos relacionado ao perfil
     const [foundProjects, foundProjectsMetadata] = await sequelize.query(`SELECT * FROM profile_project_data WHERE profile_id=${foundProfile[0].id}`);
 
     const profileName = foundProfile[0].name;
@@ -20,9 +21,9 @@ const profileProjects = async(req, res) => {
         let image_mimetype = [];
 
         const images = await sequelize.query(`SELECT * FROM profile_project_image_data WHERE project_id=${project.id}`);
-        images.forEach((img) => {
-            image_data.push(img[0].image_data);
-            image_mimetype.push(img[0].image_content_type);
+        images[0].forEach((img) => {
+            image_data.push(img.image_data);
+            image_mimetype.push(img.image_content_type);
         })
 
         let project_data = {

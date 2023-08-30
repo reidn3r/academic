@@ -17,7 +17,7 @@ const ProfileProject = sequelize.define('profile_project_data', {
     },
     
     project_description:{
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(512),
         allowNull: true
     },
     
