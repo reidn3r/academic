@@ -27,6 +27,7 @@ const profileProjects = async(req, res) => {
         })
 
         let project_data = {
+            project_id: project.id,
             project_description: project.project_description,
             image_data: image_data,
             image_mimetype: image_mimetype
@@ -35,17 +36,20 @@ const profileProjects = async(req, res) => {
             data.push(project_data);
         }
     }
+
     /*
-        1. data é um array de objetos da seguinte forma:
-        data:   [
-                    {
-                    project_desc: "..." - string de descrição do projeto
-                    image_data: [ '...' ] - binário da imagem
-                    image_mimetype: ['...'] - mimetype da imagem
-                    }
-                ]
-   */
-    const context = { profileName, data };
+    1. data é um array de objetos da seguinte forma:
+    data:   [[
+        {
+            project_desc: "..." - string de descrição do projeto
+            image_data: [ '...' ] - binário da imagem
+            image_mimetype: ['...'] - mimetype da imagem
+        }
+    ]]
+    */
+
+    const remainingSize = 5 - foundProjects.length;
+    const context = { profileName, data, remainingSize };
     return res.render('profileProjects', {context:context});
 
 }

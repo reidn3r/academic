@@ -17,6 +17,7 @@
     
 
     <link rel="stylesheet" href="/css/profileProject.css">
+    <script src="/utils/removeProject.js"></script>
     <title><%= context.profileName %></title>    
 </head>
 <body>
@@ -31,7 +32,7 @@
 
     <div class="projects-container">
         <div class="projects-title">
-            <p class="title">Projetos Atuais (Máximo 5)</p>
+            <p class="title">Projetos Atuais (Permitido add. mais <%= context.remainingSize %> projetos)</p>
         </div>
         <% if(context.data.length > 0){ %>
         <% for(let i=0; i < context.data.length; i++){ %>
@@ -46,10 +47,22 @@
             <div class="project-description">
                     <p class="project-desc"> <%= context.data[i].project_description %></p>
                 </div>
+            <div class="update-container">
+                <div class="delete-group">
+                    <!-- <i class="fa-solid fa-trash delete-icon" onclick="deleteProject({projectId: <%= context.data[i].project_id %>})" data-project-id="<%= context.data[i].project_id %>"></i> -->
+                    <i class="fa-solid fa-trash delete-icon" data-project-id="<%= context.data[i].project_id %>"></i>
+                </div>
+                <div class="update-group">
+                    <i class="fa-solid fa-pen update-icon" data-project-id="<%= context.data[i].project_id %>"> </i>
+                </div>
+            </div>
             </div>
         <% } %>
         <% } %>
+
     </div>
+
+    <% if(context.remainingSize > 0){ %>
     <div class="upload-container">
         <form action="/v1/api/create/project" enctype="multipart/form-data" method="POST">
             <div class="project-desc-container">
@@ -60,11 +73,25 @@
                 <label for="image-input" class="img-input-label" >Escolher imagens do novo projeto</label>
                 <input type="file" multiple name="imageInput" class="image-input" id="image-input">
             </div>
-
             <div class="submit-container">
                 <input type="submit" class="submit-btn" value="Enviar">
             </div>
         </form>
     </div>
+    <% } %>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteBtn = document.getElementsByClassName('delete-icon');
+            for(let del of deleteBtn){
+                del.addEventListener('click', (e) => {
+                    // console.log(e);
+                    let id = e.srcElement.dataset.projectId;
+                    // console.log(Number(id));
+                    deleteProject({projectId: Number(id)})
+                })
+            }
+        })
+    </script>
 </body>
 </html>
