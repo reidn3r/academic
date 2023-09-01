@@ -21,9 +21,7 @@ a{
 
     width: 100%;
     height: 10vh;
-    /* background-color: #282828; */
     background-color: #181818;
-    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 }
 
 .home-container{
@@ -74,7 +72,7 @@ a{
 }
 
 .academic-logo{
-    width: 10vw;
+    min-width: 10vw;
     height: 13vh;
     object-fit: cover;
     margin-top: -1vh;
@@ -85,9 +83,6 @@ a{
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #707070;
-    /* background-color: #D0D0D0; */
-    /* background-image: linear-gradient(145deg, #505050, #303030); */
-    /* background: linear-gradient(142deg, rgba(115,115,115,1) 17%, rgba(56,56,56,1) 100%); */
     background: linear-gradient(310deg, rgb(181 181 181) 17%, rgb(146 146 146) 100%);
 }
 
@@ -210,19 +205,46 @@ a{
 .project-list{
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-top: 2%;
 }
 
 .project-container{
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
-    padding: 8px;
+
+    padding: 38px;
+    border: 1px solid #b6b6b6;
+    background-color: #fff;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+
     margin-bottom: 5%;
+    max-width: 50vw;
+}
+
+.project-image{
+    width: 10vw;
 }
 
 .project-image-carrousel{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 0 5%;
+}
+
+.image-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 5%;
+}
+
+.project-description-conntainer{
+    display: flex;
+}
+
+.project-description{
+    text-align: justify;
 }

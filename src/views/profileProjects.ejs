@@ -18,18 +18,13 @@
 
     <link rel="stylesheet" href="/css/profileProject.css">
     <script src="/utils/removeProject.js"></script>
+    <script src="/utils/loadImage.js"></script>
     <title><%= context.profileName %></title>    
 </head>
 <body>
-    <div class="main-header">
-        <div class="home-container">
-            <a href="/v1/"><p class="home-btn">Home</p></a>
-        </div>
-        <div class="academic-logo-container">
-            <img src="/images/white-logo.png" alt="academic-logo" class="academic-logo">
-        </div>
-    </div>
-
+    
+    <%- include('./partials/default-header'); %>
+    
     <div class="projects-container">
         <div class="projects-title">
             <p class="title">Projetos Atuais (Permitido add. mais <%= context.remainingSize %> projetos)</p>
@@ -49,11 +44,10 @@
                 </div>
             <div class="update-container">
                 <div class="delete-group">
-                    <!-- <i class="fa-solid fa-trash delete-icon" onclick="deleteProject({projectId: <%= context.data[i].project_id %>})" data-project-id="<%= context.data[i].project_id %>"></i> -->
-                    <i class="fa-solid fa-trash delete-icon" data-project-id="<%= context.data[i].project_id %>"></i>
+                    <i class="fa-solid fa-trash fa-xl delete-icon" data-project-id="<%= context.data[i].project_id %>"></i>
                 </div>
                 <div class="update-group">
-                    <i class="fa-solid fa-pen update-icon" data-project-id="<%= context.data[i].project_id %>"> </i>
+                    <i class="fa-solid fa-pen fa-xl update-icon" data-project-id="<%= context.data[i].project_id %>"> </i>
                 </div>
             </div>
             </div>
@@ -64,14 +58,16 @@
 
     <% if(context.remainingSize > 0){ %>
     <div class="upload-container">
-        <form action="/v1/api/create/project" enctype="multipart/form-data" method="POST">
+        <form action="/v1/api/create/project" enctype="multipart/form-data" method="POST" class="input-form">
+            <div class="loaded-images">
+            </div>
             <div class="project-desc-container">
                 <p class="project-desc-title">Descricao do novo projeto</p>
                 <textarea name="projectDesc" class="project-desc-txtarea" rows="10" required></textarea>
             </div>
             <div class="project-image-select-container">
                 <label for="image-input" class="img-input-label" >Escolher imagens do novo projeto</label>
-                <input type="file" multiple name="imageInput" class="image-input" id="image-input">
+                <input type="file" accept="image/*" multiple name="imageInput" class="image-input" id="image-input" onchange="loadImage(event)">
             </div>
             <div class="submit-container">
                 <input type="submit" class="submit-btn" value="Enviar">

@@ -21,11 +21,6 @@ const jwtAuth = async(req, res, next) => {
                 if(err) console.log(err);
                 if(replies) console.log(err);
             });
-        console.log(`Redis: OK`);
-
-        //criar perfil
-            //add. info de login
-
         next();
     });
 }

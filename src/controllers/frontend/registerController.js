@@ -6,6 +6,10 @@ const cityModel = require('../../model/City_Info');
 const stateModel = require('../../model/State_Info');
 const UserModel = require('../../model/User');
 
+const registerPage = (req, res) => {
+    res.render('register');
+}
+
 const registerUserController = async(req, res) => {
     const data = req.session.userData;
     if(!data) return res.redirect('/v1/register');
@@ -13,10 +17,6 @@ const registerUserController = async(req, res) => {
     const foundCities = await cityModel.findAll({ attributes: ['city_name']});
     const foundStates = await stateModel.findAll({ attributes: ['state_name']});
     res.render('registerUser', {context: data, foundUniversities, foundCities, foundStates});
-}
-
-const registerPage = (req, res) => {
-    res.render('register');
 }
 
 const registerMainController = async(req, res) => {

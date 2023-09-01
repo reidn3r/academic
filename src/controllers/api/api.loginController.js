@@ -31,6 +31,7 @@ const loginController = async(req, res) => {
                 return res.redirect('/v1/create');
             }
                 const payload = { id: foundEmail.id, profile_id: foundProfile[0].register_id};
+                
                 const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
                     
                 res.cookie('loginToken', token, {

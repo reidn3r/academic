@@ -9,8 +9,9 @@ const dateFormat = require('../../public/utils/dateFormat');
 const createProfile = async(req, res, next) => {
     const session = req.session.profile;
     const entity_data = session.profileData.newUser;    
+    
+    
     const { profileDesc } = req.body;
-
     if(!entity_data) return res.redirect('/v1/register');
     if(!profileDesc) return res.status(400).json({message: "Profile description required."});
     
@@ -48,10 +49,9 @@ const createProfile = async(req, res, next) => {
 
     if(filename) await fsPromises.rm(path.join(__dirname, '..', '..', '..', 'temp', `${filename}`));
 
-    // return res.redirect('/v1/login');
     const profileId = newProfile.id;
-    
     req.session.profileId = profileId;
+    
     return res.redirect('/v1/create/contacts');
 }
 

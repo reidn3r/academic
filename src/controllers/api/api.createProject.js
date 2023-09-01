@@ -34,7 +34,7 @@ const createProject = async(req ,res, next) => {
         })
     }
 
-    return res.redirect(`/v1/profile/${profile_id}`);
+    return res.redirect(`/v1/profile/${profile_id}/projects`);
 }
 
 module.exports = createProject;

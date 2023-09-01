@@ -31,17 +31,14 @@ img{
     
     display: flex;
     flex-direction: column;
-    /* justify-content:flex-start; */
     justify-content:center;
 
     /* CENTER */
     align-items: center;
     
-    /* padding: 20px; */
     width: 30%;
     height: 100vh;
     float: left;
-    /* background-color: #F0F0F0; */
     background-color: #282828;
     
 }
