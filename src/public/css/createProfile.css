@@ -60,8 +60,7 @@ body{
 }
 
 .profile-image{
-    max-width: 90%;
-    max-height: 90%;
+    width: 35vw;
     margin-top: 5%;
     margin-bottom: 13%;
 
