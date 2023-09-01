@@ -21,6 +21,6 @@ router.post('/create', upload.single('profile-image'), require('../controllers/a
 router.post('/create/contacts', require('../controllers/api/api.profileContacts'));
 router.post('/create/project', upload.array('imageInput', 3) ,require('../controllers/api/api.createProject'));
 
-router.post('/delete/project', require('../controllers/api/api.removeProject'));
+router.post('/delete/project', require('../controllers/api/api.deleteProject'));
 
 module.exports = router;

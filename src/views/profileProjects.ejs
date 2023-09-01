@@ -85,9 +85,7 @@
             const deleteBtn = document.getElementsByClassName('delete-icon');
             for(let del of deleteBtn){
                 del.addEventListener('click', (e) => {
-                    // console.log(e);
                     let id = e.srcElement.dataset.projectId;
-                    // console.log(Number(id));
                     deleteProject({projectId: Number(id)})
                 })
             }
