@@ -20,4 +20,4 @@ const registerUser = async(universityId, userActivityId, nameInput, emailInput, 
     return newUser;
 }
 
-module.exports = registerUser;
+// module.exports = registerUser;

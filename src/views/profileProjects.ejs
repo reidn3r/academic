@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/css/profileProject.css">
     <script src="/utils/removeProject.js"></script>
     <script src="/utils/loadImage.js"></script>
+    <script src="/utils/updateProject.js" ></script>
     <title><%= context.profileName %></title>    
 </head>
 <body>
@@ -78,11 +79,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const updateBtn = document.getElementsByClassName('update-icon');
             const deleteBtn = document.getElementsByClassName('delete-icon');
+
             for(let del of deleteBtn){
                 del.addEventListener('click', (e) => {
                     let id = e.srcElement.dataset.projectId;
-                    deleteProject({projectId: Number(id)})
+                    deleteProject({projectId: id});
+                })
+            }
+
+            for(update of updateBtn){
+                update.addEventListener('click', (e) => {
+                    let id = e.srcElement.dataset.projectId;
+                    updateProject({projectId: id});
                 })
             }
         })
