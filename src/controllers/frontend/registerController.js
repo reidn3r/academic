@@ -7,6 +7,13 @@ const stateModel = require('../../model/State_Info');
 const UserModel = require('../../model/User');
 
 const registerPage = (req, res) => {
+    //autenticação da rota
+    /* 
+        1. Se o usuário estiver autenticado,
+        não é permitido fazer novo cadastro na plataforma
+    */
+    const token = req.cookies.loginToken;
+    if(token) return res.redirect('/v1/');
     res.render('register');
 }
 
