@@ -24,25 +24,26 @@ const loginController = async(req, res) => {
         try{
             const [foundProfile, metadata] = await sequelize.query(`SELECT * FROM profile WHERE contact_email="${emailInput}" LIMIT 1`);
             if(foundProfile.length == 0){
-                const opt = foundEmail.cpf ? "pessoa" : "empresa";
+                // const opt = foundEmail.cpf ? "pessoa" : "empresa";
+                const opt = "pessoa";
                 const userData = { nameInput: foundEmail.name, emailInput:foundEmail.email, hashPw:foundEmail.password, optradio: opt};
-
-                req.session.profile = {userData: userData, profileData: foundEmail};
+                
+                req.session.create_profile = {userData: userData, profileData: foundEmail};
                 return res.redirect('/v1/create');
             }
-                const payload = { id: foundEmail.id, profile_id: foundProfile[0].register_id};
-                
-                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
-                    
-                res.cookie('loginToken', token, {
-                    httpOnly: true,
-                    secure: true
-                });
-                
-                await loginModel.create({
-                    profile_id: foundProfile[0].register_id,
-                    login_date: dateFormat(new Date())
-                });
+            
+            const payload = { id: foundEmail.id, profile_id: foundProfile[0].register_id};
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
+            
+            res.cookie('loginToken', token, {
+                httpOnly: true,
+                secure: true
+            });
+            
+            await loginModel.create({
+                profile_id: foundProfile[0].id,
+                login_date: dateFormat(new Date())
+            });
 
                 return res.redirect(`/v1/profile/${foundProfile[0].register_id}`);
             }

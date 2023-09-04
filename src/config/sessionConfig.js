@@ -7,5 +7,6 @@ module.exports = {
     secure: false,
     cookie: { secure: false },
     saveUninitialized: true,
-    resave: false
+    resave: false,
+    maxAge: 3600000
 }

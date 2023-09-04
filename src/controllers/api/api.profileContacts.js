@@ -6,7 +6,8 @@ const sequelize = require('../../config/sequelizeConfig');
 const profileData = async(req, res) => {
     const { userEmail, userWhatsApp, userInstagram, userPosGrad } = req.body;
     
-    // if(!userEmail) return res.json({message: "Campo faltante: email"});
+    console.log(req.body);
+    if(!userEmail) return res.json({message: "Campo faltante: email"});
     
     const profileId = req.session.profileId;
     if(!profileId) return res.json({message: profileId});

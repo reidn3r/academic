@@ -7,9 +7,11 @@ const imageModel = require('../../model/Profile_Image_Info');
 const dateFormat = require('../../public/utils/dateFormat');
 
 const createProfile = async(req, res, next) => {
-    const session = req.session.profile;
-    const entity_data = session.profileData.newUser;    
-    
+    // const session = req.session.profile;
+    const session = req.session.profile_data;
+    console.log(`session: ${JSON.stringify(session)}`);
+    // const entity_data = session.profileData.newUser;    
+    const entity_data = session.profileData;    
     
     const { profileDesc } = req.body;
     if(!entity_data) return res.redirect('/v1/register');
@@ -51,6 +53,7 @@ const createProfile = async(req, res, next) => {
 
     const profileId = newProfile.id;
     req.session.profileId = profileId;
+    req.session.profile_data = session;
     
     return res.redirect('/v1/create/contacts');
 }
