@@ -9,7 +9,6 @@ const profileData = async(req, res) => {
 
     const [ profileData, profileDataMetadata ] = await sequelize.query(`SELECT id, register_id FROM profile WHERE contact_email="${userEmail}"`);
 
-    
     await ProfileContacts.create({
         profile_id: profileData[0].id,
         contact_type_id: 1,
@@ -52,8 +51,8 @@ const profileData = async(req, res) => {
             profile_id: profileData[0].id
         })
     }
-
-    return res.redirect(`/v1/profile/${profileData[0].register_id}`);
+    
+    return res.redirect(`/v1/login`);
 }
 
 

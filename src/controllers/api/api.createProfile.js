@@ -4,6 +4,7 @@ const path = require('path');
 
 const profileModel = require('../../model/Profile');
 const imageModel = require('../../model/Profile_Image_Info');
+
 const dateFormat = require('../../public/utils/dateFormat');
 
 const createProfile = async(req, res, next) => {
@@ -53,8 +54,10 @@ const createProfile = async(req, res, next) => {
         
         return res.redirect('/v1/create/contacts');
     }
+
     catch(err){
-        res.redirect('/v1/login');
+        console.log(err);
+        return res.redirect('/v1/login');
     }
 }
 
