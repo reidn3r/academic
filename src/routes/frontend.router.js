@@ -1,3 +1,4 @@
+const verifyAuth = require('../middleware/verifyAuth.auth');
 const authJwt = require('../middleware/login.auth');
 const verifyLogin = require('../middleware/verifyLogin.auth');
 const express = require('express');
@@ -15,7 +16,7 @@ router.get('/register/user', require('../controllers/frontend/registerController
 router.get('/create/', require('../controllers/frontend/createProfileController'));
 router.get('/create/contacts', require('../controllers/frontend/profileContactsController'));
 
-router.get('/profile/:id', require('../controllers/frontend/getProfileController'));
+router.get('/profile/:id', verifyAuth, require('../controllers/frontend/getProfileController'));
 router.get('/profile/:id/projects', require('../controllers/frontend/profileProjectsController'));
 router.get('/profile/:id/edit/:project_id', require('../controllers/frontend/editProjectController'));
 

@@ -2,6 +2,10 @@ const client = require('../config/redisConfig');
 const jwt = require('jsonwebtoken');
 
 const jwtAuth = async(req, res, next) => {
+    /*
+        1. Middleware usado para add. tokens gerados no
+        login ao set de tokens válidos.
+    */
     const token = req.cookies.loginToken;
     if(!token) return res.redirect('/v1/login');
 

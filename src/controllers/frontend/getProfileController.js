@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 //Buscar dados dos projetos
 const getProfile = async(req, res) => {
+    console.log(`req.auth: ${req.auth}`);
     const { id } = req.params;
     let auth=false;
     if(req.cookies.loginToken){
@@ -30,7 +31,6 @@ const getProfile = async(req, res) => {
         
         images[0].forEach((img) => {
             image_data.push(img.image_data);
-            // image_data.push("*");
             image_mimetype.push(img.image_content_type);
         })
 
