@@ -5,28 +5,27 @@ const sequelize = require('../../config/sequelizeConfig');
 
 const profileData = async(req, res) => {
     const { userEmail, userWhatsApp, userInstagram, userPosGrad } = req.body;
-    
-    console.log(req.body);
     if(!userEmail) return res.json({message: "Campo faltante: email"});
+
+    const [ profileData, profileDataMetadata ] = await sequelize.query(`SELECT id, register_id FROM profile WHERE contact_email="${userEmail}"`);
+
     
-    const profileId = req.session.profileId;
-    if(!profileId) return res.json({message: profileId});
     await ProfileContacts.create({
-        profile_id: profileId,
+        profile_id: profileData[0].id,
         contact_type_id: 1,
         contact_content: userEmail
     })
     
     if(userWhatsApp){
         await ProfileContacts.create({
-            profile_id: profileId,
+            profile_id: profileData[0].id,
             contact_type_id: 2,
             contact_content: userWhatsApp
         })
     }    
     if(userInstagram){
         await ProfileContacts.create({
-            profile_id: profileId,
+            profile_id: profileData[0].id,
             contact_type_id: 3,
             contact_content: userInstagram
         })
@@ -36,25 +35,25 @@ const profileData = async(req, res) => {
     const [user_id, metadata] = await sequelize.query(`SELECT id FROM user WHERE email="${userEmail}"`); 
     if(userPosGrad){
         await UserPosGrade.create({
-            profile_id: profileId,
+            profile_id: profileData[0].id,
             pos_grad_id: pos_grad_id 
         })
         
         await UserGrade.create({
             user_grade_id: 2,
             user_id: user_id[0].id,
-            profile_id: profileId
+            profile_id: profileData[0].id
         })        
     }
     else{
         await UserGrade.create({
             user_grade_id: 1,
             user_id: user_id[0].id, 
-            profile_id: profileId
+            profile_id: profileData[0].id
         })
     }
 
-    return res.redirect(`/v1/profile/${profileId}`);
+    return res.redirect(`/v1/profile/${profileData[0].register_id}`);
 }
 
 

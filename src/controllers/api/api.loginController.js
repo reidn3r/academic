@@ -7,6 +7,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
+
+// /create/:id
+// 	- dados a serem redeziados em /create
+// 		- 
+// /create/contacts/:id ??
+
 require('dotenv').config({path: path.join(__dirname, '..', 'config.env')});
 
 const loginController = async(req, res) => {
@@ -19,6 +25,7 @@ const loginController = async(req, res) => {
 
     const matchPw = await bcrypt.compare(passwordInput, foundEmail.password);
     if(!matchPw) return res.status(401).json({message: "Senha incorreta"});
+    console.log(JSON.stringify(foundEmail));
     
     if(matchPw){
         try{
@@ -29,7 +36,8 @@ const loginController = async(req, res) => {
                 const userData = { nameInput: foundEmail.name, emailInput:foundEmail.email, hashPw:foundEmail.password, optradio: opt};
                 
                 req.session.create_profile = {userData: userData, profileData: foundEmail};
-                return res.redirect('/v1/create');
+                // return res.redirect(`/v1/create/${foundProfile[0].register_id}`);
+                return res.redirect('/v1/create/');
             }
             
             const payload = { id: foundEmail.id, profile_id: foundProfile[0].register_id};

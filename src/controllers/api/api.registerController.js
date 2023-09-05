@@ -57,7 +57,8 @@ const registerUser = async(req, res) => {
     })
 
 
-    req.session.profile = {userData: data, profileData: {newUser}};
+    // req.session.profile_data = {userData: data, profileData: {newUser}};
+    req.session.create_profile = {userData: data, profileData: {newUser}};
     req.session.userGrade = gradeQuery[0].id;
     return res.redirect('/v1/create');
     }

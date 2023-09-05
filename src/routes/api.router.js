@@ -24,3 +24,12 @@ router.post('/create/project', upload.array('imageInput', 3) ,require('../contro
 router.post('/delete/project', require('../controllers/api/api.deleteProject'));
 
 module.exports = router;
+
+/*
+    /create/register_id
+	- busca as info e renderiza no context
+	- mandar o register id para a api
+
+    /create/contacts/
+        - ?
+*/

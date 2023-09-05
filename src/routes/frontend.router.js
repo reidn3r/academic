@@ -12,7 +12,7 @@ router.get('/register', require('../controllers/frontend/registerController').re
 router.post('/register', require('../controllers/frontend/registerController').registerMainController);
 router.get('/register/user', require('../controllers/frontend/registerController').registerUserController);
 
-router.get('/create', require('../controllers/frontend/createProfileController'));
+router.get('/create/', require('../controllers/frontend/createProfileController'));
 router.get('/create/contacts', require('../controllers/frontend/profileContactsController'));
 
 router.get('/profile/:id', require('../controllers/frontend/getProfileController'));
