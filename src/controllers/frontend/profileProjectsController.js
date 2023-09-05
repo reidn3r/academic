@@ -1,27 +1,17 @@
-const jwt = require('jsonwebtoken');
 const sequelize = require('../../config/sequelizeConfig');
 
 const profileProjects = async(req, res) => {
+    if(!req.auth) return res.redirect('/v1');
+
     const { id } = req.params;
     //register_id
-    
-    req.session.profileId = id;
-    
-    //autenticação da rota
-    const token = req.cookies.loginToken;    
-    if(token){
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-            if(id != decoded.profile_id) return res.redirect('/v1/');
-        })
-    }
-    
+
     const [foundProfile, foundProfileMetadata] = await sequelize.query(`SELECT id, name FROM profile WHERE register_id=${id}`);
     if(foundProfile.length == 0) return res.status(404).json({message: "profile not found"});
     
     //Busca dos projetos relacionado ao perfil
     const [foundProjects, foundProjectsMetadata] = await sequelize.query(`SELECT * FROM profile_project_data WHERE profile_id=${foundProfile[0].id}`);
 
-    
     let data = [];
     if (foundProjects.length > 0) {
         for(const project of foundProjects){
