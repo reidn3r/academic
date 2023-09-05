@@ -14,7 +14,6 @@ const getProfile = async(req, res) => {
     if(foundProfile.length == 0) return res.status(404).json({message: "Profile not found"});
     
     const [foundProjects, foundProjectsMetadata] = await sequelize.query(`SELECT * FROM profile_project_data WHERE profile_id=${foundProfile[0].id}`);
-
     let data = [];
     for(const project of foundProjects){
         let image_data = [];
