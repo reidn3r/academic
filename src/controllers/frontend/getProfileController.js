@@ -5,15 +5,8 @@ const jwt = require('jsonwebtoken');
 
 //Buscar dados dos projetos
 const getProfile = async(req, res) => {
-    console.log(`req.auth: ${req.auth}`);
     const { id } = req.params;
-    let auth=false;
-    if(req.cookies.loginToken){
-        const token = req.cookies.loginToken;
-        jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-            auth = decoded.profile_id == id ? true : false;
-        })
-    }
+    
     let foundUser = await userModel.findOne({where: {register_id: id}})
     if(!foundUser) return res.status(404).json({message: "User not found"});
     
@@ -50,6 +43,7 @@ const getProfile = async(req, res) => {
     const profileDesc = foundProfile[0].description;
     const profileImage = foundImage.image_data;
     const mimeType = foundImage.image_content_type;
+    const auth = req.auth;
     
     const context = { profileName, profileEmail, profileDesc, profileImage, mimeType, auth, data, id };
     return res.render('profile', {context});

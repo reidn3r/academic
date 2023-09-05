@@ -36,12 +36,14 @@
     
     <div class="middle-container">
         <div class="project-list-container">
+            <% if (context.auth) { %>
             <div class="list-title">
                 <p class="title">Exiba e gerencie seus projetos no seu perfil</p>
                 <div class="add-btn">
                     <a href="/v1/profile/<%= context.id %>/projects"><p class="add-btn-text">Adicionar</p></a>
                 </div>
             </div>
+            <% } %>
             
             <% if(context.data.length > 0){ %>
                 <div class="project-list">
