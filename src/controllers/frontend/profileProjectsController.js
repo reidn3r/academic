@@ -47,6 +47,7 @@ const profileProjects = async(req, res) => {
     ]
     */
     
+    req.session.profileId = id;
     const profileName = foundProfile[0].name;
     const remainingSize = 5 - foundProjects.length;
     const context = { profileName, data, remainingSize };

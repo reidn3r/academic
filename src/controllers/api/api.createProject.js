@@ -2,7 +2,6 @@ const ProjectImageData = require('../../model/Profile_Project_Image_Data');
 const ProjectData = require('../../model/Profile_Project_Data');
 const dateFormat = require('../../public/utils/dateFormat');
 
-
 const createProject = async(req ,res, next) => {
         /* 
             body: descrição do projeto
@@ -12,6 +11,7 @@ const createProject = async(req ,res, next) => {
     
     const { projectDesc } = req.body;
     const profile_id = req.session.profileId;
+    // const { profile_id } = req.params;
 
     let newProject = await ProjectData.create({
         profile_id: profile_id,
