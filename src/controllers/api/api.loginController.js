@@ -24,7 +24,6 @@ const loginController = async(req, res) => {
         try{
             const [foundProfile, metadata] = await sequelize.query(`SELECT * FROM profile WHERE contact_email="${emailInput}" LIMIT 1`);
             if(foundProfile.length == 0){
-                // const opt = foundEmail.cpf ? "pessoa" : "empresa";
                 const opt = "pessoa";
                 const userData = { nameInput: foundEmail.name, emailInput:foundEmail.email, hashPw:foundEmail.password, optradio: opt};
                 
