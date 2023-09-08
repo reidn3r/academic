@@ -37,7 +37,7 @@ const loginController = async(req, res) => {
             });
 
             const payload = { id: foundEmail.id, profile_id: foundProfile[0].register_id, login_id: loginInfo.id, logout_profile_id: foundProfile[0].id };
-            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2h'});
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '4h'});
             
             res.cookie('loginToken', token, {
                 httpOnly: true,
