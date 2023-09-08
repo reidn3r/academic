@@ -37,14 +37,14 @@ const profileProjects = async(req, res) => {
     
     /*
     1. data é um array de objetos da seguinte forma:
-    data:   [[
+    data:   [
         {
             project_desc: "..." - string de descrição do projeto
             image_data: [ '...' ] - binário da imagem
             image_mimetype: ['...'] - mimetype da imagem
         },
         { ... }, { ... }
-    ]]
+    ]
     */
     
     const profileName = foundProfile[0].name;

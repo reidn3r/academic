@@ -89,10 +89,11 @@
                 })
             }
 
-            //Pegar o id para redirecionamento
             for(update of updateBtn){
                 update.addEventListener('click', (e) => {
                     let projectId = e.srcElement.dataset.projectId;
+                    
+                    //Pega o id para redirecionamento
                     let Id = window.location.pathname.split('/')[3];
                     updateProject({projectId: projectId, userDataId: Id});
                 })

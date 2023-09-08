@@ -21,15 +21,11 @@ router.post('/create', upload.single('profile-image'), require('../controllers/a
 router.post('/create/contacts', require('../controllers/api/api.profileContacts'));
 router.post('/create/project', upload.array('imageInput', 3) ,require('../controllers/api/api.createProject'));
 
+//1 ou 3
+// router.post('/edit/project', upload.single('ImageFile'), require('../controllers/api/api.editProject'));
+router.post('/edit/project', upload.array('ImageFile', 3), require('../controllers/api/api.editProject'));
+
+//post -> delete
 router.post('/delete/project', require('../controllers/api/api.deleteProject'));
 
 module.exports = router;
-
-/*
-    /create/register_id
-	- busca as info e renderiza no context
-	- mandar o register id para a api
-
-    /create/contacts/
-        - ?
-*/

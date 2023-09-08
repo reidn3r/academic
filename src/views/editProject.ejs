@@ -28,39 +28,117 @@
         </div>
     </div>
     <div class="project-container">
-        <div class="project-description-container">
-            <div class="description-title">Descrição</div>
-            <div class="desc-container">
-                <textarea name="" class="description" spellcheck="false"  oninput="autoGrow(this)" id=""><%= context.data[0].project_description %></textarea>
-            </div>
+        <form action="/v1/api/edit/project" id="form-data" class="form-data" method="POST" enctype="multipart/form-data">
+            <div class="project-description-container">
+                <div class="description-title">Descrição</div>
+                <div class="desc-container">
+                    <textarea name="" class="description" spellcheck="false"  oninput="autoGrow(this)" id=""><%= context.data[0].project_description %></textarea>
+                </div>
 
-        </div>
-        <% if(context.data[0].image_data.length > 0){  %>
-        <div class="project-image-group">
-            <% for(let i=0; i< context.data[0].image_data.length; i++) { %>
-            <div class="image-container">
-                <div class="image-loaded">
-                    <img class="project-image" src="data:<%= context.data[0].image_mimetype[i]%>;base64, <%= context.data[0].image_data[i].toString('base64')%>" alt="project-image" alt="">
+            </div>
+            <% if(context.data[0].image_data.length > 0){  %>
+            <div class="project-image-group">
+                <% for(let i=0; i< context.data[0].image_data.length; i++) { %>
+                <div class="image-container">
+                    <div class="image-loaded">
+                        <img class="project-image" src="data:<%= context.data[0].image_mimetype[i]%>;base64, <%= context.data[0].image_data[i].toString('base64')%>" alt="project-image">
+                    </div>
+                    <div class="alter-group">
+                        <label for="alterImage" class="alter-image-label">
+                            <input type="file" name="ImageFile" id="alter-image" class="alter-image-<%= context.data[0].image_id[i] %>">
+                        </label>
+                        <i class="fa-solid fa-pen fa-xl update-icon" data-project-id="<%= context.data[0].image_id[i] %>"></i>
+                        
+                        <i class="fa-solid fa-trash fa-xl delete-icon" data-project-id="<%= context.data[0].image_id[i] %>"></i>
+                    </div>
                 </div>
-                <div class="alter-group">
-                    <i class="fa-solid fa-pen fa-xl update-icon" data-project-id="-1"> </i>
-                    <i class="fa-solid fa-trash fa-xl delete-icon" data-project-id="-1"></i>
-                </div>
+                <% } %>
             </div>
             <% } %>
-        </div>
-        <% } %>
 
-        <div class="save-container">
-            <input type="submit" class="submit-btn" value="Salvar">
-        </div>
+            <div class="save-container">
+                <input type="submit" class="submit-btn" value="Salvar">
+            </div>
+        </form>
     </div>
 
     <script>
+        let changed_img = []; 
+        let removed_img = [];
+        let locationHref = window.location.href.split('/');
+        let project_id = locationHref[locationHref.length-1];
+
         document.addEventListener("DOMContentLoaded", () => {
             var textarea = document.querySelector('.description');
             autoGrow(textarea);
         })
+
+        const updateIcon = document.querySelectorAll('.update-icon');
+        const removeIcon = document.querySelectorAll('.delete-icon');
+        const alterImageInputFile = document.querySelectorAll(`#alter-image`); 
+        
+
+        for(let i=0; i<removeIcon.length; i++){
+            removeIcon[i].addEventListener('click', (e) => {
+                removed_img.push(Number(e.srcElement.dataset.projectId));
+            })
+        }
+
+        for(let i=0; i<updateIcon.length; i++){
+            updateIcon[i].addEventListener('click', ()=> {
+                alterImageInputFile[i].click();
+            })
+        }
+
+        for(ipt of alterImageInputFile){
+            ipt.addEventListener('change', (e) => {
+                changed_img.push(Number(e.target.className.split('-')[2]));
+            })
+        }
+
+        document.querySelector("#form-data").addEventListener('submit', async(e) => {
+            e.preventDefault();
+            
+            const data = new FormData();
+            const textArea = document.querySelector('.description').value;
+            data.append('project_description', textArea);
+            data.append('changed_ids', JSON.stringify(changed_img));
+            data.append('removed_ids', JSON.stringify(removed_img));
+            data.append('project_id', project_id);
+
+            const imageInput = document.querySelectorAll("#alter-image");
+            /* 
+                1. Percorre os campos de input[type="file"]
+                e verifica qual deles está enviando arquivos.
+                Os que possuirem dados a serem enviados, são add.
+                ao formulário em data.append('ImageFile')
+                    - O nome do campo deve ser
+                    igual ao nome associado a tag html
+            */
+            for(ipt of imageInput){
+                if(ipt.files[0]){
+                    data.append('ImageFile', ipt.files[0])
+                }
+            }
+
+            // Chamada para a API
+            try {
+                const response = await fetch('/v1/api/edit/project', {
+                    method: 'POST',
+                    body: data,
+                });
+                
+                if (response.ok) {
+                    window.location.reload();
+
+                } else {
+                    console.error('Erro ao enviar dados para o servidor');
+                }
+            } catch (error) {
+                console.error('Erro de rede:', error);
+            }
+        })
+
     </script>
 </body>
 </html>
