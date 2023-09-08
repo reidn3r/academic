@@ -11,7 +11,6 @@ const createProject = async(req ,res, next) => {
     
     const { projectDesc } = req.body;
     const profile_id = req.session.profileId;
-    // const { profile_id } = req.params;
 
     let newProject = await ProjectData.create({
         profile_id: profile_id,
