@@ -1,0 +1,30 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body, .container{
+    background-color: black;
+    color: #fff;
+
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+p{
+    font-family: 'Roboto', sans-serif;
+    font-size: 3vw;
+}
+
+
+i{
+    margin-top: 3vh;
+}
+
+

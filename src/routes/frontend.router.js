@@ -21,8 +21,6 @@ router.get('/profile/:id', verifyAuth, require('../controllers/frontend/getProfi
 router.get('/profile/:id/projects', verifyAuth, require('../controllers/frontend/profileProjectsController'));
 router.get('/profile/:id/edit/:project_id', require('../controllers/frontend/editProjectController'));
 
-router.get('*', (req, res) => {
-    res.redirect('/v1');
-})
+router.get('*', require('../controllers/frontend/pageNotFound'));
 
 module.exports = router;
