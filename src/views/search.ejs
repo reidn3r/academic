@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="/css/search.css">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <div class="main-header">
+        <div class="edit-container">
+            <a href="/v1/profile/<%= context.RegisterId %>"><p class="edit-btn">Perfil</p></a>
+        </div>
+        <div class="academic-logo-container">
+            <img src="/images/white-logo.png" alt="academic-logo" class="academic-logo">
+        </div>
+        <div class="home-container">
+            <a href="/v1/logout"><p class="home-btn">Desconectar</p></a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search-container">
+            <form class="search-data" action="/v1/search" method="POST">
+                <div class="name-input-container">
+                    <input type="text" name="nameInput" class="name-input text-ipt" placeholder="Nome">
+                </div>
+
+                <div class="secondary-input-container">
+                    <div class="input-group">
+                        <input list="course-list" type="text" name="cursoInput" class="curso-input text-ipt" placeholder="Curso de Formação">
+                        <input type="text" name="specInput" class="spec-input text-ipt" placeholder="Especialização">
+                    </div>
+
+                    <div class="input-group">
+                        <input list="graduation-list" type="list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
+                        <datalist id="graduation-list">
+                            <% for( grad of context.GradInfo ) { %>
+                            <option value=" <%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %>">
+                            <% } %>
+                        </datalist>
+                        
+                        <input list="university-list" type="list" name="universityInput" class="university-input list-ipt" placeholder="Universidade">
+                        <datalist id="university-list">
+                            <% for( univ of context.Universities ) { %>
+                            <option value="<%= univ.university_name %>">
+                            <% } %>
+                        </datalist>
+
+                    </div>
+
+                    <div class="input-group">
+                        <input list="city-list" type="list" name="cityInput" class="city-input list-ipt" placeholder="Cidade de atuação">
+                        <datalist id="city-list"> 
+                            <% for ( ct of context.Cities ) { %>
+                            <option value="<%= ct.city_name %>">
+                            <% } %>
+                        </datalist>
+
+                        <input list="state-input" type="list" name="stateInput" class="state-input list-ipt" placeholder="Estado de atuação">
+                        <datalist id="state-input">
+                            <% for ( st of context.States ){ %>
+                            <option value="<%=  st.state_name %>">
+                            <% } %>
+                        </datalist>
+                        
+                    </div>
+
+                    <div class="input-group">
+                        <input type="list" name="topicInput" class="topic-input list-ipt" placeholder="Tópicos de Interesse">
+                    </div>
+                </div>
+
+                <div class="submit-btn">
+                    <input type="submit" class="ipt-btn" value="Pesquisar">
+                    <i class="fa-solid fa-magnifying-glass" style="color: #707070;"></i>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

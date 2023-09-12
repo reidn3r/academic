@@ -1,0 +1,197 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.main-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 10vh;
+    /* background-color: #282828; */
+    background-color: #181818;
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+}
+
+.home-container{
+    border: 1px solid #00FA9A;
+    background-color: #00FA9A;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 0 8%;
+    transition: 0.5s;
+    color: #fff;
+}
+
+.home-container > a{
+    color: #fff;
+}
+
+.home-container:hover{
+    border: 1px solid #00FF40;
+    color: #fff;
+    background-color: #1B4D3E;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+
+.edit-container > a{
+    color: #fff;
+}
+.edit-container{
+    color: #fff;
+    background-color: #1E90FF;
+    border: 1px solid #1E90FF;
+    padding: 15px;
+    margin: 0 8%;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.edit-container:hover{
+    color: #F0F8FF;
+    background-color: #002244;
+    border: 1px solid #7CB9E8;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.academic-logo-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.academic-logo{
+    min-width: 10vw;
+    height: 13vh;
+    object-fit: cover;
+    margin-top: -1vh;
+    margin: auto;
+}
+
+
+/* ---------- */
+
+input{
+    outline: none;
+    padding: 13px;
+    border: 1px solid #c8c8c8;
+    transition: 0.5s;
+    border-radius: 3px;
+}
+input:hover{
+    border: 1px solid #707070;
+    transition: 0.5s;
+}
+
+input, input::placeholder{
+    font-size: 23px;
+}
+
+/* Centraliza o placeholder */
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.search-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5vh 0;
+    width: 50vw;
+}
+.search-container > div {
+    padding: 8px;
+}
+
+.input-group{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.input-group > input{
+    width: 100%;
+    margin: 0px 3px;
+}
+
+.secondary-input-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    width: 100%;
+    align-items: center;
+}
+
+.secondary-input-container > div{
+    flex: 50%;
+    margin: 0.8vh 0;
+}
+
+.name-input-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1vh;
+}
+.name-input-container > input[type="text"]{
+    width: 100%;
+}
+
+.ipt-btn{
+    background-color: inherit;
+    border: none;
+    transition: 0.5s;
+}
+
+.ipt-btn:hover{
+    cursor: pointer;
+    border: none;
+    background-color: inherit;
+    transition: 0.5s;
+}
+
+.submit-btn{
+    background-color: #f7f7f7ed;
+    color: black;
+    margin: 5% 0px;
+    padding: 8px;
+
+    border: 1px solid #ededed;
+    border-radius: 8px;
+    transition: 0.5s;
+}
+
+.submit-btn:hover{
+    background-color: #fff;
+    border: 1px solid #707070;
+    color: black;
+
+    box-shadow: rgba(240, 46, 46, 0.4) 0px 5px, rgba(240, 46, 46, 0.3) 0px 10px, rgba(240, 46, 46, 0.2) 0px 15px, rgba(240, 46, 46, 0.1) 0px 20px, rgba(240, 46, 46, 0.05) 0px 25px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.search-data{
+    all: inherit;
+}

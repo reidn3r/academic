@@ -10,18 +10,11 @@ const Graduate_Info = sequelize.define('graduate_info', {
         autoIncrement: true,
         primaryKey: true,
     },
-    user_grade_id:{
-        type: DataTypes.INTEGER,
+    grade:{
+        type: DataTypes.STRING,
         allowNull: false,
     },
-    user_id:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    profile_id:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    }
+    
 }, {
     tableName: 'graduate_info',
     timestamps: false
