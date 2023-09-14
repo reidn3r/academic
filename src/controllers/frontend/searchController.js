@@ -1,3 +1,4 @@
+const ProfileImageInfo = require('../../model/Profile_Image_Info');
 const ProfileModel = require('../../model/Profile');
 const query = require('../../public/utils/query');
 const sequelize = require('../../config/sequelizeConfig');
@@ -38,16 +39,20 @@ const search = async(req, res) => {
             where: { register_id: id.register_id },
         })
         if(foundProfile){
+            const profile_image = await ProfileImageInfo.findOne({where:{id: foundProfile.image_id}});
+
             const profile = {
+                register_id: id.register_id,
                 name: foundProfile.name,
                 description: foundProfile.description,
-                image_id: foundProfile.image_id
+                image_data: profile_image.image_data,
+                image_mimetype: profile_image.image_content_type
             }
             profileData.push(profile);
         }
     }
 
-    return res.json({query: profileData});
+    return res.render('searchResults', {profileData});
 }
 
 
