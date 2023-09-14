@@ -17,9 +17,7 @@ a{
 
     width: 100%;
     height: 10vh;
-    /* background-color: #282828; */
     background-color: #181818;
-    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 }
 
 .home-container{
@@ -113,4 +111,34 @@ a{
 
 .profile-name, .profile-description{
     margin: 1.5% 3.5%;
+}
+
+.not-found-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found{
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.back{
+    background-color: #1E90FF;
+    color: #fff;
+
+    padding: 8px;
+    transition: 0.5s;
+
+    border-radius: 5px;
+    margin-top: 5vh;
+}
+
+.back:hover{
+    background-color: #002244;
+    border: 1px solid #7CB9E8;
+    transition: 0.5s;
 }

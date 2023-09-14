@@ -16,6 +16,7 @@
         </div>
     </div>
     <div class="container">
+        <% if(profileData.length > 0){ %>
         <% for( profile of profileData ){ %>
         <div class="profile">
             <div class="profile-image">
@@ -33,6 +34,16 @@
                 </div>
             </div>
         </div>
+        <% } %>
+        <% } else { %>
+            <div class="not-found-container">
+                <div class="not-found">
+                    <p class="not-found-text">Nada encontrado.</p>
+                </div>
+                <div class="back-btn">
+                    <a href="/v1/"><p class="back">Voltar</p></a>
+                </div>
+            </div>
         <% } %>
     </div>
 </body>
