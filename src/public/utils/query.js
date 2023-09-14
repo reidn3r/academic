@@ -10,35 +10,31 @@
     user do banco de dados e valor_x é o valor 
     associado a um dado desse campo
 
+    return: string
+        - SELECT campo_1, campo_2, ..., campo_n FROM user WHERE 
+        campo_1="valor_1", campo_2="valor_2", ...
 */
 
 const query = (data) => {
-    let select = "SELECT ";
+    let select = "SELECT register_id ";
     let from = "FROM user WHERE ";
     
     const fields = Object.keys(data);
     const values = Object.values(data);
-    
-    let current_field = null;
-    for(let i=0; i<fields.length; i++){
-        if(i == fields.length-1){
-            current_field = fields[i] + ' ';
-            if(typeof(values[i]) === "string"){
-                from += `${fields[i]}="${values[i]}";`;
+
+    for(let j=0; j<fields.length; j++){
+        if(values[j]){
+            if(typeof(values[j]) === "string"){
+                from += `${fields[j]}="${values[j]}"`;
             }
             else{
-                from += `${fields[i]}=${values[i]};`;
+                from += `${fields[j]}=${values[j]}`;
             }
+            if(j <= fields.length - 2) from += " AND ";
+            if(j == fields.length - 1) from += "; ";
         }
-        else{
-            current_field = fields[i] + ',';
-            if(typeof(values[i]) === "string"){
-                from += `${fields[i]}="${values[i]}",`;
-            }
-            else{
-                from += `${fields[i]}=${values[i]},`;
-            }
-        }
-        select += current_field;
     }
+    return select + from;
 }
+
+module.exports = query;

@@ -9,13 +9,12 @@ const GradModel = require('../../model/Graduate_Info');
 const jwt = require('jsonwebtoken');
 
 const homeController = async(req, res) => {
-    const token = req.cookies.loginToken;
     let RegisterId = null;
+    const token = req.cookies.loginToken;
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if(!decoded) return res.redirect('/v1/logout');
         RegisterId = decoded.profile_id;
     })
-
     
     const States = await StateModel.findAll({attributes: ['state_name']});
     const Cities = await CityModel.findAll({attributes: ['city_name']});
@@ -23,7 +22,6 @@ const homeController = async(req, res) => {
     const GradInfo = await GradModel.findAll({attributes: ['grade']});
     
     const context = { States, Cities, Universities, GradInfo, RegisterId };
-    console.log(context)
     return res.render('search', {context});
 }
 
