@@ -21,7 +21,7 @@ router.get('/profile/:id', verifyAuth, require('../controllers/frontend/getProfi
 router.get('/profile/:id/projects', verifyAuth, require('../controllers/frontend/profileProjectsController'));
 router.get('/profile/:id/edit/:project_id', require('../controllers/frontend/editProjectController'));
 
-router.get('/search', require('../controllers/frontend/searchController'));
+router.get('/search', verifyAuth,require('../controllers/frontend/searchController'));
 
 router.get('*', require('../controllers/frontend/pageNotFound'));
 
