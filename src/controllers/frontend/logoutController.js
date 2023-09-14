@@ -7,7 +7,7 @@ const logoutModel = require('../../model/Logout');
 const logoutController = async(req, res) => {
     //Verifica se existe o token de login
     const token = req.cookies.loginToken;
-    if(!token) return res.redirect('v1/login');
+    if(!token) return res.redirect('/v1/login');
 
     //Salvar info de logout no banco de dados
     jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
