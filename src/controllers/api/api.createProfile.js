@@ -1,10 +1,9 @@
-const fs = require('fs');
-const fsPromises = require('fs/promises');
-const path = require('path');
-
 const profileModel = require('../../model/Profile');
 const imageModel = require('../../model/Profile_Image_Info');
 
+const fs = require('fs');
+const fsPromises = require('fs/promises');
+const path = require('path');
 const dateFormat = require('../../public/utils/dateFormat');
 
 const createProfile = async(req, res, next) => {

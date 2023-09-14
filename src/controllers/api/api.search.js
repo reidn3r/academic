@@ -10,11 +10,11 @@ const search = async(req, res) => {
         1. Busca os campos, depois o dado de usuário e retorna o register_id para ser feito a busca dos perfis
         2. Campos de string: passar para lower-case antes de tratar/usar
     */
-
     const { nameInput, courseInput, specInput, gradInput, universityInput, cityInput, stateInput, topicInput } = req.body;
-
     let data = {};
-    data["name"] = nameInput;
+    if(nameInput.length > 0){
+        data["name"] = nameInput;
+    }
 
     //Curso de grad. 
     let userCourseLowerCase =  "";
@@ -78,7 +78,8 @@ const search = async(req, res) => {
             data["state_id"] = stateData.id;
         }
     }
-
+    if(Object.keys(data).length == 0) return res.redirect('/v1');
+    
     const url = queryString.stringify(data);
     return res.redirect(`/v1/search/?${url}`);
 }
