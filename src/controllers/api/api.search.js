@@ -50,7 +50,6 @@ const search = async(req, res) => {
         }
     }
 
-
     //id da cidade
     let city = ""; let cityData = null;
     if(cityInput){
@@ -66,12 +65,10 @@ const search = async(req, res) => {
     }    
     if(cityInput && city.length > 0){
         cityData = await CityModel.findOne({where: {city_name: city}});
-        console.log(cityData.id);
         if(cityData){
             data["city_id"] = cityData.id;
         }
     }
-    
     
     //id do estado
     let stateData = null;
@@ -83,7 +80,7 @@ const search = async(req, res) => {
     }
 
     const url = queryString.stringify(data);
-    return res.redirect(`/v1/${url}`);
+    return res.redirect(`/v1/search/?${url}`);
 }
 
 

@@ -12,7 +12,7 @@
 
     return: string
         - SELECT campo_1, campo_2, ..., campo_n FROM user WHERE 
-        campo_1="valor_1", campo_2="valor_2", ...
+        campo_1="valor_1" AND campo_2="valor_2" AND ...
 */
 
 const query = (data) => {
