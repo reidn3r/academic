@@ -8,15 +8,25 @@ const fs = require('fs');
 const path = require('path');
 
 
-cidade = [4121, 3830, 4006, 67, 3243];
-estado = [41, 35, 41, 12, 33];
-s = ["M", "F"];
-cursos = ["ciencia da computacao", "zootecnica", "engenharia de alimentos", "engenharia elétrica", "engenharia civil", "comunicacao e multimeios", "direito", "arquitetura", "medicina", "matematica", "quimica", "ciencias biologicas"];
+let cidade = [4121, 3830, 4006, 67, 3243];
+let estado = [41, 35, 41, 12, 33];
+let s = ["M", "F"];
+let cursos = ["ciencia da computacao", "zootecnica", "engenharia de alimentos", "engenharia elétrica", "engenharia civil", "comunicacao e multimeios", "direito", "arquitetura", "medicina", "matematica", "quimica", "ciencias biologicas"];
 
+let qty = 2;
+
+let name = [];
+let email = [];
 const mockData = async(qty) => {
+    for(let i=0; i<qty; i++){
+        name.push(casual.full_name);
+        email.push(casual.email);
+    }
+
     for(let j=0; j<qty; j++){
 
-        const randomUnivId = Math.floor((Math.random() * 10000) % 1764);
+        const randomName = Math.floor((Math.random() * 100) % qty);
+        const randomUnivId = Math.floor((Math.random() * 100) % 1764);
         const randomUserActivityId = Math.floor((Math.random() * 10 )) % 4;
         const randomUserSex = Math.floor(Math.random() * 10) % 2;
         const randomUserCourse = Math.floor((Math.random() * 100) % cursos.length);
@@ -28,8 +38,8 @@ const mockData = async(qty) => {
             register_id: newRegister.id,
             university_id: 1,
             user_activity_id: 1,
-            name: casual.full_name,
-            email: casual.email,
+            name: name[randomName],
+            email: email[randomName],
             password: "$2b$10$GNBObbA1k6eStmRbzoJRDelvtqYjJDRyu.Xz0yiTzqXte1wci3eFG",
             city_id: cidade[randomPlace],
             state_id: estado[randomPlace],
@@ -50,11 +60,10 @@ const mockData = async(qty) => {
             created_at: dateFormat(new Date())
         });
 
-
         let newProfile = await ProfileModel.create({
-            register_id: newUser.id,
-            name: newUser.name,
-            contact_email: newUser.email,
+            register_id: newUser.register_id,
+            name: name[randomName],
+            contact_email: email[randomName],
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed rhoncus dolor. Suspendisse ac ligula.",
             created_at: dateFormat(new Date()),
             updated_at: dateFormat(new Date()),
@@ -66,4 +75,4 @@ const mockData = async(qty) => {
     }
 }
 
-mockData(150);
+mockData(5);
