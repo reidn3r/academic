@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt_br">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
     <!-- AUTO RESIZE -->
     <script src="/utils/textAreaAutoResize.js" ></script>
 
-    <title>Document</title>
+    <title>Editar Projeto</title>
 </head>
 <body>
     <div class="main-header">
@@ -25,6 +25,9 @@
         </div>
         <div class="academic-logo-container">
             <img src="/images/white-logo.png" alt="academic-logo" class="academic-logo">
+        </div>
+        <div class="back-container">
+            <a class="back-btn" href="/v1/profile/<%= context.id %>/projects"><p class="edit-btn">Voltar</p></a>
         </div>
     </div>
     <div class="project-container">

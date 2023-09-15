@@ -45,7 +45,7 @@ const editProjectContoller = async(req, res) => {
     ]
     */
     
-    const context = { data };
+    const context = { data, id };
     return res.render('editProject', {context})
 };
 

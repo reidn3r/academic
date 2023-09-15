@@ -45,7 +45,7 @@ a{
 }
 
 
-.edit-container{
+.back-container{
     color: #fff;
     background-color: #1E90FF;
     border: 1px solid #1E90FF;
@@ -54,12 +54,16 @@ a{
     border-radius: 5px;
     transition: 0.3s;
 }
-.edit-container:hover{
+.back-container:hover{
     color: #F0F8FF;
     background-color: #002244;
     border: 1px solid #7CB9E8;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.back-btn{
+    color: #fff;
 }
 
 .academic-logo-container{
