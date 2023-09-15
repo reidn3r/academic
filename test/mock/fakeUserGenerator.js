@@ -61,7 +61,7 @@ const mockData = async(qty) => {
         });
 
         let newProfile = await ProfileModel.create({
-            register_id: newUser.register_id,
+            register_id: newRegister.id,
             name: name[randomName],
             contact_email: email[randomName],
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sed rhoncus dolor. Suspendisse ac ligula.",
