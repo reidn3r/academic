@@ -4,13 +4,14 @@ const query = require('../../public/utils/query');
 const sequelize = require('../../config/sequelizeConfig');
 
 const search = async(req, res) => {
-    const { name, user_course, user_grade_id, univeristy_id, city_id, state_id } = req.query;
+    const { name, user_course, user_grade_id, university_id, city_id, state_id } = req.query;
     
     let queryData = {};
     if(name) queryData["name"] = name;
     if(user_course) queryData["user_course"] = user_course;
     if(user_grade_id) queryData["user_grade_id"] = Number(user_grade_id);
-    if(univeristy_id) queryData["univeristy_id"] = Number(univeristy_id);
+    if(university_id) queryData["university_id"] = Number(university_id);
+    console.log(`university id:${university_id}\n`);
     if(city_id) queryData["city_id"] = Number(city_id);
     if(state_id) queryData["state_id"] = Number(state_id);
 
@@ -19,6 +20,7 @@ const search = async(req, res) => {
         todos os perfis que casam com a busca
     */
     const query_str = query(queryData);
+    // console.log(query_str);
     const [ queryProfile, metadata ] = await sequelize.query(`${query_str}`);
 
     let profileData = [];

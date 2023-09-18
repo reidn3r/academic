@@ -2,7 +2,6 @@ const CityModel = require('../../model/City_Info');
 const StateModel = require('../../model/State_Info');
 const UniveristyModel = require('../../model/University');
 const GraduateInfoModel = require('../../model/Graduate_Info');
-
 const queryString = require('node:querystring');
 
 const search = async(req, res) => {
@@ -11,6 +10,7 @@ const search = async(req, res) => {
         2. Campos de string: passar para lower-case antes de tratar/usar
     */
     const { nameInput, courseInput, specInput, gradInput, universityInput, cityInput, stateInput, topicInput } = req.body;
+
     let data = {};
     if(nameInput.length > 0){
         data["name"] = nameInput;
@@ -44,6 +44,7 @@ const search = async(req, res) => {
     //id da universidade
     let univInfo = null;
     if(universityInput){
+        console.log(`university input:${universityInput}\n`);
         univInfo = await UniveristyModel.findOne({where: {university_name: universityInput.toUpperCase()}});
         if(univInfo){
             data["university_id"] = univInfo.id;

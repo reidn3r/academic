@@ -71,8 +71,8 @@ const mockData = async(qty) => {
         });
 
         newImage.profile_id = newProfile.id;
-        console.log(`${j+1} ok.\n`);
+        console.log(`\n${j+1} ok.\n`);
     }
 }
 
-mockData(5);
+mockData(100);

@@ -25,7 +25,12 @@ const query = (data) => {
     for(let j=0; j<fields.length; j++){
         if(values[j]){
             if(typeof(values[j]) === "string"){
-                from += `${fields[j]}="${values[j]}"`;
+                if(fields[j] === "name"){
+                    from += `${fields[j]} LIKE "%${values[j]}%"`;
+                }
+                else{
+                    from += `${fields[j]}="${values[j]}"`;
+                }
             }
             else{
                 from += `${fields[j]}=${values[j]}`;
