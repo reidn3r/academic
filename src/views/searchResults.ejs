@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="container">
-        <% if(profileData.length > 0){ %>
-        <% for( profile of profileData ){ %>
+        <% if(render.length > 0){ %>
+        <% for( profile of render ){ %>
         <div class="profile">
             <div class="profile-image">
                 <img class="found-image" src="data:<%= profile.image_mimetype %>;base64,<%= profile.image_data.toString('base64') %>" alt="found-profile-image">
