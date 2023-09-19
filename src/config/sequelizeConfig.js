@@ -6,7 +6,8 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(process.env.database, process.env.db_username, process.env.db_password, {
     host: 'localhost',
     port: process.env.db_port,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false
 })
 
 module.exports = sequelize;

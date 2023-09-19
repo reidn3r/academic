@@ -18,9 +18,16 @@ const search = async(req, res) => {
     1. queryProfile contém o register_id de
     todos os perfis que casam com a busca
     */
-    let query_str = query(queryData);
-    const [ queryProfile, metadata ] = await sequelize.query(`${query_str}`);
 
+    let query_str = query(queryData);
+    if(page && Math.abs(page) > 1){
+        query_str += ` LIMIT ${process.env.PAGE_ELEMENTS} OFFSET ${process.env.PAGE_ELEMENTS * (Math.abs(page) - 1)}`;
+    }
+    else{
+        query_str += ` LIMIT ${process.env.PAGE_ELEMENTS}`;
+    }
+    const [ queryProfile, metadata ] = await sequelize.query(`${query_str}`);
+    
     let profileData = [];
     /* 
     2. profileData é um array de objetos contendo
@@ -35,40 +42,27 @@ const search = async(req, res) => {
     */
 
         
-        for( id of queryProfile ){
-            const foundProfile = await ProfileModel.findOne({
-                attributes: ['name', 'description', 'image_id'],
-                where: { register_id: id.register_id },
-            })
-            if(foundProfile){
-                const profile_image = await ProfileImageInfo.findOne({where:{id: foundProfile.image_id}});
-    
-                const profile = {
-                    register_id: id.register_id,
-                    name: foundProfile.name,
-                    description: foundProfile.description,
-                    image_data: profile_image.image_data,
-                    image_mimetype: profile_image.image_content_type
-                }
-                profileData.push(profile);
+    for( id of queryProfile ){
+        const foundProfile = await ProfileModel.findOne({
+            attributes: ['name', 'description', 'image_id'],
+            where: { register_id: id.register_id },
+        })
+        if(foundProfile){
+            const profile_image = await ProfileImageInfo.findOne({where:{id: foundProfile.image_id}});
+
+            const profile = {
+                register_id: id.register_id,
+                name: foundProfile.name,
+                description: foundProfile.description,
+                image_data: profile_image.image_data,
+                image_mimetype: profile_image.image_content_type
             }
+            profileData.push(profile);
+        }
     }
 
-    let start_idx = 1;
-    let end_idx = 10;
-    if(page && Math.abs(page) > 1){
-        start_idx = process.env.PAGE_ELEMENTS * page;
-        end_idx = Number(start_idx) + Number(process.env.PAGE_ELEMENTS) > profileData.length ? Number(profileData.length) - 1 : Number(start_idx) + Number(process.env.PAGE_ELEMENTS);
-    }
-    
-    let render = [];
-    for(start_idx; start_idx <= end_idx; start_idx++){
-        render.push(profileData[start_idx]);
-    }
-
-    
-    // return res.render('searchResults', {profileData});
-    return res.render('searchResults', {render});
+    console.log(query_str, profileData.length);
+    return res.render('searchResults', {profileData});
 }
 
 
