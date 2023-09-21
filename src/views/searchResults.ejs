@@ -59,8 +59,17 @@
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
         const url = new URL(window.location.href);
+        const current_page = "<%= context.current_page %>";
         const idx_page = document.querySelectorAll('.page-index');
+        const idx_container = document.querySelectorAll('.page-idx-container');
         
+        idx_container.forEach((container) => {
+            if(container.children[0].innerText == current_page){
+                container.className += " active-page";
+            }
+        })
+
+
         idx_page.forEach(idx => {
             idx.addEventListener('click', (e) => {
                 e.preventDefault();

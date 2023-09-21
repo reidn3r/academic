@@ -164,24 +164,33 @@ body{
     flex-direction: row;
     justify-content: left;
     
-    border: 1px solid #ededed;
+    border: 1px solid #F0F0F0;
     padding: 8px;
     max-width: 70%;
     overflow: hidden;
+    transition: 0.5s;
+}
+.page-idx-container:hover{
+    background-color: #1da1f2;
+    transition: 0.5s;
+}
+.page-idx-container:hover > a{
+    color: #fff;
+    cursor: pointer;
 }
 
 .page-index{
     margin: 0 8px;
     border-radius: 8px;
-    background-color: #707070;
-    color: #fff;
+    color: black;
     padding: 8px;
-
     transition: 0.5s;
+    font-size: 1.7vw;
 }
-.page-index:hover{
-    background-color: #1da1f2;
+
+.active-page{
+    background-color: #5A4FCF;
+}
+.active-page > a {
     color: #fff;
-    transition: 0.5s;
-    cursor: pointer;
 }

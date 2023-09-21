@@ -88,7 +88,7 @@ const search = async(req, res) => {
         }
     }
 
-    context = { profileData, pages_idx };
+    context = { profileData, pages_idx, current_page };
     return res.render('searchResults', {context});
 }
 
