@@ -9,6 +9,10 @@ a{
     text-decoration: none !important;
 }
 
+body{
+    height: 100vh;
+}
+
 .main-header{
     display: flex;
     flex-direction: row;
@@ -141,4 +145,43 @@ a{
     background-color: #002244;
     border: 1px solid #7CB9E8;
     transition: 0.5s;
+}
+
+/* --------- */
+
+.footer-container{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 0;
+
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    padding: 35px;
+}
+
+.page-idx-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    
+    border: 1px solid #ededed;
+    padding: 8px;
+    max-width: 70%;
+    overflow: hidden;
+}
+
+.page-index{
+    margin: 0 8px;
+    border-radius: 8px;
+    background-color: #707070;
+    color: #fff;
+    padding: 8px;
+
+    transition: 0.5s;
+}
+.page-index:hover{
+    background-color: #1da1f2;
+    color: #fff;
+    transition: 0.5s;
+    cursor: pointer;
 }

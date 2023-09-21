@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="container">
-        <% if(profileData.length > 0){ %>
-        <% for( profile of profileData ){ %>
+        <% if(context.profileData.length > 0){ %>
+        <% for( profile of context.profileData ){ %>
         <div class="profile">
             <div class="profile-image">
                 <img class="found-image" src="data:<%= profile.image_mimetype %>;base64,<%= profile.image_data.toString('base64') %>" alt="found-profile-image">
@@ -45,6 +45,31 @@
                 </div>
             </div>
         <% } %>
+        <% if(context.profileData.length > 0){ %>
+        <div class="footer-container">
+            <% for( idx of context.pages_idx) { %>
+            <div class="page-idx-container">
+                <a class="page-index"><p class="idx"><%= idx %></p></a>
+            </div>
+            <% } %>
+        </div>
+        <% } %>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+        const url = new URL(window.location.href);
+        const idx_page = document.querySelectorAll('.page-index');
+        
+        idx_page.forEach(idx => {
+            idx.addEventListener('click', (e) => {
+                e.preventDefault();
+                const num = e.target.innerText; //Pg. a ser redirecionado
+                url.searchParams.set('page', num); //Insere o parâmetro page=num na URL
+                window.location.href = url.toString(); //Faz o redirect para a nova URL
+            });
+        });
+    });
+    </script>
 </body>
 </html>

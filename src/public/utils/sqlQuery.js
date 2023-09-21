@@ -42,4 +42,31 @@ const query = (data) => {
 }
 
 
-module.exports = query;
+const countQuery = (data) => {
+    let select = "SELECT COUNT(*) AS c FROM profile AS p INNER JOIN user AS u ON p.register_id=u.register_id ";
+    let from = "WHERE ";
+    
+    const fields = Object.keys(data);
+    const values = Object.values(data);
+
+    for(let j=0; j<fields.length; j++){
+        if(values[j]){
+            if(typeof(values[j]) === "string"){
+                if(fields[j] === "name"){
+                    from += `u.${fields[j]} LIKE "%${values[j]}%"`;
+                }
+                else{
+                    from += `u.${fields[j]}="${values[j]}"`;
+                }
+            }
+            else{
+                from += `u.${fields[j]}=${values[j]}`;
+            }
+            if(j <= fields.length - 2) from += " AND ";
+        }
+    }
+    return select + from;
+}
+
+
+module.exports = { query, countQuery };
