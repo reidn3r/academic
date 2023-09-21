@@ -20,12 +20,11 @@
     <script src="/utils/removeProject.js"></script>
     <script src="/utils/loadImage.js"></script>
     <script src="/utils/updateProject.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title><%= context.profileName %></title>    
 </head>
 <body>
-    
     <%- include('./partials/default-header'); %>
-    
     <div class="projects-container">
         <div class="projects-title">
             <p class="title">Projetos Atuais (Permitido add. mais <%= context.remainingSize %> projetos)</p>
@@ -81,6 +80,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const updateBtn = document.getElementsByClassName('update-icon');
             const deleteBtn = document.getElementsByClassName('delete-icon');
+            const inputFiles = document.querySelector('.image-input');
 
             for(let del of deleteBtn){
                 del.addEventListener('click', (e) => {
@@ -98,7 +98,42 @@
                     updateProject({projectId: projectId, userDataId: Id});
                 })
             }
+
+    document.querySelector('.input-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (lastImages.length > 0) {
+            const formData = new FormData();
+            for (let i = 0; i < lastImages.length; i++) {
+                formData.append('imageInput', lastImages[i]);
+            }
+
+        formData.append('projectDesc', document.querySelector('.project-desc-txtarea').value);
+
+        //envia requisição
+        fetch('/v1/api/create/project', {
+            method: 'POST',
+            body: formData,
         })
+        .then(resp => {
+            if (resp.ok) {
+                //Em caso de sucesso
+                window.location.reload();
+            } else {
+                //Em caso de erro
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+        });
+
+        }
+    });
+
+
+
+        });
+
     </script>
 </body>
 </html>
