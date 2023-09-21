@@ -66,6 +66,7 @@ img{
     
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .email-input, .password-input{
@@ -77,17 +78,28 @@ img{
     transition: 0.5s;
 }
 
+.login-btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
 .login-btn{
+    min-width: 7vw;
+    width: auto;
     padding: 10px 3.1vw;
-    border-radius: 5%;
-    cursor: pointer;  
-    border: none;
-    transition: 0.5s;
     font-size: 18px;
+    
+    border: none;
+    border-radius: 5%;
+    
+    transition: 0.5s;
+    text-align: center;
 }
 
 .login-btn:hover{
-    /* background-color: #FCF55F; */
+    cursor: pointer;  
     background-color: #fd5c63;
     color: #fff;
     transition: 0.5s;
