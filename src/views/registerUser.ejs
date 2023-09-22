@@ -57,7 +57,7 @@
 
             <div class="university-container">
                 <i class="fa-solid fa-building-columns" style="color: #fd5c63;"></i>
-                <input list="universities-list" name="universityInput" class="univ-ipt" placeholder="Universidade de atividade" required>
+                <input autocomplete="off" list="universities-list" name="universityInput" class="univ-ipt" placeholder="Universidade de atividade" required>
                 <datalist id="universities-list">
                     <% foundUniversities.forEach(function(univ) { %>
                     <option value="<%= univ.university_name %>">
@@ -67,7 +67,7 @@
 
             <div class="city-container">
                 <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
-                <input list="cities-list" class="city-ipt" placeholder="Cidade de atividade" name="cityInput">
+                <input autocomplete="off" list="cities-list" class="city-ipt" placeholder="Cidade de atividade" name="cityInput">
                 <datalist id="cities-list">
                     <% foundCities.forEach(function(city) { %>
                     <option value="<%= city.city_name %>">
@@ -77,7 +77,7 @@
             
             <div class="state-container">
                 <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>
-                <input list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade">
+                <input autocomplete="off" list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade">
                 <datalist id="states-list">
                     <% foundStates.forEach(function(state) { %>
                     <option value="<%= state.state_name %>">

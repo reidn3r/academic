@@ -43,31 +43,30 @@
                     </div>
 
                     <div class="input-group">
-                        <input list="graduation-list" type="list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
+                        <input autocomplete="off" list="graduation-list" type="list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
                         <datalist id="graduation-list">
                             <% for( grad of context.GradInfo ) { %>
                             <option value=" <%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %>">
                             <% } %>
                         </datalist>
                         
-                        <input list="university-list" type="list" name="universityInput" class="university-input list-ipt" placeholder="Universidade">
+                        <input list="university-list" autocomplete="off" type="list" name="universityInput" class="university-input list-ipt" placeholder="Universidade">
                         <datalist id="university-list">
                             <% for( univ of context.Universities ) { %>
                             <option value="<%= univ.university_name %>">
                             <% } %>
                         </datalist>
-
                     </div>
 
                     <div class="input-group">
-                        <input list="city-list" type="list" name="cityInput" class="city-input list-ipt" placeholder="Cidade de atuação">
+                        <input autocomplete="off" list="city-list" type="list" name="cityInput" class="city-input list-ipt" placeholder="Cidade de atuação">
                         <datalist id="city-list"> 
                             <% for ( ct of context.Cities ) { %>
                             <option value="<%= ct.city_name %>">
                             <% } %>
                         </datalist>
 
-                        <input list="state-input" type="list" name="stateInput" class="state-input list-ipt" placeholder="Estado de atuação">
+                        <input autocomplete="off" list="state-input" type="list" name="stateInput" class="state-input list-ipt" placeholder="Estado de atuação">
                         <datalist id="state-input">
                             <% for ( st of context.States ){ %>
                             <option value="<%=  st.state_name %>">
