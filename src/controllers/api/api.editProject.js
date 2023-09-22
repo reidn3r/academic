@@ -33,13 +33,14 @@ const editProject = async(req, res) => {
         }
     }
     
-    for(let i=0; i<changed_ids.length; i++){
-        let blob = req.files[i].buffer;
-        let mimetype = req.files[i].mimetype;
+    if(req.files.length > 0){
+        for(let i=0; i<changed_ids.length; i++){
+            let blob = req.files[i].buffer;
+            let mimetype = req.files[i].mimetype;
 
-        await projectImageDataModel.update({image_data: blob, image_content_type:mimetype}, {where: {id: changed_ids[i]}});
+            await projectImageDataModel.update({image_data: blob, image_content_type:mimetype}, {where: {id: changed_ids[i]}});
+        }
     }
-
     await projectDataModel.update({project_description:project_description }, {where: {id: project_id}})
     
     return res.json({message: "ok"});
