@@ -111,6 +111,16 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
     transition: 0.5s;
 }    
 
+.city-container, .state-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.city-ipt, .state-ipt{
+    width: 15vw;
+}
+
 .birth-ipt{
     padding: 3.5px 9.5%;
     border: 1px solid #F8F8F8;
@@ -124,10 +134,9 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
     padding: 5px 3px;
     align-items: center;
     font-family: 'Roboto';
-    /* width: 12.8%; */
 }
 
-input{
+input, select{
     margin: 0.4vh 0px;
 }
 

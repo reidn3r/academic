@@ -67,22 +67,20 @@
 
             <div class="city-container">
                 <i class="fa-solid fa-location-dot" style="color: #fd5c63;"></i>
-                <input autocomplete="off" list="cities-list" class="city-ipt" placeholder="Cidade de atividade" name="cityInput">
-                <datalist id="cities-list">
-                    <% foundCities.forEach(function(city) { %>
-                    <option value="<%= city.city_name %>">
+                <select id="cities-list" class="city-ipt" placeholder="Cidade de atividade" name="cityInput">
+                    <% foundCities.map((city, idx) => { %>
+                    <option value="<%= city.city_name %>"><%= city.city_name %></option>
                     <% }); %>
-                </datalist>
+                </select>
             </div>
             
             <div class="state-container">
                 <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>
-                <input autocomplete="off" list="states-list" class="state-ipt" name="stateInput" placeholder="Estado de atividade">
-                <datalist id="states-list">
-                    <% foundStates.forEach(function(state) { %>
-                    <option value="<%= state.state_name %>">
-                        <% }); %>
-                </datalist>
+                <select id="states-list" class="state-ipt" name="stateInput">
+                    <% foundStates.map((state, idx) => { %>
+                    <option value="<%= state.state_name %>"><%= state.state_name %></option>
+                    <% }); %>
+                </select>
             </div>
 
             <div class="user-course">

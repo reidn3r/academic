@@ -17,9 +17,7 @@ a{
 
     width: 100%;
     height: 10vh;
-    /* background-color: #282828; */
     background-color: #181818;
-    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 }
 
 .home-container{
@@ -83,14 +81,14 @@ a{
 
 /* ---------- */
 
-input{
+input, select{
     outline: none;
-    padding: 13px;
+    padding: 18px;
     border: 1px solid #c8c8c8;
     transition: 0.5s;
     border-radius: 3px;
 }
-input:hover{
+input:hover, select:hover{
     border: 1px solid #707070;
     transition: 0.5s;
 }
@@ -129,7 +127,7 @@ input, input::placeholder{
     justify-content: center;
 }
 
-.input-group > input{
+.input-group > input, .input-group > select{
     width: 100%;
     margin: 0px 3px;
 }

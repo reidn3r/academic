@@ -41,14 +41,17 @@
                         <input list="course-list" type="text" name="courseInput" class="curso-input text-ipt" placeholder="Curso de Formação">
                         <input type="list" name="topicInput" class="topic-input list-ipt" placeholder="Tópicos de Interesse">
                     </div>
-
                     <div class="input-group">
-                        <input autocomplete="off" list="graduation-list" type="list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
-                        <datalist id="graduation-list">
-                            <% for( grad of context.GradInfo ) { %>
-                            <option value=" <%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %>">
-                            <% } %>
-                        </datalist>
+                        <select id="graduation-list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
+                            <% context.GradInfo.map((grad, idx) => { %>
+                            <% if(idx == 0) { %>
+                                <option value="">Selecione Graduação/Pós </option>
+                                <option value="<%= grad.grade %>"><%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %></option>
+                            <% } else { %>
+                                    <option value="<%= grad.grade %>"><%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                         
                         <input list="university-list" autocomplete="off" type="list" name="universityInput" class="university-input list-ipt" placeholder="Universidade">
                         <datalist id="university-list">
@@ -59,20 +62,27 @@
                     </div>
 
                     <div class="input-group">
-                        <input autocomplete="off" list="city-list" type="list" name="cityInput" class="city-input list-ipt" placeholder="Cidade de atuação">
-                        <datalist id="city-list"> 
-                            <% for ( ct of context.Cities ) { %>
-                            <option value="<%= ct.city_name %>">
-                            <% } %>
-                        </datalist>
+                        <select id="city-list" name="cityInput" class="city-input list-ipt"> 
+                            <% context.Cities.map((ct, idx) => { %>
+                                <% if(idx == 0){ %>
+                                    <option value="">Selecione a Cidade</option>
+                                    <option value="<%= ct.city_name %>"><%= ct.city_name %></option>
+                                <% } else { %>
+                                <option value="<%= ct.city_name %>"><%= ct.city_name %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
 
-                        <input autocomplete="off" list="state-input" type="list" name="stateInput" class="state-input list-ipt" placeholder="Estado de atuação">
-                        <datalist id="state-input">
-                            <% for ( st of context.States ){ %>
-                            <option value="<%=  st.state_name %>">
-                            <% } %>
-                        </datalist>
-                        
+                        <select id="state-input" name="stateInput" class="state-input list-ipt">
+                            <% context.States.map((st, idx) => { %>
+                                <%if(idx == 0){ %>
+                                <option value="">Selecione o Estado</option>
+                                <option value="<%=  st.state_name %>"><%=  st.state_name %></option>
+                                <% } else { %>
+                                    <option value="<%=  st.state_name %>"><%=  st.state_name %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                 </div>
 
