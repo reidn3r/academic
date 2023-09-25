@@ -13,13 +13,15 @@ const search = async(req, res) => {
     if(university_id) queryData["university_id"] = Number(university_id);
     if(city_id) queryData["city_id"] = Number(city_id);
     if(state_id) queryData["state_id"] = Number(state_id);
-
+    if(Object.keys(queryData).length == 0) return res.redirect('/v1');
     /* 
         1. queryProfile contém o register_id de
         todos os perfis que casam com a busca
     */
 
     let query_str = query(queryData);
+    console.log(query_str);
+    console.log(queryData);
     if(page && Math.abs(page) > 1){
         query_str += ` LIMIT ${process.env.PAGE_ELEMENTS} OFFSET ${process.env.PAGE_ELEMENTS * (Math.abs(page) - 1)}`;
     }
@@ -27,6 +29,7 @@ const search = async(req, res) => {
         query_str += ` LIMIT ${process.env.PAGE_ELEMENTS}`;
     }
     const [ queryProfile, metadata ] = await sequelize.query(`${query_str}`);
+
     
     let profileData = [];
     /* 
@@ -65,7 +68,6 @@ const search = async(req, res) => {
         3. Paginação
             - Indices das paginas são contados do idx. da pg. atual-2
             até o minimo entre pg.atual+2 e o maior idx. possível
-            - É
     */
 
     let count_query_string = countQuery(queryData);

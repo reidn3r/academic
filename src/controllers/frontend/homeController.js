@@ -17,10 +17,12 @@ const homeController = async(req, res) => {
     })
     
     const States = await StateModel.findAll({attributes: ['state_name']});
-    const Cities = await CityModel.findAll({attributes: ['city_name']});
+    const Cities = await CityModel.findAll({attributes: ['city_name', 'state_id']});
     const Universities = await UnivModel.findAll({attributes: ['university_name']});
     const GradInfo = await GradModel.findAll({attributes: ['grade']});
     
+    // const context = { Cities };
+    // return res.json({data: context});
     const context = { States, Cities, Universities, GradInfo, RegisterId };
     return res.render('search', {context});
 }
