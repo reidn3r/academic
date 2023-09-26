@@ -15,6 +15,9 @@
     <!-- FONT AWESOME CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- JQUERY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 <body>
     <div class="main-header">
@@ -43,13 +46,9 @@
                     </div>
                     <div class="input-group">
                         <select id="graduation-list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
+                            <option value="">Selecione Graduação/Pós </option>
                             <% context.GradInfo.map((grad, idx) => { %>
-                            <% if(idx == 0) { %>
-                                <option value="">Selecione Graduação/Pós </option>
                                 <option value="<%= grad.grade %>"><%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %></option>
-                            <% } else { %>
-                                    <option value="<%= grad.grade %>"><%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %></option>
-                                <% } %>
                             <% }) %>
                         </select>
                         
@@ -63,24 +62,13 @@
 
                     <div class="input-group">
                         <select id="city-list" name="cityInput" class="city-input list-ipt"> 
-                            <% context.Cities.map((ct, idx) => { %>
-                                <% if(idx == 0){ %>
-                                    <option value="">Selecione a Cidade</option>
-                                    <option value="<%= ct.city_name %>"  data-state="<%= ct.state_id %>"><%= ct.city_name %></option>
-                                <% } else { %>
-                                <option value="<%= ct.city_name %>"  data-state="<%= ct.state_id %>"><%= ct.city_name %></option>
-                                <% } %>
-                            <% }) %>
+                            <option value="">Selecione a Cidade</option>
                         </select>
 
                         <select id="state-input" name="stateInput" class="state-input list-ipt">
+                            <option value="">Selecione o Estado</option>
                             <% context.States.map((st, idx) => { %>
-                                <%if(idx == 0){ %>
-                                <option value="">Selecione o Estado</option>
-                                <option value="<%=  st.state_name %>"><%=  st.state_name %></option>
-                                <% } else { %>
-                                    <option state-id="<%= st.state_id %>" value="<%=  st.state_name %>"><%=  st.state_name %></option>
-                                <% } %>
+                                <option state-id="<%= st.state_id %>" value="<%=  st.state_name %>"><%=  st.state_name %></option>
                             <% }) %>
                         </select>
                     </div>
@@ -93,5 +81,38 @@
             </form>
         </div>
     </div>
+    <script>
+        const stateSelect = document.querySelector('.state-input');
+        const citySelect = document.querySelector('.city-input')
+
+        stateSelect.addEventListener('change', (e) => {
+            let url = window.location.href;
+            if(url.slice(-1) != '/'){
+                url = '/v1/api/city';
+            }
+            else{
+                url = 'api/city';
+            }
+
+            $.post({
+                url: url,
+                data: { stateName: e.target.value },
+            })
+            .done(function(response){
+                $("#city-list").find('option').remove();
+                const option = document.createElement('option');
+                option.value = "";
+                option.textContent = "Selecione a Cidade";
+                citySelect.appendChild(option);
+                
+                response.Cities.forEach((city) => {
+                    const option = document.createElement('option');
+                    option.value = city.city_name;
+                    option.textContent = city.city_name;
+                    citySelect.appendChild(option);
+                });
+            })
+        })
+    </script>
 </body>
 </html>

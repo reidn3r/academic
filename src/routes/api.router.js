@@ -23,9 +23,10 @@ router.post('/create/project', upload.array('imageInput', 3) ,require('../contro
 
 router.post('/edit/project', upload.array('ImageFile', 3), require('../controllers/api/api.editProject'));
 
-//post -> delete
 router.post('/delete/project', require('../controllers/api/api.deleteProject'));
 
 router.post('/search', require('../controllers/api/api.search'));
+
+router.post('/city', require('../controllers/api/api.getCityController'));
 
 module.exports = router;
