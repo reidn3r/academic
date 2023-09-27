@@ -18,7 +18,6 @@ const loginController = async(req, res) => {
 
     const matchPw = await bcrypt.compare(passwordInput, foundEmail.password);
     if(!matchPw) return res.status(401).json({message: "Senha incorreta"});
-    console.log(JSON.stringify(foundEmail));
     
     if(matchPw){
         try{
