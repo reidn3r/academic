@@ -30,7 +30,8 @@ i {
     flex-direction: row;
     align-items: center;
     
-    background-color: #F0F0F0;
+    background-color: #181818;
+    color: #fff;
     border-bottom: 1px solid #bcbcbc;
 }
 
@@ -46,11 +47,11 @@ i {
 .main-container{
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     height: 100%;
     padding: 20px;
-    background-color: #e0e0e0;
+    background-color: #696969;
+    color: #fff;
 }
 
 .main-container > *{
