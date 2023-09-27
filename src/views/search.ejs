@@ -112,6 +112,9 @@
                     citySelect.appendChild(option);
                 });
             })
+            .fail(() => {
+                alert("Falha na busca, tente novamente.");
+            })
         })
     </script>
 </body>

@@ -2,11 +2,9 @@
     1. Buscar: Universidade, Cidade, Estado, Tópicos (?)
 */
 
-// const CityModel = require('../../model/City_Info');
 const StateModel = require('../../model/State_Info');
 const UnivModel = require('../../model/University');
 const GradModel = require('../../model/Graduate_Info');
-const sequelize = require('../../config/sequelizeConfig');
 const jwt = require('jsonwebtoken');
 
 const homeController = async(req, res) => {
@@ -22,8 +20,6 @@ const homeController = async(req, res) => {
     const Universities = await UnivModel.findAll({attributes: ['university_name']});
     const GradInfo = await GradModel.findAll({attributes: ['grade']});
     
-    // const context = { Cities };
-    // return res.json({data: context});
     const context = { States, Universities, GradInfo, RegisterId };
     return res.render('search', {context});
 }
