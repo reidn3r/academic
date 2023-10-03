@@ -9,12 +9,14 @@ const search = async(req, res) => {
         1. Busca os campos, depois o dado de usuário e retorna o register_id para ser feito a busca dos perfis
         2. Campos de string: passar para lower-case antes de tratar/usar
     */
-    const { nameInput, courseInput, specInput, gradInput, universityInput, cityInput, stateInput, topicInput } = req.body;
+    const { nameInput, courseInput, gradInput, universityInput, cityInput, stateInput, topicInput } = req.body;
 
-    let data = {};
+    let data = {};    
     if(nameInput.length > 0){
         data["name"] = nameInput;
     }
+    
+    if(topicInput.length > 1) data["interest"] = topicInput;
 
     //Curso de grad. 
     let userCourseLowerCase =  "";
@@ -44,7 +46,6 @@ const search = async(req, res) => {
     //id da universidade
     let univInfo = null;
     if(universityInput){
-        console.log(`university input:${universityInput}\n`);
         univInfo = await UniveristyModel.findOne({where: {university_name: universityInput.toUpperCase()}});
         if(univInfo){
             data["university_id"] = univInfo.id;

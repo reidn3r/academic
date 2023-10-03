@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="container">
-        <% if(context.profileData.length > 0){ %>
-        <% for( profile of context.profileData ){ %>
+        <% if(context.profileArray.length > 0){ %>
+        <% for( profile of context.profileArray ){ %>
         <div class="profile">
             <div class="profile-image">
                 <img class="found-image" src="data:<%= profile.image_mimetype %>;base64,<%= profile.image_data.toString('base64') %>" alt="found-profile-image">
@@ -45,7 +45,7 @@
                 </div>
             </div>
         <% } %>
-        <% if(context.profileData.length > 0){ %>
+        <% if(context.profileArray.length > 0){ %>
         <div class="footer-container">
             <% for( idx of context.pages_idx) { %>
             <div class="page-idx-container">

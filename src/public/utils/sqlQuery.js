@@ -23,7 +23,7 @@ const query = (data) => {
     const values = Object.values(data);
 
     for(let j=0; j<fields.length; j++){
-        if(values[j]){
+        if(values[j] && fields[j] != "interest"){
             if(typeof(values[j]) === "string"){
                 if(fields[j] === "name"){
                     from += `u.${fields[j]} LIKE "%${values[j]}%"`;
