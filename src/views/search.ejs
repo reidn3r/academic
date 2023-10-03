@@ -44,7 +44,13 @@
                 <div class="secondary-input-container">
                     <div class="input-group">
                         <input list="course-list" type="text" name="courseInput" class="curso-input text-ipt" placeholder="Curso de Formação">
-                        <input type="list" name="topicInput" class="topic-input list-ipt" placeholder="Tópicos de Interesse">
+                        <select name="topicInput" class="topic-input list-ipt">
+                            <option value="">Selecione o Tópico de Interesse</option>
+                            <% context.Topics.map((topic, idx) => { %>
+                                <option value="<%= topic.topic %>"><%= topic.topic %></option>
+                            <% }) %>
+
+                        </select>
                     </div>
                     <div class="input-group">
                         <select id="graduation-list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
@@ -63,15 +69,15 @@
                     </div>
 
                     <div class="input-group">
-                        <select id="city-list" name="cityInput" class="city-input list-ipt"> 
-                            <option value="">Selecione a Cidade</option>
-                        </select>
-
                         <select id="state-input" name="stateInput" class="state-input list-ipt">
                             <option value="">Selecione o Estado</option>
                             <% context.States.map((st, idx) => { %>
                                 <option state-id="<%= st.state_id %>" value="<%=  st.state_name %>"><%=  st.state_name %></option>
                             <% }) %>
+                        </select>
+
+                        <select id="city-list" name="cityInput" class="city-input list-ipt"> 
+                            <option value="">Selecione a Cidade</option>
                         </select>
                     </div>
                 </div>

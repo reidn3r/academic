@@ -134,7 +134,6 @@ const search = async(req, res) => {
             pages_idx.push(i);
         }
     }
-    console.log("final string: ", query_str);
     context = { profileArray, pages_idx, current_page };
     return res.render('searchResults', {context});
 }
