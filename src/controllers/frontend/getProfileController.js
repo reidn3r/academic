@@ -1,7 +1,7 @@
 const userModel = require('../../model/User');
 const imageModel = require('../../model/Profile_Image_Info');
+const universityModel = require('../../model/University');
 const sequelize = require('../../config/sequelizeConfig');
-const jwt = require('jsonwebtoken');
 
 //Buscar dados dos projetos
 const getProfile = async(req, res) => {
@@ -9,6 +9,8 @@ const getProfile = async(req, res) => {
     
     let foundUser = await userModel.findOne({where: {register_id: id}})
     if(!foundUser) return res.status(404).json({message: "User not found"});
+
+    const foundUniversity = await universityModel.findOne({where:{id:foundUser.university_id}});
     
     const [foundProfile, profile_metadata] = await sequelize.query(`SELECT * FROM profile WHERE register_id=${foundUser.register_id} LIMIT 1`);
     if(foundProfile.length == 0) return res.status(404).json({message: "Profile not found"});
@@ -35,16 +37,19 @@ const getProfile = async(req, res) => {
             data.push(project_data);
     }
 
+    
+
     // return res.json({message: data});
     const foundImage = await imageModel.findByPk(foundProfile[0].image_id);
     const profileName = foundProfile[0].name;
     const profileEmail = foundProfile[0].contact_email;
     const profileDesc = foundProfile[0].description;
     const profileImage = foundImage.image_data;
+    const profileUniversity = foundUniversity.university_name;
     const mimeType = foundImage.image_content_type;
     const auth = req.auth;
     
-    const context = { profileName, profileEmail, profileDesc, profileImage, mimeType, auth, data, id };
+    const context = { profileName, profileEmail, profileDesc, profileImage, profileUniversity, mimeType, auth, data, id };
     return res.render('profile', {context});
 }
 

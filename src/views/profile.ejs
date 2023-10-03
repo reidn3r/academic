@@ -25,7 +25,7 @@
             <img src="data:<%= context.mimeType %>;base64,<%= context.profileImage.toString('base64') %>" alt="profile-image" class="profile-image" >
             <div class="university-group">
                 <i class="fa-solid fa-graduation-cap" style="color: #ff8800;"></i>
-                <p class="university-name">Universidade Estadual de Maringá</p>
+                <p class="university-name"><%= context.profileUniversity %></p>
             </div>
         </div>
         <div class="profile-desc-container">
