@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require("../config/sequelizeConfig");
 const User = require('./User');
+const UndergradCourses = require('./UndergratuateCourses');
 
 const University = sequelize.define('university', {
     id:{
@@ -22,6 +23,12 @@ const University = sequelize.define('university', {
 })
 
 University.hasMany(User, {
+    foreignKey: 'university_id',
+    sourceKey: 'id',
+    onDelete: 'CASCADE'
+})
+
+University.hasMany(UndergradCourses, {
     foreignKey: 'university_id',
     sourceKey: 'id',
     onDelete: 'CASCADE'
