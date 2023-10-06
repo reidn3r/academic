@@ -28,5 +28,6 @@ router.post('/delete/project', require('../controllers/api/api.deleteProject'));
 router.post('/search', require('../controllers/api/api.search'));
 
 router.post('/city', require('../controllers/api/api.getCityController'));
+router.post('/courses', require('../controllers/api/api.getUndergradCourses'));
 
 module.exports = router;

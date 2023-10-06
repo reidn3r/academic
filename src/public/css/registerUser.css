@@ -118,7 +118,7 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
     align-items: center;
 }
 
-.city-ipt, .state-ipt{
+.city-ipt, .state-ipt, .course-ipt{
     width: 15vw;
 }
 

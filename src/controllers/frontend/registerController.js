@@ -2,9 +2,9 @@ const bcrypt = require('bcrypt');
 
 // models
 const universityModel = require('../../model/University');
-const cityModel = require('../../model/City_Info');
 const stateModel = require('../../model/State_Info');
 const UserModel = require('../../model/User');
+const UndergradCourses = require('../../model/UndergratuateCourses');
 
 const registerPage = (req, res) => {
     /* 
@@ -22,9 +22,10 @@ const registerUserController = async(req, res) => {
     const data = req.session.userData;
     if(!data) return res.redirect('/v1/register');
     const foundUniversities = await universityModel.findAll({ attributes: ['university_name']});
-    const foundCities = await cityModel.findAll({ attributes: ['city_name']});
     const foundStates = await stateModel.findAll({ attributes: ['state_name']});
-    res.render('registerUser', {context: data, foundUniversities, foundCities, foundStates});
+    const foundCourses = await UndergradCourses.findAll({attributes: ['university_name']});
+
+    res.render('registerUser', {context: data, foundUniversities, foundStates, foundCourses });
 }
 
 const registerMainController = async(req, res) => {

@@ -87,7 +87,9 @@
 
             <div class="user-course">
                 <i class="fa-solid fa-graduation-cap" style="color: #fd5c63;"></i>
-                <input type="text" name="userCourse" class="course-ipt" placeholder="Curso de graduação" required>
+                <select id="course-list" name="userCourse" class="course-ipt" required>
+                    <option value="">Selecione o Curso</option>
+                </select>
             </div>
 
             <div class="activity-title">
@@ -130,19 +132,16 @@
 
     <script>
         const stateSelect = document.querySelector('.state-input');
-        const citySelect = document.querySelector('.city-input')
+        const citySelect = document.querySelector('.city-input');
+        const univSelect = document.querySelector('.univ-ipt')
+        const courseSelect = document.querySelector('.course-ipt');
+        
+        let baseUrl = window.location.href;
+        let url = baseUrl.slice(-1) != "/" ? "/v1/api/" : 'api/';
 
         stateSelect.addEventListener('change', (e) => {
-            let url = window.location.href;
-            if(url.slice(-1) != '/'){
-                url = '/v1/api/city';
-            }
-            else{
-                url = 'api/city';
-            }
-
             $.post({
-                url: url,
+                url: url + 'city',
                 data: { stateName: e.target.value },
             })
             .done(function(response){
@@ -162,6 +161,30 @@
             .fail(() => {
                 alert("Falha na busca, tente novamente.");
             })
+        })
+        
+        univSelect.addEventListener('change', (e) => {
+            $.post({
+                url: url + 'courses',
+                data: { universityName: e.target.value },
+            })
+            .done((resp) => {
+                $("#course-list").find('option').remove();
+                const option = document.createElement('option');
+                option.value = "";
+                option.textContent = "Selecione a Cidade";
+                courseSelect.appendChild(option);
+                
+                resp.courses.forEach((course) => {
+                    const option = document.createElement('option');
+                    option.value = course.course_name;
+                    option.textContent = course.course_name;
+                    courseSelect.appendChild(option);
+                });
+            })
+        })
+        .fail(() => {
+            alert("Falha na busca, tente novamente.");
         })
     </script>
 </body>
