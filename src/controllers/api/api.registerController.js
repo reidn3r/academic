@@ -38,7 +38,8 @@ const registerUser = async(req, res) => {
     const newRegister = await RegisterModel.create({ id_register_type: 1 });
     
     const [ gradeQuery, gradeMetadata ] = await sequelize.query(`SELECT * FROM graduate_info WHERE grade="${userGrade}" LIMIT 1`);
-
+    console.log(gradeQuery);
+    console.log(userGrade);
     const newUser = await UserModel.create({
         register_id: newRegister.id,
         university_id: foundUniversity.id,

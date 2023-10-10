@@ -43,7 +43,14 @@
 
                 <div class="secondary-input-container">
                     <div class="input-group">
-                        <input list="course-list" type="text" name="courseInput" class="curso-input text-ipt" placeholder="Curso de Formação">
+                        <select name="courseInput" class="curso-input text-ipt">
+                            <option value="">Selecione o Curso de Graduação</option>
+                            <% context.Courses.map((course, idx) => { %>
+                                <option value="<%= course.course_name %>"><%= course.course_name %></option>
+                            <% }) %>
+                        </select>
+
+
                         <select name="topicInput" class="topic-input list-ipt">
                             <option value="">Selecione o Tópico de Interesse</option>
                             <% context.Topics.map((topic, idx) => { %>
