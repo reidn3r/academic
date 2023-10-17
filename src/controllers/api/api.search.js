@@ -12,8 +12,10 @@ const search = async(req, res) => {
     const { nameInput, courseInput, gradInput, universityInput, cityInput, stateInput, topicInput } = req.body;
 
     let data = {};    
-    if(nameInput.length > 0){
-        data["name"] = nameInput;
+    if(nameInput.length > 0){        
+        let clearName = nameInput.replaceAll(/"/g, `\\"`)
+                        .replaceAll(/'/g, `\\'`);
+        data["name"] = clearName;
     }
     
     if(topicInput.length > 1) data["interest"] = topicInput;
@@ -81,9 +83,9 @@ const search = async(req, res) => {
         }
     }
     if(Object.keys(data).length == 0) return res.redirect('/v1');
-    
+
     const url = queryString.stringify(data);
-    return res.redirect(`/v1/search/?${url}`);
+    return res.status(200).redirect(`/v1/search/?${url}`);
 }
 
 

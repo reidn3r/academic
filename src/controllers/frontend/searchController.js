@@ -63,8 +63,9 @@ const search = async(req, res) => {
         query_str += ` LIMIT ${process.env.PAGE_ELEMENTS}`;
     }
     const [ queryProfile, metadata ] = await sequelize.query(`${query_str}`);
-
     
+    console.log(query_str);
+
     let profileData = new Set();
     /* 
         5. profileData é um set de objetos (posteriormente 

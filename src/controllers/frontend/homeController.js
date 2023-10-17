@@ -19,8 +19,6 @@ const homeController = async(req, res) => {
     const GradInfo = await GradModel.findAll({attributes: ['grade']});
     const Topics = await InterestTopicsModel.findAll({attributes: ['topic']});
     
-    
-    console.log(Courses);
     const context = { States, Universities, GradInfo, RegisterId, Topics, Courses };
     return res.render('search', {context});
 }
