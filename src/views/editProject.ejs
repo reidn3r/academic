@@ -45,11 +45,11 @@
             <% if(context.data[0].image_data.length > 0){  %>
             <div class="project-image-group">
                 <% for(let i=0; i< context.data[0].image_data.length; i++) { %>
-                <div class="image-container">
-                    <div class="image-loaded">
+                <div class="image-container im-<%= context.data[0].image_id[i] %>">
+                    <div class="image-loaded il-<%= context.data[0].image_id[i] %>">
                         <img class="project-image image-<%= context.data[0].image_id[i] %>" src="data:<%= context.data[0].image_mimetype[i]%>;base64, <%= context.data[0].image_data[i].toString('base64')%>" alt="project-image">
                     </div>
-                    <div class="alter-group">
+                    <div class="alter-group ag-<%= context.data[0].image_id[i] %>">
                         <label for="alterImage" class="alter-image-label">
                             <input type="file" onChange="updateImage(event)" accept="image/*" name="ImageFile" id="alter-image" class="alter-image-<%= context.data[0].image_id[i] %>">
                         </label>
@@ -69,8 +69,11 @@
     </div>
 
     <script>
-        let changed_img = []; 
-        let removed_img = [];
+        let changed_img = new Set();
+        let removed_obj = [];
+        
+        let removed_img = new Set();
+
         let locationHref = window.location.href.split('/');
         let project_id = locationHref[locationHref.length-1];
 
@@ -84,8 +87,32 @@
         const alterImageInputFile = document.querySelectorAll(`#alter-image`); 
 
         for(let i=0; i<removeIcon.length; i++){
+            removed_obj.push(false);
             removeIcon[i].addEventListener('click', (e) => {
-                removed_img.push(Number(e.srcElement.dataset.projectId));
+                let click = e.srcElement.parentNode.parentElement.className.split(' ')[1];
+                let num = click.split('-')[1];
+
+                let img_container = document.querySelector(`.${click}`);
+                let img_loaded = document.querySelector(`.il-${num}`);
+                let alter_group = document.querySelector(`.ag-${num}`);
+
+                removed_img.add(Number(e.srcElement.dataset.projectId));
+                removed_obj[i] = removed_obj[i] == false ? true : false;
+                
+                if(!removed_obj[i]){
+                    removed_img.delete(Number(e.srcElement.dataset.projectId));
+                }
+
+                if(removed_obj[i]){
+                    img_container.classList.add("image-container-removed");
+                    img_loaded.classList.add("il-removed");
+                    // alter_group.classList.add("ag-removed");
+                }
+                else{
+                    img_container.classList.remove("image-container-removed");
+                    img_loaded.classList.remove("il-removed");
+                    // alter_group.classList.remove("ag-removed");
+                }
             })
         }
 
@@ -97,12 +124,15 @@
 
         for(ipt of alterImageInputFile){
             ipt.addEventListener('change', (e) => {
-                changed_img.push(Number(e.target.className.split('-')[2]));
+                changed_img.add(Number(e.target.className.split('-')[2]));
             })
         }
 
         document.querySelector("#form-data").addEventListener('submit', async(e) => {
             e.preventDefault();
+
+            changed_img = Array.from(changed_img);
+            removed_img = Array.from(removed_img);
             
             const data = new FormData();
             const textArea = document.querySelector('.description').value;

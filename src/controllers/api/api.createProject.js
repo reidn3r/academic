@@ -1,3 +1,4 @@
+const sequelize = require('../../config/sequelizeConfig');
 const ProjectImageData = require('../../model/Profile_Project_Image_Data');
 const ProjectData = require('../../model/Profile_Project_Data');
 const dateFormat = require('../../public/utils/dateFormat');
@@ -10,10 +11,14 @@ const createProject = async(req ,res, next) => {
         */
     
     const { projectDesc } = req.body;
-    const profile_id = req.session.profileId;
-
+    const register_id = req.session.profileId;
+    console.log(`register id:${register_id}`);
+    
+    const [profileId, metadata] = await sequelize.query(`SELECT id FROM profile WHERE register_id=${register_id}`);
+    console.log(`register id:${profileId[0].id}`);
+        
     let newProject = await ProjectData.create({
-        profile_id: profile_id,
+        profile_id: profileId[0].id,
         project_description: projectDesc,
     })
     
@@ -33,7 +38,7 @@ const createProject = async(req ,res, next) => {
         })
     }
 
-    return res.redirect(`/v1/profile/${profile_id}/projects`);
+    return res.redirect(`/v1/profile/${profileId[0].id}/projects`);
 }
 
 module.exports = createProject;
