@@ -8,5 +8,5 @@ module.exports = {
     cookie: { secure: false },
     saveUninitialized: true,
     resave: false,
-    maxAge: 60
+    maxAge: 3600
 }

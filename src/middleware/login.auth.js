@@ -19,8 +19,6 @@ const jwtAuth = async(req, res, next) => {
 
         await client.multi()
             .sAdd('valid_tokens', token)
-            // .expire('valid_tokens', 10)
-                //Expiração aplicado p/ tds os membros do set
             .exec((err, replies) => {
                 if(err) console.log(err);
                 if(replies) console.log(err);
