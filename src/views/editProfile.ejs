@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="/css/editProfile.css">
+
+    <!-- JQUERY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- ATUALIZA FOTO DE PERFIL -->
+    <script src="/utils/updateProfileImage.js"></script>
+
+    <script src="/utils/editProfileScript.js"></script>
+
+</head>
+<body>
+    <div class="main-header">
+        <div class="home-container">
+            <a href="/v1/"><p class="home-btn">Home</p></a>
+        </div>
+        <div class="academic-logo-container">
+            <img src="/images/white-logo.png" alt="academic-logo" class="academic-logo">
+        </div>
+    </div>
+
+    <form action="" method="POST" enctype="multipart/form-data" class="form-data">
+        <div class="personal-content">
+            <div class="image-group bs-st">
+                <div class="profile-image-text">
+                    <p class="change-image text-title">Alterar foto de perfil</p>
+                </div>
+                <div class="profile-image-container">
+                    <img class="user-image profile-image" src="data:<%= context.userImage[0].image_content_type %>;base64,<%= context.userImage[0].image_data.toString('base64')%>" alt="profile-image">
+                </div>
+                <div class="change-image-btn">
+                    <label for="profile-image-input" class="profile-image-label">Alterar Imagem
+                        <input type="file" accept="image/*" name="" id="profile-image-input" onChange="updateImage(event)" class="profile-image-input" >
+                    </label>
+                </div>
+            </div>
+
+            <div class="description-group bs-st sl-ipt">
+                <p class="change-desc text-title">Alterar descricao</p>
+                <textarea name="" class="description-field" spellcheck="false"><%= context.profileDescription %></textarea>
+            </div>
+
+            <div class="grad-group bs-st sl-ipt">
+                <div class="univ-group">
+                    <p class="change-univ text-title">Alterar Universidade</p>
+                    <select name="user-univ" class="user-univ-select">
+                        <option value="<%= context.UserUniv.university_name %>"><%= context.UserUniv.university_name %></option>
+                        <% for(let i=0; i< context.Universities.length; i++){ %>
+                            <option value="<%= context.Universities[i].university_name %>"><%= context.Universities[i].university_name %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="course-group">
+                    <p class="change-course text-title">Alterar Curso de Graduacao</p>
+                    <select id="course-list" class="user-course">
+                        <option value="<%= context.UserData.user_course %>"><%= context.UserData.user_course.toUpperCase() %></option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="location-group bs-st sl-ipt">
+                <p class="location-title text-title">Alterar local de atuação</p>
+                <div class="state-container">
+                    <p class="change-state">Alterar Estado</p>
+                    <select class="user-state">
+                        <option value="<%= context.userLocation[0].state_name %>"><%= context.userLocation[0].state_name %></option>
+                        <% for(let i=0; i<context.States.length; i++){ %>
+                            <option value="<%= context.States[i].state_name %>"><%= context.States[i].state_name %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="city-container">
+                    <p class="change-city">Alterar Cidade</p>
+                    <select class="user-city" id="user-city-select">
+                        <option value="<%= context.userLocation[0].city_name %>"><%= context.userLocation[0].city_name %></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="interest-container bs-st sl-ipt">
+                <p class="interest-title text-title">Seus Interesses</p>
+                <div class="interest-group">
+                    <% for(let i=0; i<context.interestTopics.length; i++){ %>
+                        <input type="text" name="" spellcheck="false" class="user-interest" value="<%= context.interestTopics[i].topic %>">
+                    <% } %>
+                    <% if(context.interestTopics.length < 3){ %>
+                        <% for(let j=0; j<3-context.interestTopics.length; j++){ %>
+                            <input type="text" name="" spellcheck="false" class="user-interest" value="" placeholder="Insira um tópico de interesse">
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="submit-btn-container">
+                <input type="submit" class="submit-btn" value="Salvar">
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>

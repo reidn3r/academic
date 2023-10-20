@@ -20,6 +20,7 @@ router.get('/create/contacts', require('../controllers/frontend/profileContactsC
 router.get('/profile/:id', verifyAuth, require('../controllers/frontend/getProfileController'));
 router.get('/profile/:id/projects', verifyAuth, require('../controllers/frontend/profileProjectsController'));
 router.get('/profile/:id/edit/:project_id', require('../controllers/frontend/editProjectController'));
+router.get('/profile/:id/edit', require('../controllers/frontend/editProfileController'));
 
 router.get('/search', verifyAuth,require('../controllers/frontend/searchController'));
 
