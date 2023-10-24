@@ -36,7 +36,7 @@
                 </div>
                 <div class="change-image-btn">
                     <label for="profile-image-input" class="profile-image-label">Alterar Imagem
-                        <input type="file" accept="image/*" name="" id="profile-image-input" onChange="updateImage(event)" class="profile-image-input" >
+                        <input type="file" accept="image/*" name="ImageFile" id="profile-image-input" onChange="updateImage(event)" class="profile-image-input" >
                     </label>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="grad-group bs-st sl-ipt">
                 <div class="univ-group">
                     <p class="change-univ text-title">Alterar Universidade</p>
-                    <select name="user-univ" class="user-univ-select">
+                    <select name="user-univ" class="user-univ user-univ-select">
                         <option value="<%= context.UserUniv.university_name %>"><%= context.UserUniv.university_name %></option>
                         <% for(let i=0; i< context.Universities.length; i++){ %>
                             <option value="<%= context.Universities[i].university_name %>"><%= context.Universities[i].university_name %></option>
@@ -103,5 +103,54 @@
         </div>
     </form>
 
+    <script>
+
+        const interestAll = document.querySelectorAll('.user-interest');
+        for( itr of interestAll){
+            console.log(itr.value === "");
+        }
+
+        document.querySelector('.form-data').addEventListener('submit', async(e) => {
+            e.preventDefault();
+            
+            const desc = document.querySelector('.description-field').value;
+            const univ = document.querySelector('.user-univ').value;
+            const course = document.querySelector('.user-course').value;
+            const state = document.querySelector('.user-state').value;
+            const city = document.querySelector('.user-city').value;
+            const imageInput = document.querySelector('#profile-image-input');
+            
+            const registerId = window.location.href.split('/')[5];
+
+            const data = new FormData();
+            data.append("description", desc);
+            data.append("university_name", univ);
+            data.append("course_name", course);
+            data.append("state_name", state);
+            data.append("city_name", city);
+            data.append("register_id", registerId);
+
+            if(imageInput.files[0]){
+                data.append("ImageFile", imageInput.files[0])
+            }
+
+            try {
+                const response = await fetch('/v1/api/edit/profile', {
+                    method: 'POST',
+                    body: data,
+                });
+                
+                if(response.ok) {
+                    window.location.reload();
+
+                } else {
+                    console.error('Erro ao enviar dados para o servidor');
+                }
+            } catch (error) {
+                console.error('Erro de rede:', error);
+            }
+
+        })
+    </script>
 </body>
 </html>

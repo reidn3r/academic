@@ -22,6 +22,7 @@ router.post('/create/contacts', require('../controllers/api/api.profileContacts'
 router.post('/create/project', upload.array('imageInput', 3) ,require('../controllers/api/api.createProject'));
 
 router.post('/edit/project', upload.array('ImageFile', 3), require('../controllers/api/api.editProject'));
+router.post('/edit/profile', upload.array('ImageFile', 1), require('../controllers/api/api.editProfile'));
 
 router.post('/delete/project', require('../controllers/api/api.deleteProject'));
 
