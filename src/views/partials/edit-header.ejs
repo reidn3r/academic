@@ -1,14 +1,18 @@
 <% if(context.auth) { %>
     <div class="main-header">
-        <div class="home-container">
-            <a href="/v1/"><p class="home-btn">Home</p></a>
-        </div>
+        <a class="home-button" href="/v1/">
+            <div class="home-container">
+                <p class="home-btn">Home</p>
+            </div>
+        </a>
         <div class="academic-logo-container">
             <img src="/images/white-logo.png" alt="academic-logo" class="academic-logo">
         </div>
-        <div class="edit-container">
-            <p class="edit-btn">Editar</p>
-        </div>
+        <a class="edit-button" href="/v1/profile/<%= context.id %>/edit">
+            <div class="edit-container">
+                <p class="edit-btn">Editar</p>
+            </div>
+        </a>
     </div>
     <% } else { %>
         <div class="main-header">

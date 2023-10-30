@@ -104,15 +104,16 @@
     </form>
 
     <script>
-
+        let topics = [];
         const interestAll = document.querySelectorAll('.user-interest');
         for( itr of interestAll){
-            console.log(itr.value === "");
+            topics.push({current: itr.value, post: null});
         }
-
+        
         document.querySelector('.form-data').addEventListener('submit', async(e) => {
             e.preventDefault();
             
+            const interestAll = document.querySelectorAll('.user-interest');
             const desc = document.querySelector('.description-field').value;
             const univ = document.querySelector('.user-univ').value;
             const course = document.querySelector('.user-course').value;
@@ -129,6 +130,11 @@
             data.append("state_name", state);
             data.append("city_name", city);
             data.append("register_id", registerId);
+            
+            for(let i=0; i<interestAll.length; i++){
+                topics[i].post = interestAll[i].value;
+            }
+            data.append("topics_JSON", JSON.stringify(topics));
 
             if(imageInput.files[0]){
                 data.append("ImageFile", imageInput.files[0])

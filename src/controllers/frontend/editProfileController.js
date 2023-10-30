@@ -28,9 +28,14 @@ const editProfile = async(req, res) => {
     ON tip.profile_id=${userProfile[0].id} AND tip.topic_id=ti.id`);
 
     /* Dados renderizados em tag select */
-    const States = await StateModel.findAll({attributes: ['state_name']});
-    const Universities = await UnivModel.findAll({attributes: ['university_name']});
-    
+    const States = await StateModel.findAll({
+        attributes: ['state_name'],
+        order: [['state_name', 'ASC']]
+        });
+    const Universities = await UnivModel.findAll({
+        attributes: ['university_name'],
+        order: [['university_name', 'ASC']]
+    });
     /* 
         Conteúdo de context:
             1. UserData: {university_id, city_id, state_id, user_course}
