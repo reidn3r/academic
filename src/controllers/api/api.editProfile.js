@@ -29,10 +29,16 @@ const editProfile = async(req, res) => {
                     - se não encontrado, cria em topics_of_interest e 
                     associa o usuário ao novo interesse criado em topics_of_interest_profile
                 
-        2. Se current = post, nada mudou.
+        2. Se current != post e current era vazio: novo tópico inserido.
+            - Verificar se o tópico ja existe
+                - Se existe, associar o usuário ao tópico encontrado
+                - Se não, criar o tópico e associar ao usuário
+        3. Se current = post, nada mudou.
     */
         const foundTopic = await TopicsOfInterest.findOne({where: {topic: t.current}});
+
         if(t.current != t.post && t.current !== ""){
+            /* O interesse foi apagado */
             if(t.post === ""){
                 const { count, rows } = await TopicsOfInterestProfile.findAndCountAll({where:{topic_id:foundTopic.id}})
                 if(count == 1){
@@ -51,6 +57,7 @@ const editProfile = async(req, res) => {
                 }
             }
             else{
+                /* O interesse não foi apagado */
                 const [data, createdData] = await TopicsOfInterest.findOrCreate({
                     where: { topic: t.post },
                     defaults: { topic:t.post }
@@ -82,11 +89,29 @@ const editProfile = async(req, res) => {
                             topic_id: foundTopic.id
                         }
                     })
-                    /* ---------- DELETAR CASO NGM MAIS TENHA INTERESSE */ 
                     const { count, rows } = await TopicsOfInterest.findAndCountAll({where:{topic:t.current}})
                     if(count == 1) await TopicsOfInterest.destroy({ where:{topic: t.current} });
                 }
             }
+        }
+        /* Novo Tópico Inserido */
+        else if(t.current != t.post && t.current == ""){
+            if(foundTopic){
+                await TopicsOfInterestProfile.create({
+                    topic_id: foundTopic.id,
+                    profile_id:profileId[0].id
+                })
+            }
+            else{
+                const newTopic = await TopicsOfInterest.create({
+                    topic: t.post
+                })
+                await TopicsOfInterestProfile.create({
+                    topic_id: newTopic.id,
+                    profile_id:profileId[0].id
+                })
+            }
+
         }
     }
 
