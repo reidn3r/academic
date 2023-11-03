@@ -11,6 +11,12 @@ require('dotenv').config({path: path.join(__dirname, '..', 'config.env')});
 const app = express();
 const PORT = process.env.PORT || 3030;
 
+//socket.io
+const server = require('http').createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
+app.set('socketio', io);
+
 //Middleware
 app.use(morgan('dev'));
 app.use(express.json());
@@ -27,7 +33,7 @@ app.use('/v1/api', require('./routes/api.router'));
 const associations = require('./model/Associations');
 
 //Start Server
-const Server = async() => {
+const ExpressServer = async() => {
     try{
         await dbConnect();
         app.listen(PORT, () => console.log(`server running at: http://localhost:${PORT}/v1`));
@@ -41,4 +47,4 @@ const Server = async() => {
 }
 
 
-Server();
+ExpressServer();

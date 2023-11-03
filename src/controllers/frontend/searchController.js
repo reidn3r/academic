@@ -64,8 +64,6 @@ const search = async(req, res) => {
     }
     const [ queryProfile, metadata ] = await sequelize.query(`${query_str}`);
     
-    console.log(query_str);
-
     let profileData = new Set();
     /* 
         5. profileData é um set de objetos (posteriormente 
@@ -80,7 +78,6 @@ const search = async(req, res) => {
         criaram perfil (ou seja, não possuem register_id na tabela profile)
     */
 
-        
     for( id of queryProfile ){
         /* 
             6. queryProfile contém o register_id de

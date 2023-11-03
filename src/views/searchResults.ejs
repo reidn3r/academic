@@ -8,6 +8,10 @@
     
     <!-- FONT AWESOME CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    
 </head>
 <body>
     <div class="main-header">
@@ -68,7 +72,7 @@
         <div class="contacts">
             <div class="contacts-group-title">
                 <p class="ctt-title">Conversas Iniciadas</p>
-            </div>
+        </div>
 
             <div class="users-container">
                 <div class="contact-group">
@@ -110,6 +114,11 @@
         arrowDown.addEventListener("click", (e) => {
             ChatContainer.style.height = visible ? 5+'vh' : maxHeith+'vh';
             visible = !visible;
+
+            /* 
+                - Se estiver visível, conecta com o servidor.
+                - Se não, desconecta ou mantém deconectado.
+            */
         })
 
         const url = new URL(window.location.href);
