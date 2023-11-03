@@ -13,7 +13,7 @@ let estado = [41, 35, 41, 12, 33];
 let s = ["M", "F"];
 let cursos = ["ciencia da computacao", "zootecnica", "engenharia de alimentos", "engenharia elétrica", "engenharia civil", "comunicacao e multimeios", "direito", "arquitetura", "medicina", "matematica", "quimica", "ciencias biologicas"];
 
-let qty = 2;
+let qty = 10;
 
 let name = [];
 let email = [];

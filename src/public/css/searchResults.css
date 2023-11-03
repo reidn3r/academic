@@ -120,6 +120,11 @@ body{
     text-align: justify;
 }
 
+.profile-name{
+    display: flex;
+    flex-direction: row;
+}
+
 .profile-name, .profile-description{
     margin: 1.5% 3.5%;
 }
@@ -170,7 +175,7 @@ body{
     justify-content: center;
     position: relative;
     bottom: 0;
-
+    
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
     padding: 35px;
 }
@@ -210,4 +215,93 @@ body{
 }
 .active-page > a {
     color: #fff;
+}
+
+/* --------- */
+
+.chat-container-visible{
+    overflow-y: auto;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+
+    /* height: 40vh; */
+    height: 5vh;
+    width: 25vw;
+    
+    background-color: #4b4b4b;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
+    padding: 8px;
+}
+
+.chat-username-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 0.65vw;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+    background-color: #4b4b4b;
+    padding: 8px;
+}
+
+.contacts{
+    background-color: rgba(0, 81, 255, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    
+}
+.contacts-group-title{
+    margin: 0.7vh 0;
+}
+
+.contact-group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    width: 100%;
+    padding: 3px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    margin: 0.5vw 0;
+}
+
+.contact-name-group{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.fa-bell{
+    color: #fff;
+    background-color: rgba(255, 0, 0, 0.5);
+
+    border-radius: 70%;
+    padding: 4px;
+
+    margin-left: 0.5vw;
+}
+
+.fa-circle-xmark{
+    color: #181818;
+    transition: 0.5s;
+}
+
+.fa-circle-xmark:hover{
+    color: red;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.fa-up-down:hover, .fa-bell:hover, .fa-message:hover{
+    cursor: pointer;
+}
+
+.fa-message{
+    margin-left: 0.8vw;
 }

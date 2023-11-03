@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busca</title>
+    <title>Busca</title>    
     <link rel="stylesheet" href="/css/searchResults.css">
+    
+    <!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="main-header">
@@ -15,6 +18,7 @@
             <img src="/images/white-logo.png" alt="academic-logo" class="academic-logo">
         </div>
     </div>
+
     <div class="container">
         <% if(context.profileArray.length > 0){ %>
         <% for( profile of context.profileArray ){ %>
@@ -27,6 +31,7 @@
                     <a href="/v1/profile/<%= profile.register_id %>">
                         <p class="found-name"><%=  profile.name %></p>
                     </a>
+                    <i class="fa-regular fa-message"></i>
                 </div>
     
                 <div class="profile-description">
@@ -55,9 +60,58 @@
         </div>
         <% } %>
     </div>
+    <div class="chat-container-visible">
+        <div class="chat-username-container">
+            <p class="username">Lorem Ipsum</p>
+            <i class="fa-solid fa-up-down" style="color: #ffffff;"></i>        </div>
 
+        <div class="contacts">
+            <div class="contacts-group-title">
+                <p class="ctt-title">Conversas Iniciadas</p>
+            </div>
+
+            <div class="users-container">
+                <div class="contact-group">
+                    <div class="contact-name-group">
+                        <p class="contact-name">Lorem Ipsum</p>
+                        <div class="notification">
+                            <i class="fa-regular fa-bell" style="color: #fff;"></i>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                <div class="contact-group">
+                    <div class="contact-name-group">
+                        <p class="contact-name">Lorem Ipsum</p>
+                        <div class="notification">
+                            <i class="fa-regular fa-bell" style="color: #fff;"></i>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                <div class="contact-group">
+                    <div class="contact-name-group">
+                        <p class="contact-name">Lorem Ipsum</p>
+                    </div>
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                
+            </div>
+        </div>
+    </div>
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
+        
+        const maxHeith = 40;
+        let visible = false;
+        
+        const arrowDown = document.querySelector('.fa-up-down');
+        const ChatContainer = document.querySelector('.chat-container-visible');
+        arrowDown.addEventListener("click", (e) => {
+            ChatContainer.style.height = visible ? 5+'vh' : maxHeith+'vh';
+            visible = !visible;
+        })
+
         const url = new URL(window.location.href);
         const current_page = "<%= context.current_page %>";
         const idx_page = document.querySelectorAll('.page-index');
@@ -68,7 +122,6 @@
                 container.className += " active-page";
             }
         })
-
 
         idx_page.forEach(idx => {
             idx.addEventListener('click', (e) => {

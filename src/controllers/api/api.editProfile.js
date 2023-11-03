@@ -33,6 +33,7 @@ const editProfile = async(req, res) => {
             - Verificar se o tópico ja existe
                 - Se existe, associar o usuário ao tópico encontrado
                 - Se não, criar o tópico e associar ao usuário
+                
         3. Se current = post, nada mudou.
     */
         const foundTopic = await TopicsOfInterest.findOne({where: {topic: t.current}});
