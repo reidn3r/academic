@@ -5,7 +5,9 @@ const sequelize = require('../../config/sequelizeConfig');
 
 const search = async(req, res) => {
     const { name, user_course, user_grade_id, university_id, city_id, state_id, page, interest } = req.query;
-    
+    const io = req.app.get('socketio');
+
+
     let queryData = {};
     if(name) queryData["name"] = name;
     if(interest) queryData["interest"] = String(interest);
@@ -132,6 +134,20 @@ const search = async(req, res) => {
             pages_idx.push(i);
         }
     }
+
+    /* ---------- socket.io */
+    io.on('connection', (socket) => {
+        console.log(socket.id);
+    })
+
+    io.on('ok', (data) => {
+        console.log(data);
+    })
+
+    io.on('disconnect', (socket) => {
+        console.log('disconnected.\n');
+    })
+
     context = { profileArray, pages_idx, current_page };
     return res.render('searchResults', {context});
 }
