@@ -138,15 +138,16 @@ const search = async(req, res) => {
     /* ---------- socket.io */
     io.on('connection', (socket) => {
         console.log(socket.id);
-    })
 
+        socket.on('disconnect', () => {
+            console.log('ok');
+        })
+    })
+    
     io.on('ok', (data) => {
         console.log(data);
     })
-
-    io.on('disconnect', (socket) => {
-        console.log('disconnected.\n');
-    })
+    
 
     context = { profileArray, pages_idx, current_page };
     return res.render('searchResults', {context});
