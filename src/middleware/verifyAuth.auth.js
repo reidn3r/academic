@@ -9,13 +9,16 @@ const verifyAuth = (req, res, next) => {
     const token = req.cookies.loginToken;
     if(!token) return res.redirect('/v1/login');
     
+    
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if(!decoded){
             req.auth = false;
             return res.redirect('/v1/logout');
         }
         req.auth = decoded.profile_id == id ? true : false;
+        res.locals.userRegisterId = decoded.profile_id;
     })
+
     next();
 }
 

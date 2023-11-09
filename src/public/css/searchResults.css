@@ -19,6 +19,11 @@ body{
     height: 100vh;
 }
 
+/* SCROLLBAR */
+::-webkit-scrollbar{
+    width: 0px;
+}
+
 .main-header{
     display: flex;
     flex-direction: row;
@@ -228,7 +233,7 @@ body{
 
     /* height: 40vh; */
     height: 5vh;
-    width: 25vw;
+    width: 35vw;
     
     background-color: #4b4b4b;
     color: #fff;
@@ -277,6 +282,15 @@ body{
     align-items: center;
 }
 
+.contact-name:hover{
+    cursor: pointer;
+}
+
+.username{
+    text-align: center;
+}
+
+
 .fa-bell{
     color: #fff;
     background-color: rgba(255, 0, 0, 0.5);
@@ -305,3 +319,68 @@ body{
 .fa-message{
     margin-left: 0.8vw;
 }
+
+
+/* ----------- Messages */
+
+.message-container{
+    display: flex;
+    flex-direction: column;
+    max-height: 20vh;
+    overflow-y: auto;
+    
+}
+
+.sent-content, .received-content{
+    border-radius: 5px;
+    padding: 8px;
+    margin: 0.5vh 0;
+}
+
+.received-content{
+    display: flex;
+    justify-content: start;
+    background-color: #7CB9E8;
+    text-align:start;
+}
+
+.sent-content{
+    background-color:#32de84;
+    text-align:start;
+    justify-content: right;
+}
+
+.textbox-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 5px;
+    margin-top: 15px;
+
+}
+
+.user-textarea{
+    outline: none;
+    padding: 5px;
+    width: 95%;
+    margin-right: 5%;
+    border: 1px solid rgba(0, 81, 255, 0.1);;
+}
+
+.send-message-btn{
+    background-color: #7CB9E8;
+    color: #fff;
+    border: none;
+    padding: 3px;
+    border-radius: 2px;
+    transition: 0.5s;
+}
+
+.send-message-btn:hover{
+    background-color: #fff;
+    color: #181818;
+    transition: 0.2s;
+    cursor: pointer;
+}
+

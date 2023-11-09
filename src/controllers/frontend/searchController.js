@@ -7,7 +7,6 @@ const search = async(req, res) => {
     const { name, user_course, user_grade_id, university_id, city_id, state_id, page, interest } = req.query;
     const io = req.app.get('socketio');
 
-
     let queryData = {};
     if(name) queryData["name"] = name;
     if(interest) queryData["interest"] = String(interest);
@@ -18,7 +17,7 @@ const search = async(req, res) => {
     if(state_id) queryData["state_id"] = Number(state_id);
     if(Object.keys(queryData).length == 0) return res.redirect('/v1');
     delete queryData.interest;
-    
+
     /* 
         1. Caso haja preenchimento do campo de interesse,
         a busca deve ser feita de forma separada.
@@ -137,17 +136,21 @@ const search = async(req, res) => {
 
     /* ---------- socket.io */
     io.on('connection', (socket) => {
-        console.log(socket.id);
+        // console.log(socket.id);
 
         socket.on('disconnect', () => {
-            console.log('ok');
+            console.log('disconnected');
         })
+
+        socket.on('render_data', async(data) => {
+            console.log(data);
+            let id =res.locals.userRegisterId;
+            // const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message, to_message, message, message_time FROM messages WHERE to_message=${data.to_id} AND from_message=${id}`);
+
+            io.emit('message_content_loaded', {content: null});
+            })
     })
-    
-    io.on('ok', (data) => {
-        console.log(data);
-    })
-    
+        
 
     context = { profileArray, pages_idx, current_page };
     return res.render('searchResults', {context});

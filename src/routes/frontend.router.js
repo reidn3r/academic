@@ -19,10 +19,12 @@ router.get('/create/contacts', require('../controllers/frontend/profileContactsC
 
 router.get('/profile/:id', verifyAuth, require('../controllers/frontend/getProfileController'));
 router.get('/profile/:id/projects', verifyAuth, require('../controllers/frontend/profileProjectsController'));
-router.get('/profile/:id/edit/:project_id', require('../controllers/frontend/editProjectController'));
-router.get('/profile/:id/edit', require('../controllers/frontend/editProfileController'));
+router.get('/profile/:id/edit/:project_id', verifyAuth, require('../controllers/frontend/editProjectController'));
+router.get('/profile/:id/edit', verifyAuth, require('../controllers/frontend/editProfileController'));
 
 router.get('/search', verifyAuth,require('../controllers/frontend/searchController'));
+
+router.get('/chat/render', require('../controllers/frontend/renderMessagesController'));
 
 router.get('*', require('../controllers/frontend/pageNotFound'));
 

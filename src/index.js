@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require("express");
+const favicon = require('serve-favicon');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -26,6 +27,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(session(require('./config/sessionConfig')));
 app.use(cookieParser());
+app.use(favicon(path.join(__dirname, "public", "favicon", "favicon.ico")));
 app.use('/v1', require('./routes/frontend.router'));
 app.use('/v1/api', require('./routes/api.router'));
 

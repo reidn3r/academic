@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- socket.io -->
-    <script src="/socket.io/socket.io.js"></script>    
+    <script src="/socket.io/socket.io.js"></script>   
+    
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div class="main-header">
@@ -34,7 +37,7 @@
                     <a href="/v1/profile/<%= profile.register_id %>">
                         <p class="found-name"><%=  profile.name %></p>
                     </a>
-                    <i class="fa-regular fa-message"></i>
+                    <i onclick="chatAppTalk(event)" class="fa-regular fa-message data-<%= profile.register_id %>"></i>
                 </div>
     
                 <div class="profile-description">
@@ -63,10 +66,10 @@
         </div>
         <% } %>
     </div>
-    <div class="chat-container-visible">
+    <div class="chat-container-visible" id="chat-container">
         <div class="chat-username-container">
             <p class="username">Lorem Ipsum</p>
-            <i class="fa-solid fa-up-down" style="color: #ffffff;"></i>        </div>
+            <i class="fa-solid fa-up-down" onclick="chatAppArrowIcon()" style="color: #ffffff;"></i>        </div>
 
         <div class="contacts">
             <div class="contacts-group-title">
@@ -76,25 +79,27 @@
             <div class="users-container">
                 <div class="contact-group">
                     <div class="contact-name-group">
-                        <p class="contact-name">Lorem Ipsum</p>
+                            <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
                         <div class="notification">
                             <i class="fa-regular fa-bell" style="color: #fff;"></i>
                         </div>
                     </div>
                     <i class="fa-solid fa-circle-xmark"></i>
                 </div>
+                
                 <div class="contact-group">
                     <div class="contact-name-group">
-                        <p class="contact-name">Lorem Ipsum</p>
+                            <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
                         <div class="notification">
                             <i class="fa-regular fa-bell" style="color: #fff;"></i>
                         </div>
                     </div>
                     <i class="fa-solid fa-circle-xmark"></i>
                 </div>
+                
                 <div class="contact-group">
                     <div class="contact-name-group">
-                        <p class="contact-name">Lorem Ipsum</p>
+                        <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
                     </div>
                     <i class="fa-solid fa-circle-xmark"></i>
                 </div>
@@ -103,16 +108,14 @@
         </div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-            
         const maxHeith = 40;
         let visible = false;
-            
+
         const arrowDown = document.querySelector('.fa-up-down');
         const ChatContainer = document.querySelector('.chat-container-visible');
 
         let socket;
-        arrowDown.addEventListener("click", (e) => {
+        const chatAppArrowIcon = () => {
             ChatContainer.style.height = visible ? 5+'vh' : maxHeith+'vh';
             visible = !visible;
             if(visible){
@@ -124,12 +127,35 @@
                     socket.disconnect();
                 }
             }
-            /* 
-                - Se estiver visível, conecta com o servidor.
-                - Se não, desconecta ou mantém deconectado.
-            */
-        })
+        }
+        
+        const chatAppTalk = (event) => {
+            const to_id = Number(event.srcElement.className.split('-')[3]);
+            ChatContainer.style.height = maxHeith+'vh';
+            visible = true;
+            if(visible){
+                renderData(to_id);
+            }
+        }
 
+        const renderData = (to_id) => {
+            socket = io().connect();
+                socket.emit('render_data', {data: to_id});
+                socket.on('message_content_loaded', (data) => {
+                    // if(data.content!= null){
+                    if(data){
+                        //Renderiza tela de conversa
+                        $("#chat-container").empty();
+
+                        $.get('/v1/chat/render', data, (data) => {
+                            $("#chat-container").html(data);
+                        })
+                    }
+                })
+        }
+
+
+        document.addEventListener("DOMContentLoaded", (event) => {            
         const url = new URL(window.location.href);
         const current_page = "<%= context.current_page %>";
         const idx_page = document.querySelectorAll('.page-index');
