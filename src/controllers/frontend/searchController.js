@@ -136,23 +136,20 @@ const search = async(req, res) => {
 
     /* ---------- socket.io */
     io.on('connection', (socket) => {
-        // console.log(socket.id);
-
         socket.on('disconnect', () => {
             console.log('disconnected');
         })
 
         socket.on('render_data', async(data) => {
-            console.log(data);
-            let id =res.locals.userRegisterId;
-            // const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message, to_message, message, message_time FROM messages WHERE to_message=${data.to_id} AND from_message=${id}`);
+            let id = res.locals.userRegisterId;
+            const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
 
-            io.emit('message_content_loaded', {content: null});
+            io.emit('message_content_loaded', {content: messages});
             })
     })
         
-
-    context = { profileArray, pages_idx, current_page };
+    let userId = res.locals.userRegisterId;
+    context = { profileArray, pages_idx, current_page, userId };
     return res.render('searchResults', {context});
 }
 

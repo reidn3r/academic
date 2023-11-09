@@ -68,7 +68,7 @@
     </div>
     <div class="chat-container-visible" id="chat-container">
         <div class="chat-username-container">
-            <p class="username">Lorem Ipsum</p>
+            <p class="username user-data-<%= context.userId %>">Lorem Ipsum</p>
             <i class="fa-solid fa-up-down" onclick="chatAppArrowIcon()" style="color: #ffffff;"></i>        </div>
 
         <div class="contacts">
@@ -109,6 +109,7 @@
     </div>
     <script>
         const maxHeith = 40;
+        const userId = Number(document.querySelector('.username').className.split('-')[2]);
         let visible = false;
 
         const arrowDown = document.querySelector('.fa-up-down');
@@ -140,15 +141,63 @@
 
         const renderData = (to_id) => {
             socket = io().connect();
-                socket.emit('render_data', {data: to_id});
-                socket.on('message_content_loaded', (data) => {
-                    // if(data.content!= null){
-                    if(data){
+                socket.emit('render_data', {to_id: to_id});
+                socket.on('message_content_loaded', (messageData) => {
+                    let chatContainer = document.querySelector("#chat-container");
+                    if(messageData.content){
                         //Renderiza tela de conversa
                         $("#chat-container").empty();
+                        $.ajax({
+                            url: `/v1/messages/${userId}/${to_id}`,
+                            type: 'GET',
+                            success: (messages) => {
+                                $.ajax({
+                                    url: "/v1/chat/render",
+                                    type: 'GET',
+                                    success: (template) => {
+                                        $("#chat-container").html(template);
+                                        /* Renderização da parte superior do chat,
+                                        com o nome do contato */
 
-                        $.get('/v1/chat/render', data, (data) => {
-                            $("#chat-container").html(data);
+                                        let contactsDiv = document.createElement('div');
+                                        contactsDiv.classList.add('contacts');
+                                        
+                                        let contactsGroupDiv = document.createElement('div');
+                                        contactsGroupDiv.classList.add('contacts-group-title');
+                                        
+                                        let pContactTitle = document.createElement('p');
+                                        pContactTitle.textContent = messages.data[0].to_message_username;
+                                        pContactTitle.classList.add('ctt-title');
+
+                                        contactsGroupDiv.appendChild(pContactTitle);
+                                        contactsDiv.appendChild(contactsGroupDiv);
+                                        chatContainer.appendChild(contactsDiv);
+
+
+                                        /* Renderização das mensagens */
+                                        let userContainerDiv = document.createElement('div');
+                                        userContainerDiv.classList.add('users-container');
+                                        
+                                        let messageContainerDiv  = document.createElement('div');
+                                        messageContainerDiv.classList.add('message-container');
+                                        userContainerDiv.appendChild(messageContainerDiv);
+                                        chatContainer.appendChild(userContainerDiv);
+
+                                        for(msg of messages.data){
+                                            console.log(msg);
+                                            let receivedMessage = document.createElement('div');
+                                            receivedMessage.classList.add('received-message');
+
+                                            let receivedContent = document.createElement('p');
+                                            receivedContent.classList.add('received-content');
+                                            receivedContent.textContent = msg.message;
+
+                                            receivedMessage.appendChild(receivedContent);
+                                            messageContainerDiv.appendChild(receivedMessage);
+                                        }
+                                    }
+                                })
+                            }
                         })
                     }
                 })
