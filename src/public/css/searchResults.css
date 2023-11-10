@@ -384,3 +384,11 @@ body{
     cursor: pointer;
 }
 
+
+
+/* 
+
+    let txtBox = document.createElement('div');
+    txtBox.classList.add('textbox-container');
+    userContainerDiv.appendChild(txtBox);
+*/
