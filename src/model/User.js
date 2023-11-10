@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/sequelizeConfig');
 const User_Grade = require('./User_Grade');
-
-
+const MessagesModel = require('./MessagesModel');
 
 const User = sequelize.define('user', {
     id:{
@@ -96,7 +95,19 @@ User.hasOne(User_Grade, {
     foreignKey: 'user_id',
     sourceKey: 'id',
     onDelete: "CASCADE"
-})
+});
+
+User.hasMany(MessagesModel, {
+    foreignKey: 'from_message_id',
+    sourceKey: 'register_id',
+    onDelete: "CASCADE"
+});
+
+User.hasMany(MessagesModel, {
+    foreignKey: 'to_message_id',
+    sourceKey: 'register_id',
+    onDelete: "CASCADE"
+});
 
 
 module.exports = User;

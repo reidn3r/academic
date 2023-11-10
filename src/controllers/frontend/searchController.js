@@ -1,5 +1,6 @@
 const ProfileImageInfo = require('../../model/Profile_Image_Info');
 const ProfileModel = require('../../model/Profile');
+const MessagesModel = require('../../model/MessagesModel');
 const { query, countQuery } = require('../../public/utils/sqlQuery');
 const sequelize = require('../../config/sequelizeConfig');
 
@@ -137,18 +138,28 @@ const search = async(req, res) => {
     /* ---------- socket.io */
     io.on('connection', (socket) => {
         socket.on('disconnect', () => {
-            console.log('disconnected');
         })
 
         socket.on('render_data', async(data) => {
-            let id = res.locals.userRegisterId;
+            const  id = res.locals.userRegisterId;
             const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
 
             io.emit('message_content_loaded', {content: messages});
-            })
+        })
+
+        socket.on('save_message', async(data) => {
+            console.log(data);
+            console.log(data.to_message_username);
+            await MessagesModel.create({
+                from_message_id: data.from,
+                to_message_id: data.to,
+                to_message_username: data.to_message_username,
+                message: data.message,
+        })
+        })
     })
         
-    let userId = res.locals.userRegisterId;
+    const userId = res.locals.userRegisterId;
     context = { profileArray, pages_idx, current_page, userId };
     return res.render('searchResults', {context});
 }

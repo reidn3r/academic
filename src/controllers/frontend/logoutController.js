@@ -11,11 +11,20 @@ const logoutController = async(req, res) => {
 
     //Salvar info de logout no banco de dados
     jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        await logoutModel.create({
-            login_id: decoded.login_id,
-            profile_id: decoded.logout_profile_id,
-            logout_date: dateFormat(new Date())
-        })
+        if(decoded){
+            await logoutModel.create({
+                login_id: decoded.login_id,
+                profile_id: decoded.logout_profile_id,
+                logout_date: dateFormat(new Date())
+            })
+        }
+        else{
+            // await logoutModel.create({
+            //     login_id: decoded.login_id,
+            //     profile_id: decoded.logout_profile_id,
+            //     logout_date: dateFormat(new Date())
+            // })
+        }
     })
     
     //Invalida o token movendo para o set de tokens inválidos

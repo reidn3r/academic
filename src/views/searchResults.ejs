@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src= "/utils/renderData.js"></script>
+    <script src= "/utils/chatAppArrowIcon.js"></script>
+    <script src= "/utils/chatAppTalk.js"></script>
 </head>
 <body>
     <div class="main-header">
@@ -39,7 +41,9 @@
                     <a href="/v1/profile/<%= profile.register_id %>">
                         <p class="found-name"><%=  profile.name %></p>
                     </a>
+                    <% if(profile.register_id != context.userId) { %>
                     <i onclick="chatAppTalk(event)" class="fa-regular fa-message data-<%= profile.register_id %>"></i>
+                    <% } %>
                 </div>
     
                 <div class="profile-description">
@@ -78,35 +82,34 @@
                 <p class="ctt-title">Conversas Iniciadas</p>
         </div>
 
-            <div class="users-container">
-                <div class="contact-group">
-                    <div class="contact-name-group">
-                            <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
-                        <div class="notification">
-                            <i class="fa-regular fa-bell" style="color: #fff;"></i>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-circle-xmark"></i>
-                </div>
-                
-                <div class="contact-group">
-                    <div class="contact-name-group">
-                            <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
-                        <div class="notification">
-                            <i class="fa-regular fa-bell" style="color: #fff;"></i>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-circle-xmark"></i>
-                </div>
-                
-                <div class="contact-group">
-                    <div class="contact-name-group">
+        <div class="users-container">
+            <div class="contact-group">
+                <div class="contact-name-group">
                         <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
+                    <div class="notification">
+                        <i class="fa-regular fa-bell" style="color: #fff;"></i>
                     </div>
-                    <i class="fa-solid fa-circle-xmark"></i>
                 </div>
-                
+                <i class="fa-solid fa-circle-xmark"></i>
             </div>
+            
+            <div class="contact-group">
+                <div class="contact-name-group">
+                        <p class="contact-name" onclick="renderData(1)">Lorem Ipsum</p>
+                    <div class="notification">
+                        <i class="fa-regular fa-bell" style="color: #fff;"></i>
+                    </div>
+                </div>
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            
+            <div class="contact-group">
+                <div class="contact-name-group">
+                    <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
+                </div>
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+        </div>
         </div>
     </div>
     <script>
@@ -118,35 +121,13 @@
         const ChatContainer = document.querySelector('.chat-container-visible');
 
         let socket;
-        const chatAppArrowIcon = () => {
-            ChatContainer.style.height = visible ? 5+'vh' : maxHeith+'vh';
-            visible = !visible;
-            if(visible){
-                socket = io();
-                socket.emit('ok', {data: "ok"});
-            }
-            else{
-                if(socket){
-                    socket.disconnect();
-                }
-            }
-        }
-        
-        const chatAppTalk = (event) => {
-            const to_id = Number(event.srcElement.className.split('-')[3]);
-            ChatContainer.style.height = maxHeith+'vh';
-            visible = true;
-            if(visible){
-                renderData(to_id);
-            }
-        }
 
         document.addEventListener("DOMContentLoaded", (event) => {            
         const url = new URL(window.location.href);
         const current_page = "<%= context.current_page %>";
         const idx_page = document.querySelectorAll('.page-index');
         const idx_container = document.querySelectorAll('.page-idx-container');
-        
+
         idx_container.forEach((container) => {
             if(container.children[0].innerText == current_page){
                 container.className += " active-page";
