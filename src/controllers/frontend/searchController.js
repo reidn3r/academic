@@ -1,11 +1,14 @@
 const ProfileImageInfo = require('../../model/Profile_Image_Info');
 const ProfileModel = require('../../model/Profile');
+const UserModel = require('../../model/User');
+
 const MessagesModel = require('../../model/MessagesModel');
 const { query, countQuery } = require('../../public/utils/sqlQuery');
 const sequelize = require('../../config/sequelizeConfig');
 
 const search = async(req, res) => {
     const { name, user_course, user_grade_id, university_id, city_id, state_id, page, interest } = req.query;
+    const userId = res.locals.userRegisterId;
     const io = req.app.get('socketio');
 
     let queryData = {};
@@ -137,6 +140,7 @@ const search = async(req, res) => {
 
     /* ---------- socket.io */
     io.on('connection', (socket) => {
+        console.log(socket.id)
         socket.on('disconnect', () => {
         })
 
@@ -148,19 +152,20 @@ const search = async(req, res) => {
         })
 
         socket.on('save_message', async(data) => {
-            console.log(data);
-            console.log(data.to_message_username);
             await MessagesModel.create({
                 from_message_id: data.from,
                 to_message_id: data.to,
                 to_message_username: data.to_message_username,
                 message: data.message,
-        })
+            })
         })
     })
-        
-    const userId = res.locals.userRegisterId;
-    context = { profileArray, pages_idx, current_page, userId };
+    
+    const foundUser = await UserModel.findOne({attributes: ['name'], 
+        where: {register_id:userId}});
+
+    const UserName = foundUser.name;
+    context = { profileArray, pages_idx, current_page, userId, UserName };
     return res.render('searchResults', {context});
 }
 

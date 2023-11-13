@@ -1,4 +1,4 @@
-const renderData = (to_id) => {
+const renderData = (event, to_id) => {
     socket = io().connect();
         socket.emit('render_data', {to_id: to_id});
         socket.on('message_content_loaded', (messageData) => {
@@ -26,7 +26,7 @@ const renderData = (to_id) => {
                                 contactsGroupDiv.classList.add('contacts-group-title');
                                 
                                 const pContactTitle = document.createElement('p');
-                                pContactTitle.textContent = messages.data.length > 0 ? messages.data[0].to_message_username : "";
+                                pContactTitle.textContent = messages.data.length > 0 ? messages.data[0].to_message_username : event.srcElement.parentNode.innerText;;
                                 pContactTitle.classList.add('ctt-title');
 
                                 contactsGroupDiv.appendChild(pContactTitle);
@@ -87,7 +87,6 @@ const renderData = (to_id) => {
                                         textInput.value="";
                                     }
                                 })
-
                                 for(msg of messages.data){
                                     let receivedContent = document.createElement('p');
 

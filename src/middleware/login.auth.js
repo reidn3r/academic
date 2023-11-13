@@ -15,7 +15,7 @@ const jwtAuth = async(req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
         if(err) return res.status(500).json({message: "Falha na autenticação"})
         req.userId = decoded.id;
-        req.username = decoded.username;
+        // req.username = decoded.username;
 
         await client.multi()
             .sAdd('valid_tokens', token)

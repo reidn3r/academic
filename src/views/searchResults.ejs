@@ -42,7 +42,7 @@
                         <p class="found-name"><%=  profile.name %></p>
                     </a>
                     <% if(profile.register_id != context.userId) { %>
-                    <i onclick="chatAppTalk(event)" class="fa-regular fa-message data-<%= profile.register_id %>"></i>
+                    <i onclick="chatAppTalk(event)" class="fa-regular fa-message data-<%= profile.register_id %> talk-icn"></i>
                     <% } %>
                 </div>
     
@@ -74,7 +74,7 @@
     </div>
     <div class="chat-container-visible" id="chat-container">
         <div class="chat-username-container">
-            <p class="username user-data-<%= context.userId %>">Lorem Ipsum</p>
+            <p class="username"><%= context.UserName %></p>
             <i class="fa-solid fa-up-down" onclick="chatAppArrowIcon()" style="color: #ffffff;"></i>        </div>
 
         <div class="contacts">
@@ -95,16 +95,6 @@
             
             <div class="contact-group">
                 <div class="contact-name-group">
-                        <p class="contact-name" onclick="renderData(1)">Lorem Ipsum</p>
-                    <div class="notification">
-                        <i class="fa-regular fa-bell" style="color: #fff;"></i>
-                    </div>
-                </div>
-                <i class="fa-solid fa-circle-xmark"></i>
-            </div>
-            
-            <div class="contact-group">
-                <div class="contact-name-group">
                     <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
                 </div>
                 <i class="fa-solid fa-circle-xmark"></i>
@@ -114,7 +104,7 @@
     </div>
     <script>
         const maxHeith = 40;
-        const userId = Number(document.querySelector('.username').className.split('-')[2]);
+        const userId = Number("<%= context.userId %>");
         let visible = false;
 
         const arrowDown = document.querySelector('.fa-up-down');
@@ -127,6 +117,13 @@
         const current_page = "<%= context.current_page %>";
         const idx_page = document.querySelectorAll('.page-index');
         const idx_container = document.querySelectorAll('.page-idx-container');
+        // const talk_icon = document.querySelectorAll('.talk-icn');
+
+        // for(icon of talk_icon){
+        //     icon.addEventListener('click', e => {
+        //         renderData(userId);
+        //     })
+        // }
 
         idx_container.forEach((container) => {
             if(container.children[0].innerText == current_page){
