@@ -1,5 +1,5 @@
 const renderData = (event, to_id) => {
-    socket = io().connect();
+    // socket = io().connect();
         socket.emit('render_data', {to_id: to_id});
         socket.on('message_content_loaded', (messageData) => {
             let chatContainer = document.querySelector("#chat-container");
@@ -19,6 +19,8 @@ const renderData = (event, to_id) => {
                                 $("#chat-container").html(template);
                                 /* Renderização da parte superior do chat,
                                 com o nome do contato */
+                                let to_username = messages.data.length > 0 ? messages.data[0].to_message_username : event.srcElement.parentNode.innerText;
+                                
                                 const contactsDiv = document.createElement('div');
                                 contactsDiv.classList.add('contacts');
                                 
@@ -26,7 +28,7 @@ const renderData = (event, to_id) => {
                                 contactsGroupDiv.classList.add('contacts-group-title');
                                 
                                 const pContactTitle = document.createElement('p');
-                                pContactTitle.textContent = messages.data.length > 0 ? messages.data[0].to_message_username : event.srcElement.parentNode.innerText;;
+                                pContactTitle.textContent = to_username;
                                 pContactTitle.classList.add('ctt-title');
 
                                 contactsGroupDiv.appendChild(pContactTitle);
@@ -77,7 +79,7 @@ const renderData = (event, to_id) => {
                                         socket.emit('save_message', {
                                             from:userId,
                                             to:to_id,
-                                            to_message_username: messages.data[0].to_message_username,
+                                            to_message_username: messages.data[0].to_message_username || event.srcElement.parentNode.innerText,
                                             message:textInput.value,
                                         });
                                         sentMessage.appendChild(receivedContent);

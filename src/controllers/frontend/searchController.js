@@ -138,19 +138,20 @@ const search = async(req, res) => {
         }
     }
 
+    let connections = [];
     /* ---------- socket.io */
     io.on('connection', (socket) => {
-        console.log(socket.id)
-        socket.on('disconnect', () => {
-        })
-
+        connections.push(socket.id);
+        if(connections[0] === socket.id){
+            io.removeAllListeners('connection');
+        }
+    
         socket.on('render_data', async(data) => {
             const  id = res.locals.userRegisterId;
             const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
-
             io.emit('message_content_loaded', {content: messages});
         })
-
+        
         socket.on('save_message', async(data) => {
             await MessagesModel.create({
                 from_message_id: data.from,
@@ -159,8 +160,8 @@ const search = async(req, res) => {
                 message: data.message,
             })
         })
-    })
-    
+})
+
     const foundUser = await UserModel.findOne({attributes: ['name'], 
         where: {register_id:userId}});
 

@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3030;
 const server = require('http').createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
+
 app.set('socketio', io);
 
 //Middleware

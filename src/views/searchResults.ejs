@@ -110,20 +110,26 @@
         const arrowDown = document.querySelector('.fa-up-down');
         const ChatContainer = document.querySelector('.chat-container-visible');
 
-        let socket;
+        let socket = null;
+        const initSocket = () => {
+            if(!socket){
+                socket = io({
+                    upgrade: false, 
+                    transports: ['websocket'], 
+                    reconnection: true, 
+                    forceNew: false
+                });
+            }
+        }
 
-        document.addEventListener("DOMContentLoaded", (event) => {            
+
+        document.addEventListener("DOMContentLoaded", (event) => {  
         const url = new URL(window.location.href);
         const current_page = "<%= context.current_page %>";
         const idx_page = document.querySelectorAll('.page-index');
         const idx_container = document.querySelectorAll('.page-idx-container');
-        // const talk_icon = document.querySelectorAll('.talk-icn');
-
-        // for(icon of talk_icon){
-        //     icon.addEventListener('click', e => {
-        //         renderData(userId);
-        //     })
-        // }
+        
+        initSocket();
 
         idx_container.forEach((container) => {
             if(container.children[0].innerText == current_page){

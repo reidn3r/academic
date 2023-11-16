@@ -3,6 +3,9 @@ const chatAppTalk = (event) => {
     ChatContainer.style.height = maxHeith+'vh';
     visible = true;
     if(visible){
+        if(!socket){
+            initSocket();
+        }
         renderData(event, to_id);
     }
 }
