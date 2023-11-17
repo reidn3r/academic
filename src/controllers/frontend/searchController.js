@@ -21,7 +21,6 @@ const search = async(req, res) => {
     if(state_id) queryData["state_id"] = Number(state_id);
     if(Object.keys(queryData).length == 0) return res.redirect('/v1');
     delete queryData.interest;
-
     /* 
         1. Caso haja preenchimento do campo de interesse,
         a busca deve ser feita de forma separada.
@@ -34,7 +33,6 @@ const search = async(req, res) => {
             tema de interesse de input
         */
         base_interest_str = `SELECT profile_id FROM topics_of_interest_profile AS tp INNER JOIN topics_of_interest AS ti ON ti.topic="${interest}" AND ti.id=tp.topic_id INNER JOIN profile AS p ON p.id=tp.profile_id `;
-        
         const [ interestQueryResult, interestQueryResultMetadata ] = await sequelize.query(base_interest_str);
         interestQuery=interestQueryResult;
     }
@@ -42,11 +40,14 @@ const search = async(req, res) => {
     let query_str = query(queryData);
     if(interest){
         /* 
-            3. Tratamento da string de busca no bd
-            caso o campo de interesse seja preenchido
-            com algum tema
+        3. Tratamento da string de busca no bd
+        caso o campo de interesse seja preenchido
+        com algum tema
         */
-        query_str += Object.keys(queryData).length == 0 ? "(" : " AND (";
+        query_str = base_interest_str;
+        // query_str += Object.keys(queryData).length == 0 ? "(" : " AND (";
+        // query_str += Object.keys(queryData).length == 0 ? "" : " AND (";
+        query_str += " AND (";
         for(let i=0; i<interestQuery.length; i++){
             query_str += `p.id=${interestQuery[i].profile_id} `;
             if(i != interestQuery.length-1){
@@ -54,6 +55,7 @@ const search = async(req, res) => {
             }
         }
         query_str += `)`;
+        // query_str += Object.keys(queryData).length == 0 ? "" : " )";
     }
     
     /* 
@@ -76,11 +78,13 @@ const search = async(req, res) => {
             dos perfis encontrados:
 
         profileData = [
-            {"name":"name_1","description":"lorem","image_id":x},{"name":"name_2","description":"ipsum","image_id":y}
+            {"name":"name_1","description":"lorem","image_id":x},
+            {"name":"name_2","description":"ipsum","image_id":y}
         ]
             
         Podem existir registros (register_id) na tabela user que não
-        criaram perfil (ou seja, não possuem register_id na tabela profile)
+        criaram perfil (ou seja, não possuem register_id
+        na tabela profile)
     */
 
     for( id of queryProfile ){
@@ -119,9 +123,9 @@ const search = async(req, res) => {
     */
 
     let count_query_string = interest ? query_str.replace("SELECT * FROM", "SELECT COUNT(*) AS c FROM") : countQuery(queryData);
-    const count_data = await sequelize.query(count_query_string);
-    let profile_qty = count_data[0][0].c;
-    
+    const [ countData, countDataMetada ] = await sequelize.query(count_query_string);
+    let profile_qty = !interest ? countData[0].c : countData.length>0 ? countData.length: 0;
+
     let current_page = page ? Math.abs(page) : 1; pages_idx = [];
     let max_idx = 0;
 
@@ -138,9 +142,10 @@ const search = async(req, res) => {
         }
     }
 
-    let connections = [];
     /* ---------- socket.io */
+    let connections = [];
     io.on('connection', (socket) => {
+        /* Garante que cada cliente faça uma conexão única com o servidor */
         connections.push(socket.id);
         if(connections[0] === socket.id){
             io.removeAllListeners('connection');
@@ -150,6 +155,8 @@ const search = async(req, res) => {
             const  id = res.locals.userRegisterId;
             const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
             io.emit('message_content_loaded', {content: messages});
+            socket.connect();
+            console.log('socket connected');
         })
         
         socket.on('save_message', async(data) => {
@@ -165,8 +172,18 @@ const search = async(req, res) => {
     const foundUser = await UserModel.findOne({attributes: ['name'], 
         where: {register_id:userId}});
 
+    const foundMessagesUser = await MessagesModel.findAll({attributes: ['to_message_username'],
+        where: {from_message_id:userId},
+        group: "to_message_username"});
+
+    let messagesUser = [];
+    for(user of foundMessagesUser){
+        messagesUser.push(user.to_message_username);
+    }
+
+    
     const UserName = foundUser.name;
-    context = { profileArray, pages_idx, current_page, userId, UserName };
+    context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser };
     return res.render('searchResults', {context});
 }
 

@@ -83,22 +83,17 @@
         </div>
 
         <div class="users-container">
+            <% for(user of context.messagesUser){ %>
             <div class="contact-group">
                 <div class="contact-name-group">
-                        <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
+                        <p class="contact-name"><%= user %></p>
                     <div class="notification">
                         <i class="fa-regular fa-bell" style="color: #fff;"></i>
                     </div>
                 </div>
                 <i class="fa-solid fa-circle-xmark"></i>
             </div>
-            
-            <div class="contact-group">
-                <div class="contact-name-group">
-                    <p class="contact-name" onclick="renderData(1)" >Lorem Ipsum</p>
-                </div>
-                <i class="fa-solid fa-circle-xmark"></i>
-            </div>
+            <% } %>
         </div>
         </div>
     </div>
@@ -117,8 +112,10 @@
                     upgrade: false, 
                     transports: ['websocket'], 
                     reconnection: true, 
-                    forceNew: false
+                    forceNew: true,
                 });
+                // socket.auth.token = "on";
+                socket.connect();
             }
         }
 

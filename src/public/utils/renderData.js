@@ -1,6 +1,7 @@
 const renderData = (event, to_id) => {
     // socket = io().connect();
         socket.emit('render_data', {to_id: to_id});
+        console.log("render data emmited");
         socket.on('message_content_loaded', (messageData) => {
             let chatContainer = document.querySelector("#chat-container");
             if(messageData.content){
@@ -12,6 +13,7 @@ const renderData = (event, to_id) => {
                     type: 'GET',
                     success: (messages) => {
                         /* Busca o template do chat de um usuário */
+                        let to_message_username = messages.length>0? messages.data[0].to_message_username : event.srcElement.parentNode.innerText;
                         $.ajax({
                             url: "/v1/chat/render",
                             type: 'GET',
@@ -79,7 +81,7 @@ const renderData = (event, to_id) => {
                                         socket.emit('save_message', {
                                             from:userId,
                                             to:to_id,
-                                            to_message_username: messages.data[0].to_message_username || event.srcElement.parentNode.innerText,
+                                            to_message_username: to_message_username,
                                             message:textInput.value,
                                         });
                                         sentMessage.appendChild(receivedContent);
