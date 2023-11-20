@@ -86,10 +86,7 @@
             <% for(user of context.messagesUser){ %>
             <div class="contact-group">
                 <div class="contact-name-group">
-                        <p class="contact-name"><%= user %></p>
-                    <div class="notification">
-                        <i class="fa-regular fa-bell" style="color: #fff;"></i>
-                    </div>
+                        <p class="contact-name" d-msg=<%= user.to_message_id %>><%= user.to_message_username %></p>
                 </div>
                 <i class="fa-solid fa-circle-xmark"></i>
             </div>
@@ -104,6 +101,15 @@
 
         const arrowDown = document.querySelector('.fa-up-down');
         const ChatContainer = document.querySelector('.chat-container-visible');
+        const username = document.querySelectorAll('.contact-name');
+
+        username.forEach((user) => {
+            user.addEventListener("click", (e) => {
+                // console.log(e);
+                const idx = e.target.getAttribute('d-msg');
+                renderData(e, idx);
+            })
+        })
 
         let socket = null;
         const initSocket = () => {
@@ -114,8 +120,6 @@
                     reconnection: true, 
                     forceNew: true,
                 });
-                // socket.auth.token = "on";
-                socket.connect();
             }
         }
 

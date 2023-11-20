@@ -155,8 +155,8 @@ const search = async(req, res) => {
             const  id = res.locals.userRegisterId;
             const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
             io.emit('message_content_loaded', {content: messages});
-            socket.connect();
-            console.log('socket connected');
+            // socket.connect();
+            // console.log('socket connected');
         })
         
         socket.on('save_message', async(data) => {
@@ -172,18 +172,23 @@ const search = async(req, res) => {
     const foundUser = await UserModel.findOne({attributes: ['name'], 
         where: {register_id:userId}});
 
-    const foundMessagesUser = await MessagesModel.findAll({attributes: ['to_message_username'],
+    const foundMessagesUser = await MessagesModel.findAll({attributes: ['to_message_username', 'to_message_id'],
         where: {from_message_id:userId},
-        group: "to_message_username"});
+        // group: "to_message_username"});
+        group: ["to_message_id", "to_message_username"]});
 
     let messagesUser = [];
     for(user of foundMessagesUser){
-        messagesUser.push(user.to_message_username);
+        let data = {}
+        data["to_message_username"]=user.to_message_username;
+        data["to_message_id"] = user.to_message_id;
+        messagesUser.push(data);
     }
-
+    let messagesUserLength = messagesUser.length;
     
+    console.log(messagesUser);
     const UserName = foundUser.name;
-    context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser };
+    context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser, messagesUserLength };
     return res.render('searchResults', {context});
 }
 
