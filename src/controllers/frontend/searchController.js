@@ -5,6 +5,7 @@ const UserModel = require('../../model/User');
 const MessagesModel = require('../../model/MessagesModel');
 const { query, countQuery } = require('../../public/utils/sqlQuery');
 const sequelize = require('../../config/sequelizeConfig');
+const { Op } = require('sequelize')
 
 const search = async(req, res) => {
     const { name, user_course, user_grade_id, university_id, city_id, state_id, page, interest } = req.query;
@@ -155,13 +156,13 @@ const search = async(req, res) => {
             const  id = res.locals.userRegisterId;
             const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
             io.emit('message_content_loaded', {content: messages});
-            // socket.connect();
-            // console.log('socket connected');
         })
         
         socket.on('save_message', async(data) => {
+            console.log(data);
             await MessagesModel.create({
                 from_message_id: data.from,
+                from_message_username: UserName,
                 to_message_id: data.to,
                 to_message_username: data.to_message_username,
                 message: data.message,
@@ -171,24 +172,30 @@ const search = async(req, res) => {
 
     const foundUser = await UserModel.findOne({attributes: ['name'], 
         where: {register_id:userId}});
+    
+    const UserName = foundUser.name;
 
-    const foundMessagesUser = await MessagesModel.findAll({attributes: ['to_message_username', 'to_message_id'],
-        where: {from_message_id:userId},
-        // group: "to_message_username"});
-        group: ["to_message_id", "to_message_username"]});
+    const foundMessagesUser = await MessagesModel.findAll({
+        attributes: ['from_message_username', 'to_message_username', 'to_message_id', 'from_message_id'],
+        where: {[Op.or]: [{from_message_id: userId},{ to_message_id: userId}]},
+        group: ["from_message_username", "to_message_username", "to_message_id", "from_message_id"]
+    });
 
     let messagesUser = [];
     for(user of foundMessagesUser){
         let data = {}
-        data["to_message_username"]=user.to_message_username;
-        data["to_message_id"] = user.to_message_id;
-        messagesUser.push(data);
+        data["message_username"] = user.to_message_id !== userId ? user.to_message_username : user.from_message_username;
+
+        data["message_id"] = user.to_message_id !== userId ? user.to_message_id : user.from_message_id;
+
+        let exists = messagesUser.some(u => {
+            return u.message_id === data.message_id
+        })
+
+        if(!exists) messagesUser.push(data);
     }
-    let messagesUserLength = messagesUser.length;
     
-    console.log(messagesUser);
-    const UserName = foundUser.name;
-    context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser, messagesUserLength };
+    context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser };
     return res.render('searchResults', {context});
 }
 

@@ -5,10 +5,10 @@ const chatAppArrowIcon = () => {
         // socket = io();
         initSocket();
     }
-    else{
-        if(socket){
-            socket.disconnect();
-            socket = null;
-        }
-    }
+    // else{
+    //     if(socket){
+    //         socket.disconnect();
+    //         socket = null;
+    //     }
+    // }
 }

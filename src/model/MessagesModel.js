@@ -24,6 +24,11 @@ const MessagesModel = sequelize.define('messages', {
         type: DataTypes.STRING(200),
         allowNull: false
     },
+    
+    from_message_username: {
+        type: DataTypes.STRING(50),
+        allowNull: false
+    },
 
     message:{
         type: DataTypes.STRING(200),
