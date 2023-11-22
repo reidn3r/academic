@@ -18,6 +18,9 @@
     <script src= "/utils/renderData.js"></script>
     <script src= "/utils/chatAppArrowIcon.js"></script>
     <script src= "/utils/chatAppTalk.js"></script>
+    <script src="/utils/renderClientMessage.js"></script>
+    <script src="/utils/renderComingMessage.js"></script>
+    <script src="/utils/saveNewMessage.js"></script>
 </head>
 <body>
     <div class="main-header">
@@ -95,7 +98,7 @@
         </div>
     </div>
     <script>
-        const maxHeith = 40;
+        const maxHeith = 35;
         const userId = Number("<%= context.userId %>");
         let visible = false;
 
@@ -121,7 +124,6 @@
                 });
             }
         }
-
 
         document.addEventListener("DOMContentLoaded", (event) => {  
         const url = new URL(window.location.href);

@@ -159,7 +159,6 @@ const search = async(req, res) => {
         })
         
         socket.on('save_message', async(data) => {
-            console.log(data);
             await MessagesModel.create({
                 from_message_id: data.from,
                 from_message_username: UserName,
@@ -167,6 +166,14 @@ const search = async(req, res) => {
                 to_message_username: data.to_message_username,
                 message: data.message,
             })
+
+            const newMessagePayload = { 
+                message: data.message,
+                to_message_id: data.to,
+                from_message_id: data.from
+            }
+            io.emit('new_message', (newMessagePayload));
+            console.log('new message emmited');
         })
 })
 

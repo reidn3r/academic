@@ -1,6 +1,18 @@
 const renderData = (event, to_id) => {
-    // socket = io().connect();
+    const messageContainerDiv  = document.createElement('div');
+    messageContainerDiv.classList.add('message-container');
+
     socket.emit('render_data', {to_id: to_id});
+    socket.on('new_message', (data) => {
+        console.log(data);
+        let userMsg = data.from_message_id == userId;
+        if(userMsg){ 
+            renderClientMessage(data, messageContainerDiv);
+        }
+        else{
+            renderComingMessage(data, messageContainerDiv);
+        }
+    })
     socket.on('message_content_loaded', (messageData) => {
         let chatContainer = document.querySelector("#chat-container");
         if(messageData.content){
@@ -12,7 +24,7 @@ const renderData = (event, to_id) => {
                 type: 'GET',
                 success: (messages) => {
                     /* Busca o template do chat de um usuário */
-                    let to_message_username = messages.length>0? messages.data[0].to_message_username : event.srcElement.parentNode.innerText;
+                    let to_message_username = messages.length>0? messages.data[0].to_message_username : event.srcElement.innerText.length > 0 ? event.srcElement.innerText.length : event.target.parentElement.innerText;
                     $.ajax({
                         url: "/v1/chat/render",
                         type: 'GET',
@@ -43,8 +55,8 @@ const renderData = (event, to_id) => {
                             const userContainerDiv = document.createElement('div');
                             userContainerDiv.classList.add('users-container');
                             
-                            const messageContainerDiv  = document.createElement('div');
-                            messageContainerDiv.classList.add('message-container');
+                            // const messageContainerDiv  = document.createElement('div');
+                            // messageContainerDiv.classList.add('message-container');
                             
                             const txtBox = document.createElement('div');
                             txtBox.classList.add('textbox-container');
@@ -66,57 +78,31 @@ const renderData = (event, to_id) => {
                             userContainerDiv.appendChild(txtBox);
                             txtBox.appendChild(sendBtn);
 
-                            /*  Renderiza novas mensagens em tela 
+                            //Renderiza mensagens salvas em tela 
+                            for(msg of messages.data){
+                                if(msg.from_message_id == userId){
+                                    renderClientMessage(msg, messageContainerDiv);
+                                }
+                                else{
+                                    renderComingMessage(msg, messageContainerDiv);
+                                }
+                            }
+
+                            /* 
+                                Renderiza nova mensagem do cliente em tela
                                 e salva no banco de dados
                             */
                             sendBtn.addEventListener('click', e => {
                                 if(textInput.value.length > 0){
-                                    receivedContent = document.createElement('p');
-                                    receivedContent.classList.add('sent-content');
-                                    
-                                    sentMessage = document.createElement('div');
-                                    sentMessage.classList.add('sent-message');
-                                    
-                                    socket.emit('save_message', {
+                                    const payload = {
                                         from:userId,
                                         to:to_id,
                                         to_message_username: to_message_username,
                                         message:textInput.value,
-                                    });
-                                    sentMessage.appendChild(receivedContent);
-                                    messageContainerDiv.appendChild(sentMessage);
-                                    
-                                    receivedContent.innerText = textInput.value;
-                                    textInput.value="";
+                                    }
+                                    saveNewMessage(payload, socket, messageContainerDiv, textInput);
                                 }
                             })
-                            for(msg of messages.data){
-                                let receivedContent = document.createElement('p');
-
-                                let sentMessage = document.createElement('div');
-                                sentMessage.classList.add('sent-message');
-
-                                let receivedMessage = document.createElement('div');
-                                receivedMessage.classList.add('received-message');
-                                if(msg.from_message_id == userId){
-                                    receivedContent.classList.add('sent-content');
-                                }
-                                else{
-                                    receivedContent.classList.add('received-content');
-                                }
-
-                                //Associa o conteúdo da mensagem a tag <p> criada
-                                receivedContent.textContent = msg.message;
-
-                                if(msg.from_message_id == userId){
-                                    sentMessage.appendChild(receivedContent);
-                                    messageContainerDiv.appendChild(sentMessage);
-                                }
-                                else{
-                                    receivedMessage.appendChild(receivedContent);
-                                    messageContainerDiv.appendChild(receivedMessage);
-                                }
-                            }
                         }
                     })
                 }
