@@ -6,12 +6,13 @@ const renderData = (event, to_id) => {
     socket.on('new_message', (data) => {
         console.log(data);
         let userMsg = data.from_message_id == userId;
-        if(userMsg){ 
-            renderClientMessage(data, messageContainerDiv);
-        }
-        else{
+        if(!userMsg){ 
+            // renderClientMessage(data, messageContainerDiv);
             renderComingMessage(data, messageContainerDiv);
         }
+        // else{
+        //     renderComingMessage(data, messageContainerDiv);
+        // }
     })
     socket.on('message_content_loaded', (messageData) => {
         let chatContainer = document.querySelector("#chat-container");
@@ -54,9 +55,6 @@ const renderData = (event, to_id) => {
                             */
                             const userContainerDiv = document.createElement('div');
                             userContainerDiv.classList.add('users-container');
-                            
-                            // const messageContainerDiv  = document.createElement('div');
-                            // messageContainerDiv.classList.add('message-container');
                             
                             const txtBox = document.createElement('div');
                             txtBox.classList.add('textbox-container');

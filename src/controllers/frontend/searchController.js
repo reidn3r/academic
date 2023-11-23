@@ -159,6 +159,7 @@ const search = async(req, res) => {
         })
         
         socket.on('save_message', async(data) => {
+            console.log('save-message-emitted');
             await MessagesModel.create({
                 from_message_id: data.from,
                 from_message_username: UserName,
