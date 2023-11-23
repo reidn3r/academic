@@ -4,19 +4,14 @@ const renderData = (event, to_id) => {
 
     socket.emit('render_data', {to_id: to_id});
     socket.on('new_message', (data) => {
-        console.log(data);
         let userMsg = data.from_message_id == userId;
         if(!userMsg){ 
-            // renderClientMessage(data, messageContainerDiv);
             renderComingMessage(data, messageContainerDiv);
         }
-        // else{
-        //     renderComingMessage(data, messageContainerDiv);
-        // }
     })
     socket.on('message_content_loaded', (messageData) => {
         let chatContainer = document.querySelector("#chat-container");
-        if(messageData.content){
+        if(messageData.content && messageData){
             //Renderiza tela de conversa
             $("#chat-container").empty();
             //Busca as mensagens

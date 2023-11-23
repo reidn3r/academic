@@ -143,23 +143,34 @@ const search = async(req, res) => {
         }
     }
 
+    const foundUser = await UserModel.findOne({attributes: ['name'], 
+    where: {register_id:userId}});
+    
+    const UserName = foundUser.name;
+    
     /* ---------- socket.io */
     let connections = [];
+    let connId = [];
     io.on('connection', (socket) => {
         /* Garante que cada cliente faça uma conexão única com o servidor */
         connections.push(socket.id);
         if(connections[0] === socket.id){
             io.removeAllListeners('connection');
         }
-    
+
+        /* Armazena o socket.id em cache do navegador */
+        const socketInfo = {"socketid" : socket.id};
+        // res.cookie('ConnId', socketInfo);
+        connId.push(socketInfo);
+
         socket.on('render_data', async(data) => {
             const  id = res.locals.userRegisterId;
             const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
-            io.emit('message_content_loaded', {content: messages});
+            // io.emit('message_content_loaded', {content: messages});
+            io.to(socket.id).emit('message_content_loaded', {content: messages});
         })
         
         socket.on('save_message', async(data) => {
-            console.log('save-message-emitted');
             await MessagesModel.create({
                 from_message_id: data.from,
                 from_message_username: UserName,
@@ -174,14 +185,8 @@ const search = async(req, res) => {
                 from_message_id: data.from
             }
             io.emit('new_message', (newMessagePayload));
-            console.log('new message emmited');
         })
 })
-
-    const foundUser = await UserModel.findOne({attributes: ['name'], 
-        where: {register_id:userId}});
-    
-    const UserName = foundUser.name;
 
     const foundMessagesUser = await MessagesModel.findAll({
         attributes: ['from_message_username', 'to_message_username', 'to_message_id', 'from_message_id'],
