@@ -150,18 +150,12 @@ const search = async(req, res) => {
     
     /* ---------- socket.io */
     let connections = [];
-    let connId = [];
     io.on('connection', (socket) => {
         /* Garante que cada cliente faça uma conexão única com o servidor */
         connections.push(socket.id);
         if(connections[0] === socket.id){
             io.removeAllListeners('connection');
         }
-
-        /* Armazena o socket.id em cache do navegador */
-        const socketInfo = {"socketid" : socket.id};
-        // res.cookie('ConnId', socketInfo);
-        connId.push(socketInfo);
 
         socket.on('render_data', async(data) => {
             const  id = res.locals.userRegisterId;

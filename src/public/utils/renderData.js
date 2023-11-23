@@ -7,6 +7,7 @@ const renderData = (event, to_id) => {
         let userMsg = data.from_message_id == userId;
         if(!userMsg){ 
             renderComingMessage(data, messageContainerDiv);
+            messageContainerDiv.scrollTop = messageContainerDiv.scrollHeight;
         }
     })
     socket.on('message_content_loaded', (messageData) => {
@@ -79,6 +80,7 @@ const renderData = (event, to_id) => {
                                 else{
                                     renderComingMessage(msg, messageContainerDiv);
                                 }
+                                messageContainerDiv.scrollTop = messageContainerDiv.scrollHeight;
                             }
 
                             /* 

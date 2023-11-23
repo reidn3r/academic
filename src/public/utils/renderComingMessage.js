@@ -11,4 +11,5 @@ const renderComingMessage = (payload, container) => {
 
     receivedMessage.appendChild(receivedContent);
     container.appendChild(receivedMessage);
+
 }

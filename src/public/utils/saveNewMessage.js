@@ -12,4 +12,6 @@ const saveNewMessage = (payload, socket, container, text) => {
     container.appendChild(sentMessage);
     receivedContent.innerText = text.value;
     text.value="";
+
+    container.scrollTop = container.scrollHeight;
 }
