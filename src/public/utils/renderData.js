@@ -24,7 +24,7 @@ const renderData = (event, to_id) => {
                 type: 'GET',
                 success: (messages) => {
                     /* Busca o template do chat de um usuário */
-                    let to_message_username = messages.length>0? messages.data[0].to_message_username : event.srcElement.innerText.length > 0 ? event.srcElement.innerText.length : event.target.parentElement.innerText;
+                    let to_message_username = messages.data.length>0? messages.data[0].to_message_username : event.srcElement.innerText.length > 0 ? event.srcElement.innerText: event.target.parentElement.innerText;
                     $.ajax({
                         url: "/v1/chat/render",
                         type: 'GET',
