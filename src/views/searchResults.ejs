@@ -15,6 +15,7 @@
     <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    
     <script src= "/utils/renderData.js"></script>
     <script src= "/utils/chatAppArrowIcon.js"></script>
     <script src= "/utils/chatAppTalk.js"></script>
@@ -83,18 +84,18 @@
         <div class="contacts">
             <div class="contacts-group-title">
                 <p class="ctt-title">Conversas Iniciadas</p>
-        </div>
-
-        <div class="users-container">
-            <% for(user of context.messagesUser){ %>
-            <div class="contact-group">
-                <div class="contact-name-group">
-                        <p class="contact-name" d-msg=<%= user.message_id %>><%= user.message_username %></p>
-                </div>
-                <i class="fa-solid fa-circle-xmark"></i>
             </div>
-            <% } %>
-        </div>
+
+            <div class="users-container">
+                <% for(user of context.messagesUser){ %>
+                <div class="contact-group">
+                    <div class="contact-name-group">
+                            <p class="contact-name" d-msg=<%= user.message_id %>><%= user.message_username %></p>
+                    </div>
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                <% } %>
+            </div>
         </div>
     </div>
     <script>

@@ -12,7 +12,7 @@ const renderData = (event, to_id) => {
     })
     socket.on('message_content_loaded', (messageData) => {
         let chatContainer = document.querySelector("#chat-container");
-        if(messageData.content && messageData){
+        if(messageData.content){
             //Renderiza tela de conversa
             $("#chat-container").empty();
             //Busca as mensagens
@@ -97,6 +97,60 @@ const renderData = (event, to_id) => {
                                     }
                                     saveNewMessage(payload, socket, messageContainerDiv, textInput);
                                 }
+                            })
+                            
+                            textInput.addEventListener("keypress", (e) => {
+                                if(e.key == "Enter" && textInput.value.length > 0){
+                                    const payload = {
+                                        from:userId,
+                                        to:to_id,
+                                        to_message_username: to_message_username,
+                                        message:textInput.value,
+                                    }
+                                    saveNewMessage(payload, socket, messageContainerDiv, textInput);
+                                }
+                                
+                            })
+
+                            const backArrow = document.querySelector('.back-btn');
+                            backArrow.addEventListener('click', (e) => {
+                                $(".users-container").empty();
+                                const contactTitle = document.querySelector('.ctt-title');
+                                contactTitle.innerText = "Conversas Iniciadas";
+
+                                //Requisição ajax p/ buscar contatos
+                                    //Renderizaçao de cada um
+                                $.ajax({
+                                    url: `/v1/chat/get/contacts/${userId}`,
+                                    type: 'GET',
+                                    success: (data) => {
+                                        for(user of data.messagesUser){
+                                            if(user.message_id != userId){
+                                                const contactGroupDiv = document.createElement('div');
+                                                contactGroupDiv.classList.add('contact-group');
+                                                
+                                                const contactNameGroupDiv = document.createElement('div');
+                                                contactNameGroupDiv.classList.add('contact-name-group');
+                                                
+                                                const contactNameParagraph = document.createElement('p');
+                                                contactNameParagraph.classList.add('contact-name');
+                                                contactNameParagraph.innerText = user.message_username;
+
+                                                contactNameGroupDiv.appendChild(contactNameParagraph);
+                                                contactNameGroupDiv.setAttribute("d-msg", user.message_id);
+                                                contactGroupDiv.appendChild(contactNameGroupDiv);
+                                                userContainerDiv.appendChild(contactGroupDiv);
+                                                
+                                                contactNameParagraph.addEventListener("click", (function(userId) {
+                                                    return function(e) {
+                                                        renderData(e, userId);
+                                                    };
+                                                })(user.message_id));
+                                            }
+                                        }
+                                    }
+                                    
+                                })
                             })
                         }
                     })
