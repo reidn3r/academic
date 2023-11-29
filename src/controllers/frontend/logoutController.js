@@ -18,13 +18,6 @@ const logoutController = async(req, res) => {
                 logout_date: dateFormat(new Date())
             })
         }
-        else{
-            // await logoutModel.create({
-            //     login_id: decoded.login_id,
-            //     profile_id: decoded.logout_profile_id,
-            //     logout_date: dateFormat(new Date())
-            // })
-        }
     })
     
     //Invalida o token movendo para o set de tokens inválidos

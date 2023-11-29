@@ -26,7 +26,7 @@ router.get('/search', verifyAuth,require('../controllers/frontend/searchControll
 
 router.get('/chat/render', require('../controllers/frontend/renderMessagesController'));
 router.get('/chat/get/contacts/:id', require('../controllers/frontend/getUserContactsController'));
-router.get('/messages/:from_id/:to_id', require('../controllers/api/api.messages'));
+router.get('/messages/:from_id/:to_id',require('../controllers/api/api.messages'));
 
 router.get('*', require('../controllers/frontend/pageNotFound'));
 

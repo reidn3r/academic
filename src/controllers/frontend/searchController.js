@@ -10,7 +10,6 @@ const { Op } = require('sequelize')
 const search = async(req, res) => {
     const { name, user_course, user_grade_id, university_id, city_id, state_id, page, interest } = req.query;
     const userId = res.locals.userRegisterId;
-    const io = req.app.get('socketio');
 
     let queryData = {};
     if(name) queryData["name"] = name;
@@ -148,40 +147,6 @@ const search = async(req, res) => {
     
     const UserName = foundUser.name;
     
-    /* ---------- socket.io */
-    let connections = [];
-    io.on('connection', (socket) => {
-        /* Garante que cada cliente faça uma conexão única com o servidor */
-        connections.push(socket.id);
-        if(connections[0] === socket.id){
-            io.removeAllListeners('connection');
-        }
-
-        socket.on('render_data', async(data) => {
-            const  id = res.locals.userRegisterId;
-            const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
-            // io.emit('message_content_loaded', {content: messages});
-            io.to(socket.id).emit('message_content_loaded', {content: messages});
-        })
-        
-        socket.on('save_message', async(data) => {
-            await MessagesModel.create({
-                from_message_id: data.from,
-                from_message_username: UserName,
-                to_message_id: data.to,
-                to_message_username: data.to_message_username,
-                message: data.message,
-            })
-
-            const newMessagePayload = { 
-                message: data.message,
-                to_message_id: data.to,
-                from_message_id: data.from
-            }
-            io.emit('new_message', (newMessagePayload));
-        })
-})
-
     const foundMessagesUser = await MessagesModel.findAll({
         attributes: ['from_message_username', 'to_message_username', 'to_message_id', 'from_message_id'],
         where: {[Op.or]: [{from_message_id: userId},{ to_message_id: userId}]},
@@ -205,5 +170,6 @@ const search = async(req, res) => {
     context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser };
     return res.render('searchResults', {context});
 }
+
 
 module.exports = search;
