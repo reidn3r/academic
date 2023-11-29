@@ -102,6 +102,7 @@
     <script>
         const maxHeith = 35;
         const userId = Number("<%= context.userId %>");
+        const UserNameSocketIO = "<%= context.UserName %>"
         let visible = false;
 
         const arrowDown = document.querySelector('.fa-up-down');
@@ -122,7 +123,8 @@
                     upgrade: false, 
                     transports: ['websocket'],
                     query: {
-                        registerId: userId
+                        registerId: userId,
+                        Username: UserNameSocketIO
                     }
                 });
             }

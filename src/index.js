@@ -8,6 +8,8 @@ const redisClient = require('./config/redisConfig');
 const dbConnect = require('./config/sequelizeConnect');
 const sequelize = require('./config/sequelizeConfig');
 
+const MessagesModel = require('./model/MessagesModel');
+
 require('dotenv').config({path: path.join(__dirname, '..', 'config.env')});
 
 const app = express();
@@ -22,6 +24,7 @@ const io = new Server(server);
 
 //socket.io
 io.on('connection', (socket) => {
+    console.log(socket.id);
     socket.on('render_data', async(data) => {
         const id = socket.handshake.query.registerId;
         const [messages, messagesMetadata] = await sequelize.query(`SELECT from_message_id, to_message_id, to_message_username, message, message_time FROM messages WHERE (to_message_id=${data.to_id} OR to_message_id=${id} )AND (from_message_id=${id} OR from_message_id=${data.to_id})`);
@@ -29,6 +32,7 @@ io.on('connection', (socket) => {
     })
     
     socket.on('save_message', async(data) => {
+        const UserName = socket.handshake.query.Username;
         await MessagesModel.create({
             from_message_id: data.from,
             from_message_username: UserName,
@@ -47,7 +51,7 @@ io.on('connection', (socket) => {
 })
 
 //Middleware
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
