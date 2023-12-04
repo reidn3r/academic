@@ -4,6 +4,7 @@ const router = express.Router();
 const authJwt = require('../middleware/login.auth');
 const verifyLogin = require('../middleware/verifyLogin.auth');
 const verifyAuth = require('../middleware/verifyAuth.auth');
+const checkAuth = require('../middleware/chekAuth.auth');
 
 router.get('/', authJwt, require('../controllers/frontend/homeController'));
 
@@ -19,8 +20,8 @@ router.get('/create/contacts', require('../controllers/frontend/profileContactsC
 
 router.get('/profile/:id', verifyAuth, require('../controllers/frontend/getProfileController'));
 router.get('/profile/:id/projects', verifyAuth, require('../controllers/frontend/profileProjectsController'));
-router.get('/profile/:id/edit/:project_id', verifyAuth, require('../controllers/frontend/editProjectController'));
-router.get('/profile/:id/edit', verifyAuth, require('../controllers/frontend/editProfileController'));
+router.get('/profile/:id/edit/:project_id', [verifyAuth, checkAuth], require('../controllers/frontend/editProjectController'));
+router.get('/profile/:id/edit', [verifyAuth, checkAuth], require('../controllers/frontend/editProfileController'));
 
 router.get('/search', verifyAuth,require('../controllers/frontend/searchController'));
 

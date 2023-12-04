@@ -18,54 +18,38 @@
 const query = (data) => {
     let select = "SELECT * FROM profile AS p INNER JOIN user AS u ON p.register_id=u.register_id ";
     let from = "WHERE ";
+    let topics = "INNER JOIN topics_of_interest_profile AS tip ON p.register_id=tip.profile_id "
+    let hasTopics = false;
     
     const fields = Object.keys(data);
     const values = Object.values(data);
 
     for(let j=0; j<fields.length; j++){
-        if(values[j] && fields[j] != "interest"){
-            if(typeof(values[j]) === "string"){
-                if(fields[j] === "name"){
-                    from += `u.${fields[j]} LIKE "%${values[j]}%"`;
-                }
-                else{
-                    from += `u.${fields[j]}="${values[j]}"`;
-                }
+        if(typeof(values[j]) === "string" && fields[j] !== "interest"){
+            if(fields[j] === "name"){
+                from += `u.${fields[j]} LIKE "%${values[j]}%"`;
             }
             else{
-                from += `u.${fields[j]}=${values[j]}`;
+                from += `u.${fields[j]}="${values[j]}"`;
             }
-            if(j <= fields.length - 2) from += " AND ";
         }
+        else if(fields[j] === "interest"){
+            from += `tip.topic_id=${values[j]} `;
+            hasTopics = !hasTopics;
+        }
+        else{
+            from += `u.${fields[j]}=${values[j]}`;
+        }
+        if(j <= fields.length - 2) from += " AND ";
     }
-    return select + from;
+    return hasTopics ? select + topics + from : select + from;
 }
 
 
 const countQuery = (data) => {
-    let select = "SELECT COUNT(*) AS c FROM profile AS p INNER JOIN user AS u ON p.register_id=u.register_id ";
-    let from = "WHERE ";
-    
-    const fields = Object.keys(data);
-    const values = Object.values(data);
-
-    for(let j=0; j<fields.length; j++){
-        if(values[j]){
-            if(typeof(values[j]) === "string"){
-                if(fields[j] === "name"){
-                    from += `u.${fields[j]} LIKE "%${values[j]}%"`;
-                }
-                else{
-                    from += `u.${fields[j]}="${values[j]}"`;
-                }
-            }
-            else{
-                from += `u.${fields[j]}=${values[j]}`;
-            }
-            if(j <= fields.length - 2) from += " AND ";
-        }
-    }
-    return select + from;
+    return data
+        .replace("SELECT * FROM ", "SELECT COUNT(*) AS c FROM ")
+        .split("LIMIT")[0];
 }
 
 

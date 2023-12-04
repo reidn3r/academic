@@ -20,46 +20,15 @@ const search = async(req, res) => {
     if(city_id) queryData["city_id"] = Number(city_id);
     if(state_id) queryData["state_id"] = Number(state_id);
     if(Object.keys(queryData).length == 0) return res.redirect('/v1');
-    delete queryData.interest;
     /* 
         1. Caso haja preenchimento do campo de interesse,
         a busca deve ser feita de forma separada.
     */
-    
-    let interestQuery;
-    if(interest){
-        /*
-            2. Busca o id dos perfis relacionados ao
-            tema de interesse de input
-        */
-        base_interest_str = `SELECT profile_id FROM topics_of_interest_profile AS tp INNER JOIN topics_of_interest AS ti ON ti.topic="${interest}" AND ti.id=tp.topic_id INNER JOIN profile AS p ON p.id=tp.profile_id `;
-        const [ interestQueryResult, interestQueryResultMetadata ] = await sequelize.query(base_interest_str);
-        interestQuery=interestQueryResult;
-    }
-    
+
     let query_str = query(queryData);
-    if(interest){
-        /* 
-        3. Tratamento da string de busca no bd
-        caso o campo de interesse seja preenchido
-        com algum tema
-        */
-        query_str = base_interest_str;
-        // query_str += Object.keys(queryData).length == 0 ? "(" : " AND (";
-        // query_str += Object.keys(queryData).length == 0 ? "" : " AND (";
-        query_str += " AND (";
-        for(let i=0; i<interestQuery.length; i++){
-            query_str += `p.id=${interestQuery[i].profile_id} `;
-            if(i != interestQuery.length-1){
-                query_str += `OR `;
-            }
-        }
-        query_str += `)`;
-        // query_str += Object.keys(queryData).length == 0 ? "" : " )";
-    }
-    
+
     /* 
-        4. LIMIT e OFFSET statement
+        2. LIMIT e OFFSET statement
         para tratar a qtde. de dados buscados e os dados
         referentes a paginação (offset)
     */
@@ -73,7 +42,7 @@ const search = async(req, res) => {
     
     let profileData = new Set();
     /* 
-        5. profileData é um set de objetos (posteriormente 
+        3. profileData é um set de objetos (posteriormente 
             transformado em array) contendo dados 
             dos perfis encontrados:
 
@@ -86,15 +55,15 @@ const search = async(req, res) => {
         criaram perfil (ou seja, não possuem register_id
         na tabela profile)
     */
-
-    for( id of queryProfile ){
+    
+    for( id of queryProfile ){        
         /* 
-            6. queryProfile contém o register_id de
-            todos os perfis que casam com a busca
+        4. queryProfile contém o register_id de
+        todos os perfis que casam com a busca
         */
         const foundProfile = await ProfileModel.findOne({
             attributes: ['name', 'description', 'image_id'],
-            where: { register_id: id.register_id },
+            where: { register_id: id.register_id || id.profile_id },
         })
         if(foundProfile){
             const profile_image = await ProfileImageInfo.findOne({where:{id: foundProfile.image_id}});
@@ -111,37 +80,36 @@ const search = async(req, res) => {
     }
 
     /*
-        7. Transforma o Set de buscas
+        5. Transforma o Set de buscas
         em Array. 
     */
     const profileArray = Array.from(profileData);
 
     /* 
-        8. Paginação
+        6. Paginação
             - Indices das paginas são contados do idx. da pg. atual-2
             até o minimo entre pg.atual+2 e o maior idx. possível
     */
+    const count_query_string = countQuery(query_str);
 
-    let count_query_string = interest ? query_str.replace("SELECT * FROM", "SELECT COUNT(*) AS c FROM") : countQuery(queryData);
     const [ countData, countDataMetada ] = await sequelize.query(count_query_string);
-    let profile_qty = !interest ? countData[0].c : countData.length>0 ? countData.length: 0;
+    let profile_qty = countData[0].c;    
 
-    let current_page = page ? Math.abs(page) : 1; pages_idx = [];
-    let max_idx = 0;
+    let current_page = page ? Math.abs(page) : 1; let pages_idx = [];
 
-    if(current_page>2){
-        max_idx = current_page + 3 > Math.floor(profile_qty/Number(process.env.PAGE_ELEMENTS))+2 ? Math.floor(profile_qty/Number(process.env.PAGE_ELEMENTS))+2 : current_page+3;
-        for(let i=current_page-2; i<max_idx; i++){
-            pages_idx.push(i);
-        }
+    const page_elements = Number(process.env.PAGE_ELEMENTS);
+    const ratio = Math.floor(profile_qty/page_elements);
+    console.log(ratio+1, current_page);
+
+    let i = current_page-2 <= 0 ? 1 : current_page == ratio+1 ? current_page-4: current_page+2> ratio + 1 ? current_page - 3: current_page-2;
+    
+    let j = current_page+2 > ratio ? ratio + 1 : i == 1 ? 5 : current_page+2;
+
+    while(i <= j){
+        pages_idx.push(i);
+        i++;
     }
-    else{
-        max_idx = current_page + 5 > Math.floor(profile_qty/Number(process.env.PAGE_ELEMENTS))+2 ? Math.floor(profile_qty/Number(process.env.PAGE_ELEMENTS))+2 : current_page+5;
-        for(let i=1; i< max_idx; i++){
-            pages_idx.push(i);
-        }
-    }
-
+        
     const foundUser = await UserModel.findOne({attributes: ['name'], 
     where: {register_id:userId}});
     
@@ -167,7 +135,7 @@ const search = async(req, res) => {
         if(!exists) messagesUser.push(data);
     }
     
-    context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser };
+    let context = { profileArray, pages_idx, current_page, userId, UserName, messagesUser };
     return res.render('searchResults', {context});
 }
 

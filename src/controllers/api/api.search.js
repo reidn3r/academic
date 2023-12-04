@@ -3,6 +3,7 @@ const StateModel = require('../../model/State_Info');
 const UniveristyModel = require('../../model/University');
 const GraduateInfoModel = require('../../model/Graduate_Info');
 const queryString = require('node:querystring');
+const TopicsInterestModel = require('../../model/Topics_Interest');
 
 const search = async(req, res) => {
     /* 
@@ -18,8 +19,6 @@ const search = async(req, res) => {
         data["name"] = clearName;
     }
     
-    if(topicInput.length > 1) data["interest"] = topicInput;
-
     //Curso de grad. 
     let userCourseLowerCase =  "";
     if(courseInput){
@@ -58,12 +57,10 @@ const search = async(req, res) => {
     let city = ""; let cityData = null;
     if(cityInput){
         const cityInfo = cityInput.split(' ');
-        if(cityInput){
-            for(let i=0; i< cityInfo.length; i++){
-                city += cityInfo[i][0].toUpperCase() + cityInfo[i].slice(1);
-                if(i == cityInfo.length - 2){
-                    city += " ";
-                }
+        for(let i=0; i< cityInfo.length; i++){
+            city += cityInfo[i][0].toUpperCase() + cityInfo[i].slice(1);
+            if(i == cityInfo.length - 2){
+                city += " ";
             }
         }
     }    
@@ -82,6 +79,18 @@ const search = async(req, res) => {
             data["state_id"] = stateData.id;
         }
     }
+
+    //topico de interesse
+    if(topicInput.length > 1){
+        const foundTopic = await TopicsInterestModel.findOne({
+            where: {topic: topicInput},
+            attributes: ["id"]
+        });
+        if(foundTopic){
+            data["interest"] = foundTopic.id;
+        }
+    }
+
     if(Object.keys(data).length == 0) return res.redirect('/v1');
 
     const url = queryString.stringify(data);

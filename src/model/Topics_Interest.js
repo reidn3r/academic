@@ -6,7 +6,6 @@ const topicsInterest = sequelize.define('topics_of_interest', {
     id:{
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
         autoIncrement: true,
         primaryKey: true,
     },

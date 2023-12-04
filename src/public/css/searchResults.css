@@ -235,6 +235,7 @@ body{
     height: 5vh;
     width: 35vw;
     
+    
     background-color: #4b4b4b;
     color: #fff;
     border-radius: 3px 3px 0 0;
@@ -320,14 +321,14 @@ body{
     margin-left: 0.8vw;
 }
 
-
 /* ----------- Messages */
-
 .message-container{
     display: flex;
     flex-direction: column;
-    max-height: 20vh;
+    max-height: 19vh;
+    /* max-height: 40vh; */
     overflow-y: auto;
+    /* overflow-y: scroll; */
     
 }
 
@@ -381,5 +382,9 @@ body{
     background-color: #fff;
     color: #181818;
     transition: 0.2s;
+    cursor: pointer;
+}
+
+#back-btn:hover{
     cursor: pointer;
 }
