@@ -149,8 +149,8 @@
                 if(response.ok) {
                     window.location.reload();
 
-                } else {
-                    console.error('Erro ao enviar dados para o servidor');
+                } else if(response.status === 400) {
+                    alert("Erro ao salvar dados. Verifique se todos os campos estão preenchidos");
                 }
             } catch (error) {
                 console.error('Erro de rede:', error);

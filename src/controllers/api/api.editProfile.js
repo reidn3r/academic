@@ -10,6 +10,8 @@ const editProfile = async(req, res) => {
     
     const { description, university_name, course_name, state_name, city_name, topics_JSON, register_id } = req.body;
 
+    if(!course_name || !city_name) return res.status(400).json({"message": "Missing course name"});
+
     const [profileId, profileIdMetadata] = await sequelize.query(`SELECT id FROM profile WHERE register_id=${register_id};`);
 
     const topics = JSON.parse(topics_JSON);
