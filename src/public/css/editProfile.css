@@ -29,13 +29,16 @@ select{
 }
 
 .home-container{
-    border: 1px solid #00FA9A;
-    background-color: #00FA9A;
-    border-radius: 5px;
-    padding: 15px;
-    margin-left: 8%;
-    transition: 0.5s;
+    /* border: 1px solid #00FA9A; */
+    /* background-color: #00FA9A; */
+    /* padding: 15px; */
+    
     color: #fff;
+    padding: 4px;
+
+    border-radius: 5px;
+    margin-left: 8%;
+    transition: box-shadow 0.5s;
 }
 
 .home-container > a{
@@ -43,9 +46,10 @@ select{
 }
 
 .home-container:hover{
-    border: 1px solid #00FF40;
-    color: #fff;
-    background-color: #1B4D3E;
+    /* border: 1px solid #00FF40; */
+    /* color: #fff; */
+    /* background-color: #1B4D3E; */
+    box-shadow: inset 0 0 0 1px #fff;
     transition: 0.5s;
     cursor: pointer;
 }
