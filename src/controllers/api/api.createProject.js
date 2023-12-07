@@ -12,11 +12,9 @@ const createProject = async(req ,res, next) => {
     
     const { projectDesc } = req.body;
     const register_id = req.session.profileId;
-    console.log(`register id:${register_id}`);
     
     const [profileId, metadata] = await sequelize.query(`SELECT id FROM profile WHERE register_id=${register_id}`);
-    console.log(`register id:${profileId[0].id}`);
-        
+
     let newProject = await ProjectData.create({
         profile_id: profileId[0].id,
         project_description: projectDesc,

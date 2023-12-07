@@ -16,10 +16,11 @@ const deleteProject = async(data) => {
             }
             else{
                 console.log(resp.message);
+                alert("Erro do servidor");
             }
         })
     }
     catch(err){
-        console.log(`Error: ${err}`);
+        alert("Erro do servidor");
     }
 }

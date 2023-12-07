@@ -99,7 +99,6 @@ const search = async(req, res) => {
 
     const page_elements = Number(process.env.PAGE_ELEMENTS);
     const ratio = Math.floor(profile_qty/page_elements);
-    console.log(ratio+1, current_page);
 
     let i = current_page-2 <= 0 ? 1 : current_page == ratio+1 ? current_page-4: current_page+2> ratio + 1 ? current_page - 3: current_page-2;
     

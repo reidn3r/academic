@@ -3,7 +3,6 @@ const wordData = require('../../data/exportWords');
 const ptbrWords = Object.values(wordData);
 
 let str = "       Engenharia     de      bar    "
-// let str = "engenharia de bar";
 
 const checkString = (str) => {    
     let result = str.normalize('NFD')
@@ -37,5 +36,3 @@ const checkString = (str) => {
     }
     return true;
 }
-
-console.log(checkString(str));
