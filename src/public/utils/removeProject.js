@@ -3,7 +3,7 @@ const deleteProject = async(data) => {
 
     try{
         await fetch('/v1/api/delete/project', {
-            method: "POST",
+            method: "DELETE",
             headers:{
                 "Content-Type": "application/json",
 
