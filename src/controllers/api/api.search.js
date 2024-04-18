@@ -1,9 +1,9 @@
-const CityModel = require('../../model/City_Info');
-const StateModel = require('../../model/State_Info');
-const UniveristyModel = require('../../model/University');
-const GraduateInfoModel = require('../../model/Graduate_Info');
+const CityModel = require('../../../models/City_Info');
+const StateModel = require('../../../models/State_Info');
+const UniveristyModel = require('../../../models/University');
+const GraduateInfoModel = require('../../../models/Graduate_Info');
 const queryString = require('node:querystring');
-const TopicsInterestModel = require('../../model/Topics_Interest');
+const TopicsInterest = require('../../../models/Topics_Interest');
 
 const search = async(req, res) => {
     /* 
@@ -82,7 +82,7 @@ const search = async(req, res) => {
 
     //topico de interesse
     if(topicInput.length > 1){
-        const foundTopic = await TopicsInterestModel.findOne({
+        const foundTopic = await TopicsInterest.findOne({
             where: {topic: topicInput},
             attributes: ["id"]
         });

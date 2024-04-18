@@ -1,5 +1,5 @@
-const companyModel = require('../model/Company');
-const registerModel = require('../model/Register');
+const companyModel = require('../../models/Company');
+const registerModel = require('../../models/Register');
 const dateFormat = require('../public/utils/dateFormat');
 
 const registerCompany = async(nameInput, emailInput, hashPw, cityId, stateId, cnpjInput) => {

@@ -40,7 +40,7 @@
             <div class="email-container">
                 <i class="fa-regular fa-envelope" style="color: #fd5c63;"></i>
                 <% if (context.emailInput) { %>
-                <input type="email" name="emailInput" class="email-ipt" value="<%= context.emailInput %>" placeholder="Email" required>
+                <input type="email" name="emailInput" class="email-ipt" value="<%= context.emailInput %>" placeholder="Email" required readonly>
                 <% } else { %>
                     <input type="email" name="emailInput" class="email-ipt" placeholder="Email" required >  
                 <% } %>
@@ -61,15 +61,14 @@
                 <i class="fa-solid fa-building-columns" style="color: #fd5c63;"></i>
                 <input autocomplete="off" list="universities-list" name="universityInput" class="univ-ipt" placeholder="Universidade de atividade" required>
                 <datalist id="universities-list">
-                    <% foundUniversities.forEach(function(univ) { %>
-                    <option value="<%= univ.university_name %>">
+                    <% foundUniversities.forEach((univ) => { %>
+                    <option value="<%= univ %>">
                     <% }); %>
                 </datalist>
             </div>
-
             <div class="user-course">
                 <i class="fa-solid fa-graduation-cap" style="color: #fd5c63;"></i>
-                <select id="course-list" name="userCourse" class="course-ipt" required>
+                <select id="course-list" name="userCourse" class="course-ipt">
                     <option value="">Selecione o Curso</option>
                 </select>
             </div>
@@ -78,8 +77,8 @@
                 <i class="fa-solid fa-location-arrow" style="color: #fd5c63;"></i>
                 <select id="state-input" class="state-ipt state-input" name="stateInput">
                     <option value="">Selecione o Estado</option>
-                    <% foundStates.map((state, idx) => { %>
-                    <option value="<%= state.state_name %>"><%= state.state_name %></option>
+                    <% foundStates.map((state) => { %>
+                    <option value="<%= state.state_acr %>"><%= state.state_name %></option>
                     <% }); %>
                 </select>
             </div>
@@ -91,7 +90,6 @@
                 </select>
             </div>
             
-
 
             <div class="activity-title">
                 <p class="title-desc">Atividade</p>
@@ -137,56 +135,57 @@
         const univSelect = document.querySelector('.univ-ipt')
         const courseSelect = document.querySelector('.course-ipt');
         
-        let baseUrl = window.location.href;
-        let url = baseUrl.slice(-1) != "/" ? "/v1/api/" : 'api/';
-
         stateSelect.addEventListener('change', (e) => {
-            $.post({
-                url: url + 'city',
-                data: { stateName: e.target.value },
-            })
-            .done(function(response){
-                $("#city-list").find('option').remove();
-                const option = document.createElement('option');
-                option.value = "";
-                option.textContent = "Selecione a Cidade";
-                citySelect.appendChild(option);
-                
-                response.Cities.forEach((city) => {
-                    const option = document.createElement('option');
-                    option.value = city.city_name;
-                    option.textContent = city.city_name;
-                    citySelect.appendChild(option);
-                });
-            })
-            .fail(() => {
-                alert("Falha na busca, tente novamente.");
-            })
+            citySelect.innerHTML = '';
+            const data = { state: e.target.value };
+            try{
+                fetch(`/v1/api/city/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                    data.data.forEach(city => {
+                        const option = document.createElement('option');
+                        option.text = city.city_name;
+                        option.value = city.city_name;
+                        citySelect.appendChild(option);
+                    });
+                })
+            }
+            catch(err){
+                alert("Erro ao buscar cidades");
+            }
         })
         
         univSelect.addEventListener('change', (e) => {
-            $.post({
-                url: url + 'courses',
-                data: { universityName: e.target.value },
-            })
-            .done((resp) => {
-                $("#course-list").find('option').remove();
-                const option = document.createElement('option');
-                option.value = "";
-                option.textContent = "Selecione o Curso";
-                courseSelect.appendChild(option);
-                
-                resp.courses.forEach((course) => {
-                    const option = document.createElement('option');
-                    option.value = course.course_name;
-                    option.textContent = course.course_name;
-                    courseSelect.appendChild(option);
-                });
-            })
-        })
-        .fail(() => {
-            alert("Falha na busca, tente novamente.");
-        })
+            courseSelect.innerHTML = '';
+            const data = { university: e.target.value };
+            try{
+                fetch(`/v1/api/courses`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        for(const course of data.courses){
+                            const option = document.createElement('option');
+                            option.value = course;
+                            option.textContent = course;
+                            courseSelect.appendChild(option);
+                        }
+                    })
+                }
+            catch(err){
+                alert("Erro ao buscar cursos da universidades");
+            } })
     </script>
 </body>
 </html>

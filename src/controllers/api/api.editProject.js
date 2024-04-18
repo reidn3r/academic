@@ -1,6 +1,6 @@
 const sequelize = require('../../config/sequelizeConfig');
-const projectImageDataModel = require('../../model/Profile_Project_Image_Data');
-const projectDataModel = require('../../model/Profile_Project_Data');
+const projectImageDataModel = require('../../../models/Profile_Project_Image_Data');
+const projectDataModel = require('../../../models/Profile_Project_Data');
 
 const editProject = async(req, res) => {
     /* 

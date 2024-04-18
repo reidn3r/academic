@@ -1,9 +1,9 @@
-const UnivModel = require('../../model/University');
-const StateModel = require('../../model/State_Info');
-const CityModel = require('../../model/City_Info');
-const ProfileImageModel = require('../../model/Profile_Image_Info');
-const TopicsOfInterest = require('../../model/Topics_Interest');
-const TopicsOfInterestProfile = require('../../model/Topics_of_Interest_Profile');
+const UnivModel = require('../../../models/University');
+const StateModel = require('../../../models/State_Info');
+const CityModel = require('../../../models/City_Info');
+const ProfileImageModel = require('../../../models/Profile_Image_Info');
+const TopicsOfInterest = require('../../../models/Topics_Interest');
+const TopicsOfInterestProfile = require('../../../models/Topics_of_Interest_Profile');
 const sequelize = require('../../config/sequelizeConfig');
 
 const editProfile = async(req, res) => {

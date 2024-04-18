@@ -1,0 +1,200 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:root@localhost:33061/academicdb"
+}
+
+// model CityInfo {
+//   id             Int              @id @default(autoincrement())
+//   city_info String
+// }
+
+// model StateInfo{}
+
+model ContactType {
+  id              Int               @id @default(autoincrement())
+  type            String
+  ProfileContacts ProfileContacts[]
+}
+
+model GraduateInfo {
+  id    Int    @id @default(autoincrement())
+  grade String
+}
+
+model LinkType {
+  id           Int            @id @default(autoincrement())
+  type         String
+  ProfileLinks ProfileLinks[]
+}
+
+model Profile {
+  id          Int      @id @default(autoincrement())
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  contacts                ProfileContacts[]
+  ProfileLinks            ProfileLinks[]
+  UserPosGrade            UserPosGrade[]
+  ProfileProjectData      ProfileProjectData[]
+  ProfileImageInfo        ProfileImageInfo[]
+  TopicsOfInterestProfile TopicsOfInterestProfile[]
+
+  Session Session[]
+
+  Register   Register? @relation(fields: [registerId], references: [id])
+  registerId Int?
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+}
+
+model ProfileContacts {
+  id              Int    @id @default(autoincrement())
+  contact_content String
+
+  contact       ContactType @relation(fields: [contactTypeId], references: [id])
+  Profile       Profile     @relation(fields: [profileId], references: [id])
+  profileId     Int
+  contactTypeId Int
+}
+
+model PosGradeInfo {
+  id           Int            @id @default(autoincrement())
+  pos_grade    String
+  UserPosGrade UserPosGrade[]
+}
+
+model ProfileImageInfo {
+  id                 Int      @id @default(autoincrement())
+  image_data         Bytes    @db.MediumBlob
+  image_content_type String
+  createdAt          DateTime @default(now())
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int     @unique
+}
+
+model ProfileLinks {
+  id  Int    @id @default(autoincrement())
+  url String
+
+  linkType   LinkType @relation(fields: [linkTypeId], references: [id])
+  linkTypeId Int
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int
+}
+
+model ProfileProjectData {
+  id                  Int    @id @default(autoincrement())
+  project_description String
+
+  profile                 Profile                   @relation(fields: [profileId], references: [id])
+  profileId               Int
+  ProfileProjectImageData ProfileProjectImageData[]
+}
+
+model ProfileProjectImageData {
+  id                 Int      @id @default(autoincrement())
+  image_data         Bytes    @db.MediumBlob
+  image_content_type String
+  createdAt          DateTime @default(now())
+
+  project              ProfileProjectData @relation(fields: [profileProjectDataId], references: [id])
+  profileProjectDataId Int
+}
+
+model ProfileTopicsInterest {
+  id         Int @id @default(autoincrement())
+  topic_id   Int
+  profile_id Int
+}
+
+model RegisterType {
+  id       Int        @id @default(autoincrement())
+  type     String
+  Register Register[]
+}
+
+model Register {
+  id             Int          @id @default(autoincrement())
+  registerType   RegisterType @relation(fields: [registerTypeId], references: [id])
+  registerTypeId Int
+  User           User[]
+  Profile        Profile[]
+}
+
+model Session {
+  id          Int       @id @default(autoincrement())
+  login_date  DateTime  @default(now())
+  logout_date DateTime? @db.DateTime()
+  profileId   Int
+  profile     Profile   @relation(fields: [profileId], references: [id])
+}
+
+model TopicsInterest {
+  id                      Int                       @id @default(autoincrement())
+  topic                   String
+  TopicsOfInterestProfile TopicsOfInterestProfile[]
+}
+
+model TopicsOfInterestProfile {
+  id Int @id @default(autoincrement())
+
+  topic            TopicsInterest @relation(fields: [topicsInterestId], references: [id])
+  topicsInterestId Int
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int
+}
+
+model UserActivity {
+  id            Int    @id @default(autoincrement())
+  user_activity String @unique
+  User          User[]
+}
+
+model UserGrade {
+  id            Int @id @default(autoincrement())
+  user_grade_id Int
+  user_id       Int
+  profile_id    Int
+}
+
+model UserPosGrade {
+  id         Int @id @default(autoincrement())
+  profile_id Int
+
+  posGrade       PosGradeInfo @relation(fields: [posGradeInfoId], references: [id])
+  posGradeInfoId Int
+
+  profile   Profile @relation(fields: [profileId], references: [id])
+  profileId Int
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  university  String
+  city        String
+  state       String
+  email       String   @unique
+  password    String
+  name        String
+  cpf         String   @unique
+  user_sex    String //enum
+  user_course String
+  birthday    DateTime
+  createdAt   DateTime @default(now())
+
+  userActivity   UserActivity @relation(fields: [userActivityId], references: [id])
+  userActivityId Int
+
+  register   Register  @relation(fields: [registerId], references: [id])
+  registerId Int       @unique
+  Profile    Profile[]
+}

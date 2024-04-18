@@ -14,7 +14,7 @@
     
 
         <link rel="stylesheet" href="/css/profile.css">
-    <title><%= context.profileName %></title>
+    <title><%= context.ProfileData.name %></title>
 </head>
 <body>
     
@@ -22,21 +22,21 @@
 
     <div class="main-container">
         <div class="profile-img-container">
-            <img src="data:<%= context.mimeType %>;base64,<%= context.profileImage.toString('base64') %>" alt="profile-image" class="profile-image" >
+            <img src="data:<%= context.ProfileData.ProfileImageInfo[0].image_content_type %>;base64,<%= context.ProfileData.ProfileImageInfo[0].image_data.toString('base64') %>" alt="profile-image" class="profile-image" >
             <div class="university-group">
                 <i class="fa-solid fa-graduation-cap" style="color: #ff8800;"></i>
-                <p class="university-name"><%= context.profileUniversity %></p>
+                <p class="university-name"><%= context.ProfileData.user.university %></p>
             </div>
         </div>
         <div class="profile-desc-container">
-            <p class="profile-name"><%= context.profileName %></p>
-            <p class="profile-desc"><%= context.profileDesc %></p>
+            <p class="profile-name"><%= context.ProfileData.name %></p>
+            <p class="profile-desc"><%= context.ProfileData.description %></p>
         </div>
     </div>
     
     <div class="middle-container">
         <div class="project-list-container">
-            <% if (context.auth) { %>
+            <% if(context.auth) { %>
             <div class="list-title">
                 <p class="title">Exiba e gerencie seus projetos no seu perfil</p>
                 <div class="add-btn">
@@ -45,19 +45,17 @@
             </div>
             <% } %>
             
-            <% if(context.data.length > 0){ %>
+            <% if(context.ProfileData.ProfileProjectData.length > 0){ %>
                 <div class="project-list">
-                    <% for(let i=0;  i<context.data.length; i++){ %>
+                    <% for(let i=0;  i<context.ProfileData.ProfileProjectData.length; i++){ %>
                     <div class="project-container">
                         <div class="image-group">
-                            <% for(let j=0; j < context.data[i].image_data.length; j++){ %>
                             <div class="project-image-carrousel">
-                                <img src="data:<%= context.data[i].image_mimetype[j]%>;base64, <%= context.data[i].image_data[j].toString('base64')%>" alt="project-image" class="project-image">
+                                <h1>RENDERIZAR IMAGENS DE PROJETO CORRETAMENTE!!!!!!!!!!!!!!!!!!!!!!!!!</h1>
                             </div>
-                            <% } %>
                         </div>
                     <div class="project-description-container">
-                        <p class="project-description"><%= context.data[i].project_description %></p>
+                        <p class="project-description"><%= context.ProfileData.ProfileProjectData[i].project_description %></p>
                     </div>
                 </div>
                 <% } %>

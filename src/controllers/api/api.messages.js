@@ -1,6 +1,6 @@
-const UserModel = require('../../model/User');
+const UserModel = require('../../../models/User');
 const sequelize = require('../../config/sequelizeConfig');
-const redisClient = require('../../config/redisConfig');
+const redisClient = require('../../config/redis-config');
 
 const messages = async(req, res) => {
     const {from_id, to_id} = req.params;

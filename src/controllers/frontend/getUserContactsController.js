@@ -1,4 +1,4 @@
-const MessagesModel = require('../../model/MessagesModel');
+const MessagesModel = require('../../../models/MessagesModel');
 const { Op } = require('sequelize');
 
 const getUsers = async(req, res) => {

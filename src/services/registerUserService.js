@@ -1,5 +1,5 @@
-const userModel = require('../model/User');
-const registerModel = require('../model/Register');
+const userModel = require('../../models/User');
+const registerModel = require('../../models/Register');
 const dateFormat = require('../public/utils/dateFormat');
 
 const registerUser = async(universityId, userActivityId, nameInput, emailInput, hashPw, cityId, stateId, cpfInput, birthInput) => {

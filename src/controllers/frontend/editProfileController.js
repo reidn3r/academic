@@ -1,6 +1,6 @@
-const StateModel = require('../../model/State_Info');
-const UnivModel = require('../../model/University');
-const UserModel = require('../../model/User');
+const StateModel = require('../../../models/State_Info');
+const UnivModel = require('../../../models/University');
+const UserModel = require('../../../models/User');
 
 const sequelize = require('../../config/sequelizeConfig');
 

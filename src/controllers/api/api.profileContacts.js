@@ -1,6 +1,6 @@
-const ProfileContacts = require('../../model/Profile_Contacts');
-const UserGrade = require('../../model/User_Grade');
-const UserPosGrade = require("../../model/User_Pos_Grade");
+const ProfileContacts = require('../../../models/Profile_Contacts');
+const UserGrade = require('../../../models/User_Grade');
+const UserPosGrade = require("../../../models/User_Pos_Grade");
 const sequelize = require('../../config/sequelizeConfig');
 
 const profileData = async(req, res) => {

@@ -22,7 +22,7 @@
 <body>
     <div class="main-header">
         <div class="edit-container">
-            <a href="/v1/profile/<%= context.RegisterId %>">
+            <a href="/v1/profile/<%= context.profileId %>">
                 <p class="edit-btn">Perfil</p>
             </a>
             </div>
@@ -45,15 +45,15 @@
                     <div class="input-group">
                         <select name="courseInput" class="curso-input text-ipt">
                             <option value="">Selecione o Curso de Graduação</option>
-                            <% context.Courses.map((course, idx) => { %>
-                                <option value="<%= course.course_name %>"><%= course.course_name %></option>
+                            <% context.courses.map((course) => { %>
+                                <option value="<%= course.Curso %>"><%= course.Curso %></option>
                             <% }) %>
                         </select>
 
 
                         <select name="topicInput" class="topic-input list-ipt">
                             <option value="">Selecione o Tópico de Interesse</option>
-                            <% context.Topics.map((topic, idx) => { %>
+                            <% context.topicsInterest.map((topic, idx) => { %>
                                 <option value="<%= topic.topic %>"><%= topic.topic %></option>
                             <% }) %>
 
@@ -62,15 +62,15 @@
                     <div class="input-group">
                         <select id="graduation-list" name="gradInput" class="grad-input list-ipt" placeholder="Graduado/Pós">
                             <option value="">Selecione Graduação/Pós </option>
-                            <% context.GradInfo.map((grad, idx) => { %>
+                            <% context.graduation.map((grad, idx) => { %>
                                 <option value="<%= grad.grade %>"><%= grad.grade.charAt(0).toUpperCase() + grad.grade.slice(1) %></option>
                             <% }) %>
                         </select>
                         
                         <input list="university-list" autocomplete="off" type="list" name="universityInput" class="university-input list-ipt" placeholder="Universidade">
                         <datalist id="university-list">
-                            <% for( univ of context.Universities ) { %>
-                            <option value="<%= univ.university_name %>">
+                            <% for( univ of context.universities ) { %>
+                            <option value="<%= univ %>">
                             <% } %>
                         </datalist>
                     </div>
@@ -78,8 +78,8 @@
                     <div class="input-group">
                         <select id="state-input" name="stateInput" class="state-input list-ipt">
                             <option value="">Selecione o Estado</option>
-                            <% context.States.map((st, idx) => { %>
-                                <option state-id="<%= st.state_id %>" value="<%=  st.state_name %>"><%=  st.state_name %></option>
+                            <% context.states.map((st, idx) => { %>
+                                <option state-id="<%= st.COD %>" value="<%=  st.SIGLA %>"><%=  st.NOME %></option>
                             <% }) %>
                         </select>
 
@@ -100,37 +100,42 @@
         const stateSelect = document.querySelector('.state-input');
         const citySelect = document.querySelector('.city-input')
 
-        stateSelect.addEventListener('change', (e) => {
-            let url = window.location.href;
-            if(url.slice(-1) != '/'){
-                url = '/v1/api/city';
-            }
-            else{
-                url = 'api/city';
-            }
+        stateSelect.addEventListener('change', async (e) => {
+        let url = window.location.href;
+        url = url.slice(-1) !== '/' ? '/v1/api/city' : 'api/city';
 
-            $.post({
-                url: url,
-                data: { stateName: e.target.value },
-            })
-            .done(function(response){
-                $("#city-list").find('option').remove();
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ state: e.target.value })
+            });
+
+            if (!response.ok) {
+                throw new Error('Falha na busca, tente novamente.');
+            }
+            const responseData = await response.json();
+            const cityList = document.getElementById('city-list');
+            cityList.innerHTML = ''; // Limpa todas as opções existentes
+
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'Selecione a Cidade';
+            cityList.appendChild(option);
+
+            responseData.data.forEach((city) => {
                 const option = document.createElement('option');
-                option.value = "";
-                option.textContent = "Selecione a Cidade";
-                citySelect.appendChild(option);
-                
-                response.Cities.forEach((city) => {
-                    const option = document.createElement('option');
-                    option.value = city.city_name;
-                    option.textContent = city.city_name;
-                    citySelect.appendChild(option);
-                });
-            })
-            .fail(() => {
-                alert("Falha na busca, tente novamente.");
-            })
-        })
+                option.value = city.city_name;
+                option.textContent = city.city_name;
+                cityList.appendChild(option);
+            });
+        } catch (error) {
+            console.error(error);
+            alert('Falha na busca, tente novamente.');
+        }
+    });
     </script>
 </body>
 </html>

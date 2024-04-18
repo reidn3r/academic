@@ -1,6 +1,6 @@
 const sequelize = require('../../config/sequelizeConfig');
-const ProjectImageData = require('../../model/Profile_Project_Image_Data');
-const ProjectData = require('../../model/Profile_Project_Data');
+const ProjectImageData = require('../../../models/Profile_Project_Image_Data');
+const ProjectData = require('../../../models/Profile_Project_Data');
 const dateFormat = require('../../public/utils/dateFormat');
 
 const createProject = async(req ,res, next) => {

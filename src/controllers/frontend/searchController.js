@@ -1,8 +1,8 @@
-const ProfileImageInfo = require('../../model/Profile_Image_Info');
-const ProfileModel = require('../../model/Profile');
-const UserModel = require('../../model/User');
+const ProfileImageInfo = require('../../../models/Profile_Image_Info');
+const ProfileModel = require('../../../models/Profile');
+const UserModel = require('../../../models/User');
 
-const MessagesModel = require('../../model/MessagesModel');
+const MessagesModel = require('../../../models/MessagesModel');
 const { query, countQuery } = require('../../public/utils/sqlQuery');
 const sequelize = require('../../config/sequelizeConfig');
 const { Op } = require('sequelize')

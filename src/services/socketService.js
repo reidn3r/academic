@@ -1,5 +1,5 @@
 const sequelize = require('../config/sequelizeConfig');
-const MessagesModel = require('../model/MessagesModel');
+const MessagesModel = require('../../models/MessagesModel');
 
 const socket = (io) => {
     io.on('connection', (socket) => {

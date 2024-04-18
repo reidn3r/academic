@@ -32,7 +32,7 @@
             <input type="file" accept="image/*" onChange="updateImage(event)"  class="update-image" id="update-image" name="profile-image" enctype="multipart/form-data">
         </div>
         <div class="profile-desc-container">
-            <% if(context.profileData.newUser && context.profileData.newUser.cpf ){ %>
+            <% if(context.profileData.user && context.profileData.user.cpf ){ %>
             <p class="description-title">Dê uma descrição sobre você</p>
             <% } %>
             <textarea name="profileDesc" class="profile-description" required></textarea>
