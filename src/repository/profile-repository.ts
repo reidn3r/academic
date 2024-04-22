@@ -43,7 +43,12 @@ export class ProfileRepository{
             },
             include:{
                 ProfileImageInfo: true,
-                ProfileProjectData: true,
+                ProfileProjectData: {
+                    select:{
+                        project_description: true,
+                        ProfileProjectImageData:true
+                    }
+                },
                 user: {
                     select: {
                         university: true

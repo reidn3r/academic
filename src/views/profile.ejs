@@ -50,9 +50,11 @@
                     <% for(let i=0;  i<context.ProfileData.ProfileProjectData.length; i++){ %>
                     <div class="project-container">
                         <div class="image-group">
+                            <% for(let j=0; j < context.ProfileData.ProfileProjectData[i].ProfileProjectImageData.length; j++){ %>
                             <div class="project-image-carrousel">
-                                <h1>RENDERIZAR IMAGENS DE PROJETO CORRETAMENTE!!!!!!!!!!!!!!!!!!!!!!!!!</h1>
+                                <img src="data:<%= context.ProfileData.ProfileProjectData[i].ProfileProjectImageData[j].image_content_type %>;base64,<%= context.ProfileData.ProfileProjectData[i].ProfileProjectImageData[j].image_data.toString('base64') %>" alt="project-image" class="project-image">
                             </div>
+                            <% } %>
                         </div>
                     <div class="project-description-container">
                         <p class="project-description"><%= context.ProfileData.ProfileProjectData[i].project_description %></p>

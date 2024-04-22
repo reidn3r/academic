@@ -1,4 +1,6 @@
 import { Router } from 'express';
+
+//routes
 import { Login } from '../controllers/api/api.login';
 import { FetchCities } from '../controllers/api/api.get-city';
 import { FetchCourses } from '../controllers/api/api.get-undergrad-courses';
@@ -7,6 +9,7 @@ import { CreateProfile } from '../controllers/api/api.create-profile';
 import { BuildSearchURL } from '../controllers/api/api.search';
 import { CreateProject } from '../controllers/api/api.create-project';
 
+//middleware
 import { MulterConfig } from '../config/multer-config';
 import { checkAuthenticationAtLogin } from '../middleware/check-if-authenticated-at-login.auth';
 
