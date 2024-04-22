@@ -5,6 +5,7 @@ import { FetchCourses } from '../controllers/api/api.get-undergrad-courses';
 import { Register } from '../controllers/api/api.register';
 import { CreateProfile } from '../controllers/api/api.create-profile';
 import { BuildSearchURL } from '../controllers/api/api.search';
+import { CreateProject } from '../controllers/api/api.create-project';
 
 import { MulterConfig } from '../config/multer-config';
 import { checkAuthenticationAtLogin } from '../middleware/check-if-authenticated-at-login.auth';
@@ -23,6 +24,7 @@ router.post('/city', FetchCities);
 router.post('/courses', FetchCourses);
 
 router.post('/search', BuildSearchURL);
+router.post('/create/project', MulterConfig.array('imageInput', 3) ,CreateProject);
 
 // router.post('/create/contacts', require('../controllers/api/api.profileContacts'));
 

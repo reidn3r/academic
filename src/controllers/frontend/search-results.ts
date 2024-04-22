@@ -101,7 +101,6 @@ export const SearchResults = async(req:any, res:any) => {
         }
     
         let context = { result, pages_idx, current_page};
-        // return res.json({context})
         return res.render('searchResults', {context});
     }
     catch(err){

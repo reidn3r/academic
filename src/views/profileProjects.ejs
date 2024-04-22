@@ -29,25 +29,25 @@
         <div class="projects-title">
             <p class="title">Projetos Atuais (Permitido add. mais <%= context.remainingSize %> projetos)</p>
         </div>
-        <% if(context.data.length > 0){ %>
-        <% for(let i=0; i < context.data.length; i++){ %>
+        <% if(context.data.ProfileProjectData.length > 0){ %>
+        <% for(let i=0; i < context.data.ProfileProjectData.length; i++){ %>
         <div class="loaded-project">
             <div class="image-container">
-            <% for(let j=0; j < context.data[i].image_data.length; j++){ %>
+            <% for(let j=0; j < context.data.ProfileProjectData[i].ProfileProjectImageData.length; j++){ %>
                 <div class="project-image">
-                    <img class="project-image-loaded" src="data:<%= context.data[i].image_mimetype[j] %>;base64,<%= context.data[i].image_data[j].toString('base64') %>" alt="project-image">
+                    <img class="project-image-loaded" src="data:<%= context.data.ProfileProjectData[i].ProfileProjectImageData[j].image_content_type %>;base64,<%= context.data.ProfileProjectData[i].ProfileProjectImageData[j].image_data.toString('base64') %>" alt="project-image">
                 </div>
             <% } %>
             </div>
             <div class="project-description">
-                    <p class="project-desc"> <%= context.data[i].project_description %></p>
+                    <p class="project-desc"> <%= context.data.ProfileProjectData[i].project_description %></p>
                 </div>
             <div class="update-container">
                 <div class="delete-group">
-                    <i class="fa-solid fa-trash fa-xl delete-icon" data-project-id="<%= context.data[i].project_id %>"></i>
+                    <i class="fa-solid fa-trash fa-xl delete-icon" data-project-id="<%= context.data.ProfileProjectData[i].id %>"></i>
                 </div>
                 <div class="update-group">
-                    <i class="fa-solid fa-pen fa-xl update-icon" data-project-id="<%= context.data[i].project_id %>"> </i>
+                    <i class="fa-solid fa-pen fa-xl update-icon" data-project-id="<%= context.data.ProfileProjectData[i].id %>"> </i>
                 </div>
             </div>
             </div>
@@ -120,6 +120,7 @@
                 window.location.reload();
             } else {
                 //Em caso de erro
+                alert("Falha ao criar projeto. Tente novamemte mais tarde.");
                 window.location.reload();
             }
         })
