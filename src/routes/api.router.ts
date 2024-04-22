@@ -4,6 +4,7 @@ import { FetchCities } from '../controllers/api/api.get-city';
 import { FetchCourses } from '../controllers/api/api.get-undergrad-courses';
 import { Register } from '../controllers/api/api.register';
 import { CreateProfile } from '../controllers/api/api.create-profile';
+import { BuildSearchURL } from '../controllers/api/api.search';
 
 import { MulterConfig } from '../config/multer-config';
 import { checkAuthenticationAtLogin } from '../middleware/check-if-authenticated-at-login.auth';
@@ -21,6 +22,7 @@ router.post('/city', FetchCities);
 
 router.post('/courses', FetchCourses);
 
+router.post('/search', BuildSearchURL);
 
 // router.post('/create/contacts', require('../controllers/api/api.profileContacts'));
 
@@ -31,7 +33,6 @@ router.post('/courses', FetchCourses);
 
 // router.delete('/delete/project', require('../controllers/api/api.deleteProject'));
 
-// router.post('/search', require('../controllers/api/api.search'));
 
 //  ja tava comentado router.post('/edit/project', MulterConfig.array('ImageFile', 3), require('../controllers/api/api.editProject'));
 // ja tava comentado router.post('/edit/profile', MulterConfig.array('ImageFile', 1), require('../controllers/api/api.editProfile'));

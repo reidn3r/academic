@@ -35,24 +35,21 @@
     </div>
 
     <div class="container">
-        <% if(context.profileArray.length > 0){ %>
-        <% for( profile of context.profileArray ){ %>
+        <% if(context.result.length > 0){ %>
+        <% for(profile of context.result){ %>
         <div class="profile">
             <div class="profile-image">
-                <img class="found-image" src="data:<%= profile.image_mimetype %>;base64,<%= profile.image_data.toString('base64') %>" alt="found-profile-image">
+                <img class="found-image" src="data:<%=profile.Profile[0].ProfileImageInfo[0].image_content_type %>;base64,<%= Buffer.from(profile.Profile[0].ProfileImageInfo[0].image_data).toString('base64') %>" alt="found-profile-image">
             </div>
             <div class="name-desc-group">
                 <div class="profile-name">
-                    <a href="/v1/profile/<%= profile.register_id %>">
-                        <p class="found-name"><%=  profile.name %></p>
+                    <a href="/v1/profile/<%= profile.Profile[0].id %>">
+                        <p class="found-name"><%= profile.name %></p>
                     </a>
-                    <% if(profile.register_id != context.userId) { %>
-                    <i onclick="chatAppTalk(event)" class="fa-regular fa-message data-<%= profile.register_id %> talk-icn"></i>
-                    <% } %>
                 </div>
     
                 <div class="profile-description">
-                    <p class="found-desc"><%= profile.description %></p>
+                    <p class="found-desc"><%= profile.Profile[0].description %></p>
                 </div>
             </div>
         </div>
@@ -67,9 +64,9 @@
                 </div>
             </div>
         <% } %>
-        <% if(context.profileArray.length > 0){ %>
+        <% if(context.result.length > 0){ %>
         <div class="footer-container">
-            <% for( idx of context.pages_idx) { %>
+            <% for(idx of context.pages_idx) { %>
             <div class="page-idx-container">
                 <a class="page-index"><p class="idx"><%= idx %></p></a>
             </div>
@@ -77,67 +74,14 @@
         </div>
         <% } %>
     </div>
-    <div class="chat-container-visible" id="chat-container">
-        <div class="chat-username-container">
-            <p class="username"><%= context.UserName %></p>
-            <i class="fa-solid fa-up-down" onclick="chatAppArrowIcon()" style="color: #ffffff;"></i>        </div>
-
-        <div class="contacts">
-            <div class="contacts-group-title">
-                <p class="ctt-title">Conversas Iniciadas</p>
-            </div>
-
-            <div class="users-container">
-                <% for(user of context.messagesUser){ %>
-                <div class="contact-group">
-                    <div class="contact-name-group">
-                            <p class="contact-name" d-msg=<%= user.message_id %>><%= user.message_username %></p>
-                    </div>
-                    <i class="fa-solid fa-circle-xmark"></i>
-                </div>
-                <% } %>
-            </div>
-        </div>
-    </div>
+    
     <script>
-        const maxHeith = 35;
-        const userId = Number("<%= context.userId %>");
-        const UserNameSocketIO = "<%= context.UserName %>"
-        let visible = false;
-
-        const arrowDown = document.querySelector('.fa-up-down');
-        const ChatContainer = document.querySelector('.chat-container-visible');
-        const username = document.querySelectorAll('.contact-name');
-
-        username.forEach((user) => {
-            user.addEventListener("click", (e) => {
-                const idx = e.target.getAttribute('d-msg');
-                renderData(e, idx);
-            })
-        })
-
-        let socket = null;
-        const initSocket = () => {
-            if(!socket){
-                socket = io({
-                    upgrade: false, 
-                    transports: ['websocket'],
-                    query: {
-                        registerId: userId,
-                        Username: UserNameSocketIO
-                    }
-                });
-            }
-        }
-
         document.addEventListener("DOMContentLoaded", (event) => {  
         const url = new URL(window.location.href);
         const current_page = "<%= context.current_page %>";
         const idx_page = document.querySelectorAll('.page-index');
         const idx_container = document.querySelectorAll('.page-idx-container');
         
-        initSocket();
-
         idx_container.forEach((container) => {
             if(container.children[0].innerText == current_page){
                 container.className += " active-page";
