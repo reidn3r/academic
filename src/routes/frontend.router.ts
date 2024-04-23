@@ -10,6 +10,7 @@ import { GetUserProfile } from '../controllers/frontend/get-user-profile';
 import { Main } from '../controllers/frontend/home-controller';
 import { SearchResults } from '../controllers/frontend/search-results';
 import { ProfileProjects } from '../controllers/frontend/get-profile-projects';
+import { EditProjects } from '../controllers/frontend/edit-project';
 
 import { checkIfUserIsAuthorizedToGetProfilePage } from '../middleware/check-if-user-is-authorized-profile.auth';
 import { checkAuthenticationAtLogin } from '../middleware/check-if-authenticated-at-login.auth';
@@ -31,10 +32,12 @@ router.get('/search', checkIfUserIsAuthorizedToGetProfilePage, SearchResults);
 router.get('/profile/:id', checkIfUserIsAuthorizedToGetProfilePage, GetUserProfile);
 router.get('/profile/:id/projects', checkIfUserIsAuthorizedToGetProfilePage, ProfileProjects);
 
+router.get('/profile/:profileId/edit/:projectId', EditProjects);
+
 
 router.get('/create/', require('../controllers/frontend/createProfileController'));
 router.get('/create/contacts', require('../controllers/frontend/profileContactsController'));
-// router.get('/profile/:id/edit/:project_id', [checkIfUserIsAuthorizedToGetProfilePage, checkAuth], require('../controllers/frontend/editProjectController'));
+
 // router.get('/profile/:id/edit', [checkIfUserIsAuthorizedToGetProfilePage, checkAuth], require('../controllers/frontend/editProfileController'));
 
 

@@ -15,7 +15,6 @@ export class ProfileRepository{
         });
     }
 
-
     public async createProfileWithImage(description:string, file_mimetype:string, binary_data:Buffer, profile_id:number):Promise<void>{        
         await prisma.profile.create({
             data:{
@@ -62,8 +61,8 @@ export class ProfileRepository{
 
     async getProfileIdByLoginToken(req:any, res:any):Promise<number | null>{
         const token = req.cookies.loginToken;
-        if(!token) return res.redirect('/v1/login');
-        
+        if(!token) return res.status(301).redirect('/v1/login');
+
         let profileId:number|null = null;
         const secret:Secret = process.env.JWT_SECRET as Secret;
         

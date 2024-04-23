@@ -30,7 +30,7 @@
             <img src="/images/white-logo.png" alt="academic-logo" class="academic-logo">
         </div>
         <div class="back-container">
-            <a class="back-btn" href="/v1/profile/<%= context.id %>/projects"><p class="edit-btn">Voltar</p></a>
+            <a class="back-btn" href="/v1/profile/<%= data[0].profileId %>/projects"><p class="edit-btn">Voltar</p></a>
         </div>
     </div>
     <div class="project-container">
@@ -38,24 +38,24 @@
             <div class="project-description-container">
                 <div class="description-title">Descrição</div>
                 <div class="desc-container">
-                    <textarea name="" class="description" spellcheck="false"  oninput="autoGrow(this)" id=""><%= context.data[0].project_description %></textarea>
+                    <textarea name="" class="description" spellcheck="false"  oninput="autoGrow(this)" id=""><%= data[0].project_description %></textarea>
                 </div>
 
             </div>
-            <% if(context.data[0].image_data.length > 0){  %>
+            <% if(data[0].ProfileProjectImageData.length > 0){  %>
             <div class="project-image-group">
-                <% for(let i=0; i< context.data[0].image_data.length; i++) { %>
-                <div class="image-container im-<%= context.data[0].image_id[i] %>">
-                    <div class="image-loaded il-<%= context.data[0].image_id[i] %>">
-                        <img class="project-image image-<%= context.data[0].image_id[i] %>" src="data:<%= context.data[0].image_mimetype[i]%>;base64, <%= context.data[0].image_data[i].toString('base64')%>" alt="project-image">
+                <% for(let i=0; i< data[0].ProfileProjectImageData.length; i++) { %>
+                <div class="image-container im-<%= data[0].ProfileProjectImageData[i].id %>">
+                    <div class="image-loaded il-<%= data[0].ProfileProjectImageData[i].id %>">
+                        <img class="project-image image-<%= data[0].ProfileProjectImageData[i].id %>" src="data:<%= data[0].ProfileProjectImageData[i].image_content_type %>;base64, <%= data[0].ProfileProjectImageData[i].image_data.toString('base64')%>" alt="project-image">
                     </div>
-                    <div class="alter-group ag-<%= context.data[0].image_id[i] %>">
+                    <div class="alter-group ag-<%= data[0].ProfileProjectImageData[i].id %>">
                         <label for="alterImage" class="alter-image-label">
-                            <input type="file" onChange="updateImage(event)" accept="image/*" name="ImageFile" id="alter-image" class="alter-image-<%= context.data[0].image_id[i] %>">
+                            <input type="file" onChange="updateImage(event)" accept="image/*" name="ImageFile" id="alter-image" class="alter-image-<%= data[0].ProfileProjectImageData[i].id %>">
                         </label>
-                        <i class="fa-solid fa-pen fa-xl update-icon" data-project-id="<%= context.data[0].image_id[i] %>"></i>
+                        <i class="fa-solid fa-pen fa-xl update-icon" data-project-id="<%= data[0].ProfileProjectImageData[i].id %>"></i>
                         
-                        <i class="fa-solid fa-trash fa-xl delete-icon" data-project-id="<%= context.data[0].image_id[i] %>"></i>
+                        <i class="fa-solid fa-trash fa-xl delete-icon" data-project-id="<%= data[0].ProfileProjectImageData[i].id %>"></i>
                     </div>
                 </div>
                 <% } %>

@@ -1,6 +1,5 @@
 
 const deleteProject = async(data) => {
-
     try{
         await fetch('/v1/api/delete/project', {
             method: "DELETE",
