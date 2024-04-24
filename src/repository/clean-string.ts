@@ -2,7 +2,14 @@
 export class CleanString {
 
     public removeSpaces(input:string){
-        return input.replace(/^\s+|\s+$/g, '');
+        return input == undefined ? "" : input.replace(/^\s+|\s+$/g, '');
+    }
+
+    public cleanString = (str:string):string => {
+        
+        if(typeof(str) != "string") return "";
+        const result:string = str.replaceAll(".", '').replaceAll('-', '');
+        return isNaN(+result) ? "" : result;
     }
 
     public CPFisValid = (cpf:string):boolean => {
@@ -29,9 +36,4 @@ export class CleanString {
         return false;
     }
 
-    public cleanString = (str:string):string => {
-        if(typeof(str) != "string") return "";
-        const result:string = str.replaceAll(".", '').replaceAll('-', '');
-        return isNaN(+result) ? "" : result;
-    }
 }

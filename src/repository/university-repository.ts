@@ -10,7 +10,7 @@ interface Course {
 
 export class UniversityRepository{
 
-    public basedir = (path.join(__dirname, '..', 'assets', 'stream'));
+    public basedir:string = (path.join(__dirname, '..', 'assets', 'stream'));
 
     public async findUniversityByName(university:string):Promise<University>{
         let foundUniversity:University;

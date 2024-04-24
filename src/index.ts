@@ -43,6 +43,7 @@ const ExpressServer = async() => {
     try{
         await json.execute();
         await RedisClient.connect();
+        // app.listen(PORT, () => console.log(`server running at: http://localhost:${PORT}/v1`));
         server.listen(PORT, () => console.log(`server running at: http://localhost:${PORT}/v1`));
     }
     catch(err){

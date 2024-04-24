@@ -55,7 +55,33 @@ export class ProfileRepository{
                 }
             }
         })
-        
+    }
+
+
+    async getProfileDataForEditingById(id:number){
+        return await prisma.profile.findUnique({
+            where: {
+                id
+            },
+            select:{
+                description: true,
+                user:{
+                    select:{
+                        university: true,
+                        state: true,
+                        city: true,
+                        user_course: true,
+                    },
+                },
+                ProfileImageInfo:{
+                    select: {
+                        image_content_type: true,
+                        image_data: true
+                    }
+                },
+                TopicsOfInterestProfile: true
+            }
+        })
     }
 
 

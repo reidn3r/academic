@@ -1,7 +1,5 @@
-
-const profileContact = (req, res) => {
+export const ProfileContacts = (req:any, res:any) => {
     const profileData = req.session.profile_data;
-
     if(!profileData) return res.redirect('/v1');
 
     const email = profileData.userData.emailInput;
@@ -10,5 +8,3 @@ const profileContact = (req, res) => {
     const context = {email, userGrade};
     return res.render('profileContacts', {context: context});
 }
-
-module.exports = profileContact;

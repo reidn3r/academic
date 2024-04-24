@@ -45,7 +45,6 @@ const query = (data) => {
     return hasTopics ? select + topics + from : select + from;
 }
 
-
 const countQuery = (data) => {
     return data
         .replace("SELECT * FROM ", "SELECT COUNT(*) AS c FROM ")

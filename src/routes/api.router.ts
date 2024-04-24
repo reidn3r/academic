@@ -31,15 +31,11 @@ router.put('/edit/project', MulterConfig.array('ImageFile', 3),EditProject);
 router.delete('/delete/project', RemoveProject);
 
 // router.post('/create/contacts', require('../controllers/api/api.profileContacts'));
-
 // router.post('/create/project', MulterConfig.array('imageInput', 3) ,require('../controllers/api/api.createProject'));
-
 // router.put('/edit/profile', MulterConfig.array('ImageFile', 1), require('../controllers/api/api.editProfile'));
 
 
 
-//  ja tava comentado router.post('/edit/project', MulterConfig.array('ImageFile', 3), require('../controllers/api/api.editProject'));
 // ja tava comentado router.post('/edit/profile', MulterConfig.array('ImageFile', 1), require('../controllers/api/api.editProfile'));
-// ja tava comentado  router.post('/delete/project', require('../controllers/api/api.deleteProject'));
 
 module.exports = router;
