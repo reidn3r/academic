@@ -11,6 +11,7 @@ import { Main } from '../controllers/frontend/home-controller';
 import { SearchResults } from '../controllers/frontend/search-results';
 import { ProfileProjects } from '../controllers/frontend/get-profile-projects';
 import { EditProjects } from '../controllers/frontend/edit-project';
+import { PageNotFound } from '../controllers/frontend/page-not-found';
 
 import { checkIfUserIsAuthorizedToGetProfilePage } from '../middleware/check-if-user-is-authorized-profile.auth';
 import { checkAuthenticationAtLogin } from '../middleware/check-if-authenticated-at-login.auth';
@@ -37,6 +38,7 @@ router.get('/profile/:profileId/edit/:projectId', EditProjects);
 
 router.get('/create/', require('../controllers/frontend/createProfileController'));
 router.get('/create/contacts', require('../controllers/frontend/profileContactsController'));
+router.get('*', PageNotFound);
 
 // router.get('/profile/:id/edit', [checkIfUserIsAuthorizedToGetProfilePage, checkAuth], require('../controllers/frontend/editProfileController'));
 
@@ -45,6 +47,6 @@ router.get('/create/contacts', require('../controllers/frontend/profileContactsC
 // router.get('/chat/get/contacts/:id', require('../controllers/frontend/getUserContactsController'));
 // router.get('/messages/:from_id/:to_id',require('../controllers/api/api.messages'));
 
-router.get('*', require('../controllers/frontend/pageNotFound'));
+// router.get('*', require('../controllers/frontend/pageNotFound'));
 
 module.exports = router;

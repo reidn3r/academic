@@ -15,8 +15,6 @@ import { RemoveProject } from '../controllers/api/api.delete-project';
 import { MulterConfig } from '../config/multer-config';
 import { checkAuthenticationAtLogin } from '../middleware/check-if-authenticated-at-login.auth';
 
-
-
 const router: Router = Router();
 router.post('/login', checkAuthenticationAtLogin, Login);
 router.post('/register/user', Register);
