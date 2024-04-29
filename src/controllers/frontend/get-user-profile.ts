@@ -10,7 +10,8 @@ export const GetUserProfile = async(req:any, res:any) => {
     const ProfileData = await profile.getProfileDataById(id);
     if(!ProfileData) return res.status(301).redirect('/v1');
 
-    const auth:boolean = req.authorized; //?
+    // const auth:boolean = req.authorized; //?
+    const auth:boolean = true; //?
     const context = { ProfileData, auth };
 
     return res.render('profile', {context});

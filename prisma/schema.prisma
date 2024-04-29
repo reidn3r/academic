@@ -42,7 +42,7 @@ model Profile {
   Register   Register? @relation(fields: [registerId], references: [id])
   registerId Int?
 
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int  @unique
 }
 
@@ -98,7 +98,7 @@ model ProfileProjectImageData {
   image_content_type String
   createdAt          DateTime @default(now())
 
-  project              ProfileProjectData @relation(fields: [profileProjectDataId], references: [id])
+  project              ProfileProjectData @relation(fields: [profileProjectDataId], references: [id], onDelete: Cascade)
   profileProjectDataId Int
 }
 
