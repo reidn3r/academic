@@ -34,7 +34,6 @@ router.post('/create/project', MulterConfig.array('imageInput', 3) ,CreateProjec
 router.put('/edit/project', MulterConfig.array('ImageFile', 3),EditProject);
 router.delete('/delete/project', RemoveProject);
 
-// router.post('/create/project', MulterConfig.array('imageInput', 3) ,require('../controllers/api/api.createProject'));
 // router.put('/edit/profile', MulterConfig.array('ImageFile', 1), require('../controllers/api/api.editProfile'));
 
 
