@@ -3,8 +3,6 @@ import { LocationRepository } from '../../repository/location-repository';
 import { UniversityRepository } from '../../repository/university-repository';
 
 import { prisma } from '../../db/prisma';
-import { formatISO } from 'date-fns';
-
 import { RegisterRequestBody } from '../../adapters/register-profile-requestbody-adapter';
 
 export const Register = async(req:any, res:any) => {
@@ -26,11 +24,13 @@ export const Register = async(req:any, res:any) => {
         locationRepository.findCityByName(cityInput)
     ])
 
+    console.log(foundState);
+    console.log(foundCity);
+
     if(!foundUniversity.id) return res.status(404).json({message: "Insira uma universidade válida"});
     if(!foundState || !foundState.id) return res.status(404).json({message: "Insira um estado válido"});
 
-    if(!foundCity.id) return res.status(404).json({message: "Insira uma cidade válida"});
-    if(foundCity.state_acr != foundState.state_acr) return res.status(404).json({message: "Insira uma cidáde válida"});
+    if(!foundCity.id || foundCity.state_acr != foundState.state_acr) return res.status(404).json({message: "Insira uma cidade válida"});
     
     try{
         //Pessoa(1) ou Empresa(2)
@@ -43,7 +43,7 @@ export const Register = async(req:any, res:any) => {
                 User: {
                     create: {
                         cpf: cleanCpf,
-                        birthday: formatISO(birthInput),
+                        birthday: new Date(birthInput).toISOString(),
                         city: foundCity.city_name,
                         state: foundState.state_name,
                         email: emailInput,
@@ -64,13 +64,12 @@ export const Register = async(req:any, res:any) => {
             }
         });
 
-        // req.session.create_profile = {userData: data, profileData: {user}};
         req.session.create_profile = {userData: data, profileData: user};
-        // req.session.userGrade = gradeQuery[0].id;
         return res.status(201).redirect('/v1/create');
 
     }
     catch(err){
+        console.log(err);
         return res.status(500).json({message: "Internal server error"});
     }
     }

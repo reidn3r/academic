@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
-    "dev": "tsx watch ./src/index",
-    "start": "node ./src/index"
+    "dev": "tsx watch ./src/index"
   },
   "keywords": [],
   "author": "",

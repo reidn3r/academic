@@ -7,13 +7,6 @@ datasource db {
   url      = "mysql://root:root@localhost:33061/academicdb"
 }
 
-// model CityInfo {
-//   id             Int              @id @default(autoincrement())
-//   city_info String
-// }
-
-// model StateInfo{}
-
 model ContactType {
   id              Int               @id @default(autoincrement())
   type            String

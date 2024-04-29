@@ -3,25 +3,25 @@ import path from 'path';
 import * as csv from 'fast-csv';
 import { State } from "../models/State";
 import { City } from '../models/City'
+import { CleanString } from './clean-string';
 
 export class LocationRepository{
 
+    public stringRepository = new CleanString();
     public findStateByAcronym(state:string):Promise<State>{
         return new Promise<State>((resolve, reject) => {
             let foundState:State;
-            let id:number=0;
             fs.createReadStream(path.join(__dirname, '..', 'assets', 'stream', 'estados.csv'))
-                .pipe(csv.parse( { headers: true, delimiter: ';' }))
+                .pipe(csv.parse( { headers: true, delimiter: ',' }))
                 .on('data', row => {
-                    if(row.state_acr === state){
+                    if(this.stringRepository.removeSpaces(row.SIGLA) === this.stringRepository.removeSpaces(state)){
                         foundState = {
-                            state_name:row.state_name,
-                            state_acr: row.state_acr,
-                            id: id,
+                            state_name:row.NOME,
+                            state_acr: this.stringRepository.removeSpaces(row.SIGLA),
+                            id: row.COD,
                         }
                         return foundState;
                     }
-                    id++;
                 })
                 .on('end', () => {
                     resolve(foundState);

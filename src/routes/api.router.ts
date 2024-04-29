@@ -10,6 +10,7 @@ import { BuildSearchURL } from '../controllers/api/api.search';
 import { CreateProject } from '../controllers/api/api.create-project';
 import { EditProject } from '../controllers/api/api.edit-project';
 import { RemoveProject } from '../controllers/api/api.delete-project';
+import { ProfileData } from '../controllers/api/api.profile-contacts';
 
 //middleware
 import { MulterConfig } from '../config/multer-config';
@@ -26,11 +27,13 @@ router.post('/city', FetchCities);
 
 router.post('/create', MulterConfig.single('profile-image'), CreateProfile);
 
+router.post('/create/contacts', ProfileData);
+
 router.post('/create/project', MulterConfig.array('imageInput', 3) ,CreateProject);
+
 router.put('/edit/project', MulterConfig.array('ImageFile', 3),EditProject);
 router.delete('/delete/project', RemoveProject);
 
-// router.post('/create/contacts', require('../controllers/api/api.profileContacts'));
 // router.post('/create/project', MulterConfig.array('imageInput', 3) ,require('../controllers/api/api.createProject'));
 // router.put('/edit/profile', MulterConfig.array('ImageFile', 1), require('../controllers/api/api.editProfile'));
 
