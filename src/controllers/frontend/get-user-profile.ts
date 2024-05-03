@@ -1,5 +1,5 @@
 import { ProfileRepository } from '../../repository/profile-repository';
-import  { GetProfileAdapater } from '../../adapters/get-user-profile-adapter';
+import { GetProfileAdapater } from '../../adapters/get-user-profile-adapter';
 
 export const GetUserProfile = async(req:any, res:any) => {
     const profile = new ProfileRepository();

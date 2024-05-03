@@ -80,7 +80,11 @@ export class ProfileRepository{
                         image_data: true
                     }
                 },
-                TopicsOfInterestProfile: true
+                TopicsOfInterestProfile: {
+                    include: {
+                        topic: true
+                    }
+                }
             }
         })
     }

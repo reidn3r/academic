@@ -60,7 +60,7 @@
                 <div class="course-group">
                     <p class="change-course text-title">Alterar Curso de Graduacao</p>
                     <select id="course-list" class="user-course">
-                        <option value="<%= context.data.user_course %>"><%= context.data.user_course %></option>
+                        <option value="<%= context.data.user.university %>"><%= context.data.user.university %></option>
                     </select>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                 <p class="interest-title text-title">Seus Interesses</p>
                 <div class="interest-group">
                     <% for(let i=0; i<context.data.TopicsOfInterestProfile.length; i++){ %>
-                        <input type="text" name="" spellcheck="false" class="user-interest" value="<%= context.data.TopicsOfInterestProfile.length[i] %>">
+                        <input type="text" name="" spellcheck="false" class="user-interest" value="<%= context.data.TopicsOfInterestProfile[i].topic.topic %>">
                     <% } %>
                     <% if(context.data.TopicsOfInterestProfile.length < 3){ %>
                         <% for(let j=0; j< 3-context.data.TopicsOfInterestProfile.length; j++){ %>
@@ -122,7 +122,7 @@
             const city = document.querySelector('.user-city').value;
             const imageInput = document.querySelector('#profile-image-input');
             
-            const registerId = window.location.href.split('/')[5];
+            // const registerId = window.location.href.split('/')[5];
 
             const data = new FormData();
             data.append("description", desc);
@@ -130,27 +130,27 @@
             data.append("course_name", course);
             data.append("state_name", state);
             data.append("city_name", city);
-            data.append("register_id", registerId);
+            // data.append("profileId", registerId);
             
             for(let i=0; i<interestAll.length; i++){
                 topics[i].post = interestAll[i].value;
             }
-            data.append("topics_JSON", JSON.stringify(topics));
+            data.append("topics_string", JSON.stringify(topics));
 
             if(imageInput.files[0]){
                 data.append("ImageFile", imageInput.files[0])
             }
 
             try {
-                const response = await fetch('/v1/api/edit/profile', {
+                const request = await fetch('/v1/api/edit/profile', {
                     method: 'PUT',
                     body: data,
                 });
                 
-                if(response.ok) {
+                if(request.ok) {
                     window.location.reload();
 
-                } else if(response.status === 400) {
+                } else if(request.status === 400) {
                     alert("Erro ao salvar dados. Verifique se todos os campos estão preenchidos");
                 }
             } catch (error) {

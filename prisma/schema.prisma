@@ -102,12 +102,6 @@ model ProfileProjectImageData {
   profileProjectDataId Int
 }
 
-model ProfileTopicsInterest {
-  id         Int @id @default(autoincrement())
-  topic_id   Int
-  profile_id Int
-}
-
 model RegisterType {
   id       Int        @id @default(autoincrement())
   type     String
@@ -132,18 +126,20 @@ model Session {
 
 model TopicsInterest {
   id                      Int                       @id @default(autoincrement())
-  topic                   String
+  topic                   String                    @unique
   TopicsOfInterestProfile TopicsOfInterestProfile[]
 }
 
 model TopicsOfInterestProfile {
   id Int @id @default(autoincrement())
 
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId Int?
+
   topic            TopicsInterest @relation(fields: [topicsInterestId], references: [id])
   topicsInterestId Int
 
-  profile   Profile @relation(fields: [profileId], references: [id])
-  profileId Int
+  @@unique([topicsInterestId, profileId])
 }
 
 model UserActivity {
