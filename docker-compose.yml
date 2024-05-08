@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  mysql_db:
+    image: bitnami/mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: academic-nit
+      MYSQL_USER: nituem
+      MYSQL_PASSWORD: nituem
+    ports:
+      - "33061:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+  
+  redis:
+    image: bitnami/redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/bitnami/redis/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+volumes:
+  db-data:
+  redis_data:
+    driver: local
+

@@ -15,10 +15,10 @@ export const Main = async(req:Request, res:Response) => {
     const token = req.cookies.loginToken; 
     const secret:Secret = process.env.JWT_SECRET as Secret;
     
-    jwt.verify(token, secret, (err:any, decoded:any) => {
-        if(!decoded) return res.redirect('/v1/logout');
-        profileId = decoded.profile_id;
-    })
+    // jwt.verify(token, secret, (err:any, decoded:any) => {
+    //     if(!decoded) return res.redirect('/v1/logout');
+    //     profileId = decoded.profile_id;
+    // })
 
     const localRepository = new LocationRepository();
     const universityRepository = new UniversityRepository();

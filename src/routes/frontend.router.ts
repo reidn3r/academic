@@ -41,12 +41,4 @@ router.get('/create/', require('../controllers/frontend/createProfileController'
 router.get('/create/contacts', ProfileContacts);
 router.get('*', PageNotFound);
 
-
-
-// router.get('/chat/render', require('../controllers/frontend/renderMessagesController'));
-// router.get('/chat/get/contacts/:id', require('../controllers/frontend/getUserContactsController'));
-// router.get('/messages/:from_id/:to_id',require('../controllers/api/api.messages'));
-
-// router.get('*', require('../controllers/frontend/pageNotFound'));
-
 module.exports = router;

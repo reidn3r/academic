@@ -1,6 +1,7 @@
 import { ProfileRepository } from "../../repository/profile-repository";
 import { Topic } from "../../adapters/type-topic";
 import { TopicsRepository } from "../../repository/topics-repository";
+import { prisma } from "../../db/prisma";
 
 export const EditProfile = async(req:any, res:any) => {
     
@@ -9,7 +10,10 @@ export const EditProfile = async(req:any, res:any) => {
     if(!course_name || !city_name) return res.status(400).json({"message": "Missing course name"});    
     const topics = JSON.parse(req.body.topics_string);
     const profileRepository = new ProfileRepository();
-    const profileId = await profileRepository.getProfileIdByLoginToken(req, res);
+    const profileId = await profileRepository.getProfileIdByLoginToken
+    (req, res);
+    
+    if(!profileId) throw new Error("null profileId.");
 
     const topicRepository = new TopicsRepository();
     try{
@@ -29,15 +33,39 @@ export const EditProfile = async(req:any, res:any) => {
                     await topicRepository.editTopic(profileId, topic);
                 }
             }
-    
-           //Testar e atualizar o restante
-        })
+        });
 
+        //Testar e atualizar o restante
+        const foundProfile = await prisma.profile.findUnique({
+            where: {
+                id: profileId
+            }
+        });
+
+        await Promise.all([
+            prisma.profile.update({
+                data: {
+                    description: description
+                },
+                where:{
+                    id: profileId
+                }
+            }),
+            prisma.user.update({
+                where:{
+                    id: foundProfile?.userId
+                },
+                data:{
+                    city: city_name,
+                    state: state_name,
+                    university: university_name
+                }
+            }),
+        ]);
     }
     catch(err){
         console.log(err);
     }
     
-    //Atualizar restante dos dados
     return res.json({ message: "ok" });
 }
